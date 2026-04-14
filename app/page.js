@@ -17,7 +17,7 @@ function FadeInSection({ children, className = "", id = "" }) {
           observer.unobserve(node);
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.12 }
     );
 
     observer.observe(node);
@@ -30,7 +30,7 @@ function FadeInSection({ children, className = "", id = "" }) {
       id={id || undefined}
       ref={ref}
       className={`${className} transition-all duration-700 ease-out ${
-        visible ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
       }`}
     >
       {children}
@@ -62,23 +62,25 @@ function FundCard({
       : "bg-[#E8EEF3] text-[#5A7188]";
 
   return (
-    <div className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+    <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-6 lg:p-8">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+        <div className="min-w-0">
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#5A7188] sm:text-xs">
             {label}
           </p>
-          <h3 className="text-2xl font-bold text-[#0F1A28]">{name}</h3>
+          <h3 className="break-words text-xl font-bold leading-tight text-[#0F1A28] sm:text-2xl">
+            {name}
+          </h3>
         </div>
 
         <span
-          className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${statusClass}`}
+          className={`w-fit shrink-0 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] sm:text-xs ${statusClass}`}
         >
           {status}
         </span>
       </div>
 
-      <div className="mt-4 space-y-2 text-sm text-[#2E4358]">
+      <div className="mt-4 space-y-2 text-sm leading-6 text-[#2E4358]">
         <p>
           <span className="font-semibold text-[#0F1A28]">Focus:</span> {focus}
         </p>
@@ -102,13 +104,13 @@ function FundCard({
       </div>
 
       {(primaryLink || secondaryLinks.length > 0) && (
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           {primaryLink ? (
             <a
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-[#0F1A28] px-5 py-2 text-sm font-semibold text-white transition hover:scale-105"
+              className="rounded-full bg-[#0F1A28] px-5 py-2 text-center text-sm font-semibold text-white transition hover:scale-105"
             >
               Get Started
             </a>
@@ -120,7 +122,7 @@ function FundCard({
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border border-[#2E4358] px-5 py-2 text-sm font-semibold text-[#0F1A28] transition hover:scale-105"
+              className="rounded-full border border-[#2E4358] px-5 py-2 text-center text-sm font-semibold text-[#0F1A28] transition hover:scale-105"
             >
               {link.label}
             </a>
@@ -178,16 +180,16 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#E6EEF2] text-[#0F1A28]">
+    <main className="min-h-screen bg-[#E6EEF2] text-[#0F1A28] overflow-x-hidden">
       <nav
         className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
           scrolled
-            ? "border-b border-white/40 bg-[#E6EEF2]/80 shadow-[0_8px_30px_rgba(15,26,40,0.08)] backdrop-blur-xl"
-            : "border-b border-white/20 bg-white/30 backdrop-blur-md"
+            ? "border-b border-white/40 bg-[#E6EEF2]/90 shadow-[0_8px_30px_rgba(15,26,40,0.08)] backdrop-blur-xl"
+            : "border-b border-white/20 bg-white/40 backdrop-blur-md"
         }`}
       >
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#2E4358] md:text-sm">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6 sm:py-4">
+          <span className="min-w-0 text-[11px] font-medium uppercase tracking-[0.18em] text-[#2E4358] sm:text-xs md:text-sm md:tracking-[0.2em]">
             Kaizen Capital Group
           </span>
 
@@ -214,31 +216,31 @@ export default function Home() {
 
           <a
             href="#contact-form"
-            className="rounded-full bg-[#0F1A28] px-5 py-2 text-sm font-semibold text-white transition hover:scale-105"
+            className="shrink-0 rounded-full bg-[#0F1A28] px-4 py-2 text-xs font-semibold text-white transition hover:scale-105 sm:px-5 sm:text-sm"
           >
             Get Started
           </a>
         </div>
       </nav>
 
-      <FadeInSection id="home" className="px-6 pb-20 pt-32">
-        <div className="mx-auto max-w-6xl rounded-[32px] bg-gradient-to-br from-white/70 via-[#C9D8E2]/70 to-[#9FB4C1]/70 p-12 shadow-[0_25px_80px_rgba(15,26,40,0.12)] backdrop-blur-md">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#2E4358]">
+      <FadeInSection id="home" className="px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32">
+        <div className="mx-auto max-w-6xl rounded-[28px] bg-gradient-to-br from-white/70 via-[#C9D8E2]/70 to-[#9FB4C1]/70 p-6 shadow-[0_25px_80px_rgba(15,26,40,0.12)] backdrop-blur-md sm:rounded-[32px] sm:p-12">
+          <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#2E4358] sm:text-sm sm:tracking-[0.2em]">
             Kaizen Capital Group
           </p>
 
-          <h1 className="max-w-5xl text-5xl font-bold leading-tight text-[#0F1A28] md:text-7xl">
+          <h1 className="max-w-5xl text-4xl font-bold leading-tight text-[#0F1A28] sm:text-5xl md:text-7xl">
             Disciplined capital strategy for long-term growth and premium market
             positioning.
           </h1>
 
-          <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">
+          <p className="mt-5 max-w-3xl text-base leading-7 text-[#2E4358] sm:mt-6 sm:text-lg">
             Kaizen Capital Group is built to present a refined, institutional
             brand image centered on structure, credibility, execution, and
             strategic growth.
           </p>
 
-          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:gap-4">
             <a
               href="#contact-form"
               className="rounded-full bg-[#0F1A28] px-8 py-4 text-center font-semibold text-white transition hover:scale-105"
@@ -254,7 +256,7 @@ export default function Home() {
             </a>
           </div>
 
-          <div className="mt-12 grid gap-4 md:grid-cols-4">
+          <div className="mt-10 grid gap-4 sm:mt-12 sm:grid-cols-2 lg:grid-cols-4">
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Funds Active
@@ -286,9 +288,9 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="overview" className="px-6 pb-24">
-        <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
-          <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1">
+      <FadeInSection id="overview" className="px-4 pb-20 sm:px-6 sm:pb-24">
+        <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 md:gap-8">
+          <div className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-8">
             <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
               Strategic Positioning
             </h3>
@@ -298,7 +300,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1">
+          <div className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-8">
             <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
               Growth Framework
             </h3>
@@ -310,7 +312,7 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="funds" className="bg-[#F3F7FA] px-6 py-24">
+      <FadeInSection id="funds" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             KCG Multiplied Funds
@@ -358,8 +360,8 @@ export default function Home() {
               label="Fund 2"
               name="TradeXMarkets Fund"
               focus="Gold & potentially Oil"
-              strategy="Gold Trading (Oil algorithmic approach) Manual & automated trading mix"
-              managers="2"
+              strategy="Gold Trading & automated trading mix"
+              managers="1"
               brokerage="MultiBank"
               status="N/A"
             />
@@ -367,9 +369,9 @@ export default function Home() {
             <FundCard
               label="Fund 3"
               name="VaultKano Fund"
-              focus="Crypto (BTC) & Gold"
+              focus="Crypto"
               strategy="Manual & automated trading mix"
-              managers="2"
+              managers="1"
               brokerage="MultiBank"
               status="Re-Launching"
             />
@@ -387,10 +389,10 @@ export default function Home() {
 
             <FundCard
               label="Fund 5"
-              name="Trellz + Phoenix"
+              name="Phoenix"
               focus="Gold & FX currencies"
               strategy="To be defined"
-              managers="2"
+              managers="1"
               brokerage="MultiBank"
               status="N/A"
               extra="Speculative"
@@ -408,7 +410,7 @@ export default function Home() {
 
             <FundCard
               label="Fund 7"
-              name="Forex Fortune Fund"
+              name="Exodus Investments"
               focus="EURUSD"
               strategy="Automated trading mix of EUR instruments (exact strategy to be explained)"
               managers="1"
@@ -494,7 +496,7 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="activity" className="px-6 py-24">
+      <FadeInSection id="activity" className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             Live Trading Activity
@@ -506,7 +508,7 @@ export default function Home() {
 
           <div className="grid gap-4">
             <div className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-[#0F1A28]">BUY XAUUSD</p>
                   <p className="text-sm text-[#5A7188]">
@@ -520,7 +522,7 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-[#0F1A28]">SELL EURUSD</p>
                   <p className="text-sm text-[#5A7188]">
@@ -534,7 +536,7 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-[#0F1A28]">BUY BTCUSD</p>
                   <p className="text-sm text-[#5A7188]">
@@ -550,7 +552,7 @@ export default function Home() {
 
       <FadeInSection
         id="why-kcg"
-        className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-6 py-24"
+        className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-4 py-20 sm:px-6 sm:py-24"
       >
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
@@ -563,7 +565,7 @@ export default function Home() {
           </h2>
 
           <div className="grid gap-6 md:grid-cols-3">
-            <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+            <div className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-8">
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Structured Execution
               </h3>
@@ -573,7 +575,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+            <div className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-8">
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Premium Positioning
               </h3>
@@ -583,7 +585,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+            <div className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-8">
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Scalable Systems
               </h3>
@@ -596,7 +598,7 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection className="bg-[#F3F7FA] px-6 py-24">
+      <FadeInSection className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             Trusted by Traders Worldwide
@@ -614,8 +616,8 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="contact" className="px-6 py-24">
-        <div className="mx-auto max-w-5xl rounded-[32px] border border-white/40 bg-white/70 p-10 text-center shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md md:p-16">
+      <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-5xl rounded-[28px] border border-white/40 bg-white/70 p-8 text-center shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md sm:rounded-[32px] sm:p-10 md:p-16">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             Ready to Automate Your CFD Trading?
           </p>
@@ -638,7 +640,7 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="contact-form" className="px-6 pb-24">
+      <FadeInSection id="contact-form" className="px-4 pb-24 sm:px-6">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
@@ -662,7 +664,7 @@ export default function Home() {
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Email
                 </p>
-                <p className="mt-2 text-sm text-[#0F1A28]">
+                <p className="mt-2 break-all text-sm text-[#0F1A28]">
                   cottrell@kaizencapitalgrp.com
                 </p>
               </a>
@@ -695,7 +697,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="rounded-[32px] border border-white/30 bg-white/70 p-8 shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md">
+          <div className="rounded-[28px] border border-white/30 bg-white/70 p-6 shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md sm:rounded-[32px] sm:p-8">
             {submitted && (
               <div className="mb-5 rounded-2xl border border-[#C9D8E2] bg-[#EDF4F8] px-4 py-3 text-sm text-[#0F1A28]">
                 Your email draft was opened successfully.
@@ -771,7 +773,7 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <footer className="border-t border-black/5 bg-[#DCE7EE] px-6 py-10">
+      <footer className="border-t border-black/5 bg-[#DCE7EE] px-4 py-10 sm:px-6">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#5A7188]">
