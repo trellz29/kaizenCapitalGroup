@@ -108,8 +108,8 @@ export default function Home() {
             <a href="#overview" className="hover:opacity-70">
               Overview
             </a>
-            <a href="#credibility" className="hover:opacity-70">
-              Credibility
+            <a href="#bots" className="hover:opacity-70">
+              Bots
             </a>
             <a href="#performance" className="hover:opacity-70">
               Performance
@@ -164,36 +164,30 @@ export default function Home() {
           <div className="mt-12 grid gap-4 md:grid-cols-4">
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
-                Capital Focus
+                Funds Active
               </p>
-              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
-                Multi-Asset
-              </p>
+              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">10</p>
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
-                Risk Framework
+                Active Users
               </p>
-              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
-                Structured
-              </p>
+              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">4</p>
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
-                Market Position
+                Avg Monthly Return
               </p>
-              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
-                Premium
-              </p>
+              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">9.2%</p>
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
-                Objective
+                Total Volume
               </p>
-              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">Growth</p>
+              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">$847.2M</p>
             </div>
           </div>
         </div>
@@ -223,110 +217,185 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection
-        id="credibility"
-        className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-6 py-24"
-      >
+      <FadeInSection id="bots" className="bg-[#F3F7FA] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-            Credibility
+            Our Trading Bots
           </p>
 
-          <h2 className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-6xl">
-            Built to communicate trust, structure, and investor-facing strength.
+          <h2 className="mb-6 text-4xl font-bold text-[#0F1A28] md:text-5xl">
+            Automated systems built for structure, execution, and scale.
           </h2>
 
-          <div className="mt-14 grid gap-8 md:grid-cols-3">
-            <div className="rounded-3xl border border-white/40 bg-white/55 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
-              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
-                Institutional Tone
-              </h3>
-              <p className="text-sm text-[#2E4358]">
-                The brand and website presentation are structured to feel
-                premium, disciplined, and investor-ready.
+          <p className="mb-12 max-w-3xl text-lg text-[#2E4358]">
+            These are placeholder layouts for your KCG bots. You can manually
+            replace each one later with your real bot names, performance, and
+            descriptions.
+          </p>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Bot 01
+              </p>
+              <h3 className="text-2xl font-bold text-[#0F1A28]">F.R.I.D.A.Y.</h3>
+              <p className="mt-4 text-sm text-[#2E4358]">
+                Precision-focused automation framework designed around disciplined market execution.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/40 bg-white/55 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
-              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
-                Clear Framework
-              </h3>
-              <p className="text-sm text-[#2E4358]">
-                Every section reinforces clarity, long-term thinking, and
-                consistent execution.
+            <div className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Bot 02
+              </p>
+              <h3 className="text-2xl font-bold text-[#0F1A28]">MAMALYN</h3>
+              <p className="mt-4 text-sm text-[#2E4358]">
+                A structured algorithmic system intended for disciplined currency execution and consistency.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/40 bg-white/55 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+            <div className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Bot 03
+              </p>
+              <h3 className="text-2xl font-bold text-[#0F1A28]">Algo Amalgamation</h3>
+              <p className="mt-4 text-sm text-[#2E4358]">
+                A multi-strategy model concept combining KCG execution logic into one scalable framework.
+              </p>
+            </div>
+          </div>
+        </div>
+      </FadeInSection>
+
+      <FadeInSection id="credibility" className="px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+            Live Trading Activity
+          </p>
+
+          <h2 className="mb-10 text-4xl font-bold text-[#0F1A28] md:text-5xl">
+            Live-style activity feed for your future execution flow.
+          </h2>
+
+          <div className="grid gap-4">
+            <div className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-[#0F1A28]">BUY XAUUSD</p>
+                  <p className="text-sm text-[#5A7188]">Bot: F.R.I.D.A.Y. • 0.10 lots</p>
+                </div>
+                <p className="text-sm font-semibold text-[#2E4358]">+12.4 pips</p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-[#0F1A28]">SELL EURUSD</p>
+                  <p className="text-sm text-[#5A7188]">Bot: MAMALYN • 0.05 lots</p>
+                </div>
+                <p className="text-sm font-semibold text-[#2E4358]">+8.1 pips</p>
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="font-semibold text-[#0F1A28]">BUY BTCUSD</p>
+                  <p className="text-sm text-[#5A7188]">Bot: Algo Amalgamation • 0.01 lots</p>
+                </div>
+                <p className="text-sm font-semibold text-[#2E4358]">+2.7%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </FadeInSection>
+
+      <FadeInSection id="performance" className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-6 py-24">
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+            Why Choose KCG?
+          </p>
+
+          <h2 className="mb-12 max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">
+            A brand experience built for disciplined traders, serious clients, and long-term credibility.
+          </h2>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+                Structured Execution
+              </h3>
+              <p className="text-sm text-[#2E4358]">
+                Every layer of KCG is built around consistency, clarity, and disciplined decision-making.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Premium Positioning
               </h3>
               <p className="text-sm text-[#2E4358]">
-                The overall experience is built to support high-trust
-                communication and serious market presence.
+                The presentation is designed to feel trusted, investor-facing, and institutionally credible.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+                Scalable Systems
+              </h3>
+              <p className="text-sm text-[#2E4358]">
+                Your ecosystem can expand into funds, bots, dashboards, reporting, and deeper automation later.
               </p>
             </div>
           </div>
         </div>
       </FadeInSection>
 
-      <FadeInSection id="performance" className="bg-[#F3F7FA] px-6 py-24">
-        <div className="mx-auto max-w-6xl">
+      <FadeInSection className="bg-[#F3F7FA] px-6 py-24">
+        <div className="mx-auto max-w-6xl text-center">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-            Performance Snapshot
+            Trusted by Traders Worldwide
           </p>
 
-          <h2 className="mb-6 text-4xl font-bold text-[#0F1A28] md:text-5xl">
-            Metrics designed to reinforce strength, discipline, and market
-            credibility.
+          <h2 className="mx-auto max-w-4xl text-4xl font-bold text-[#0F1A28] md:text-5xl">
+            Built to support a growing global KCG presence across traders, clients, and capital partners.
           </h2>
 
-          <p className="mb-12 max-w-3xl text-lg text-[#2E4358]">
-            Replace these placeholders with your real numbers as your public
-            reporting and investor presentation evolve.
+          <p className="mx-auto mt-6 max-w-3xl text-lg text-[#2E4358]">
+            This section is ready for future testimonials, partner logos, member counts, and social proof as your platform grows.
           </p>
-
-          <div className="grid gap-6 md:grid-cols-4">
-            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
-                Target Return
-              </p>
-              <h3 className="text-3xl font-bold text-[#0F1A28]">5–30%</h3>
-              <p className="mt-2 text-sm text-[#5A7188]">Monthly range</p>
-            </div>
-
-            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
-                Risk Profile
-              </p>
-              <h3 className="text-3xl font-bold text-[#0F1A28]">Controlled</h3>
-              <p className="mt-2 text-sm text-[#5A7188]">Structured exposure</p>
-            </div>
-
-            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
-                Core Asset
-              </p>
-              <h3 className="text-3xl font-bold text-[#0F1A28]">XAUUSD</h3>
-              <p className="mt-2 text-sm text-[#5A7188]">Primary focus</p>
-            </div>
-
-            <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
-                Execution
-              </p>
-              <h3 className="text-3xl font-bold text-[#0F1A28]">Disciplined</h3>
-              <p className="mt-2 text-sm text-[#5A7188]">Rule-based framework</p>
-            </div>
-          </div>
         </div>
       </FadeInSection>
 
       <FadeInSection id="contact" className="px-6 py-24">
+        <div className="mx-auto max-w-5xl rounded-[32px] border border-white/40 bg-white/70 p-10 text-center shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md md:p-16">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+            Ready to Automate Your CFD Trading?
+          </p>
+
+          <h2 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-6xl">
+            Start building with Kaizen Capital Group.
+          </h2>
+
+          <p className="mx-auto mt-6 max-w-2xl text-lg text-[#2E4358]">
+            Use the section below to begin the conversation, request information, or position KCG for your next phase of growth.
+          </p>
+
+          <a
+            href="#contact-form"
+            className="mt-10 inline-block rounded-full bg-[#0F1A28] px-10 py-4 font-semibold text-white transition hover:scale-105"
+          >
+            Get Started
+          </a>
+        </div>
+      </FadeInSection>
+
+      <FadeInSection id="contact-form" className="px-6 pb-24">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-              Contact
+              Get In Touch
             </p>
 
             <h2 className="max-w-xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">
@@ -474,10 +543,10 @@ export default function Home() {
             <a href="#overview" className="hover:opacity-70">
               Overview
             </a>
-            <a href="#credibility" className="hover:opacity-70">
-              Credibility
+            <a href="#bots" className="hover:opacity-70">
+              Bots
             </a>
-            <a href="#contact" className="hover:opacity-70">
+            <a href="#contact-form" className="hover:opacity-70">
               Contact
             </a>
           </div>
