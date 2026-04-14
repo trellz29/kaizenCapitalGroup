@@ -88,20 +88,20 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-[#E6EEF2] text-black">
+    <main className="min-h-screen bg-[#E6EEF2] text-[#0F1A28]">
       <nav
         className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
           scrolled
-            ? "border-b border-white/30 bg-[#E6EEF2]/75 shadow-[0_8px_30px_rgba(15,26,40,0.08)] backdrop-blur-xl"
-            : "border-b border-white/10 bg-white/20 backdrop-blur-md"
+            ? "border-b border-white/40 bg-[#E6EEF2]/80 shadow-[0_8px_30px_rgba(15,26,40,0.08)] backdrop-blur-xl"
+            : "border-b border-white/20 bg-white/30 backdrop-blur-md"
         }`}
       >
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <span className="text-xs font-medium uppercase tracking-[0.2em] text-gray-600 md:text-sm">
+          <span className="text-xs font-medium uppercase tracking-[0.2em] text-[#2E4358] md:text-sm">
             Kaizen Capital Group
           </span>
 
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-[#2E4358]">
             <a href="#home" className="hover:opacity-70">
               Home
             </a>
@@ -129,17 +129,17 @@ export default function Home() {
       </nav>
 
       <FadeInSection id="home" className="px-6 pb-20 pt-32">
-        <div className="mx-auto max-w-6xl rounded-[32px] bg-gradient-to-br from-white/60 via-[#C9D8E2]/60 to-[#9FB4C1]/60 p-12 backdrop-blur-md">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+        <div className="mx-auto max-w-6xl rounded-[32px] bg-gradient-to-br from-white/70 via-[#C9D8E2]/70 to-[#9FB4C1]/70 p-12 shadow-[0_25px_80px_rgba(15,26,40,0.12)] backdrop-blur-md">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#2E4358]">
             Kaizen Capital Group
           </p>
 
-          <h1 className="max-w-5xl text-5xl font-bold leading-tight md:text-7xl">
+          <h1 className="max-w-5xl text-5xl font-bold leading-tight text-[#0F1A28] md:text-7xl">
             Disciplined capital strategy for long-term growth and premium market
             positioning.
           </h1>
 
-          <p className="mt-6 max-w-3xl text-lg text-gray-700">
+          <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">
             Kaizen Capital Group is built to present a refined, institutional
             brand image centered on structure, credibility, execution, and
             strategic growth.
@@ -155,7 +155,7 @@ export default function Home() {
 
             <a
               href="#performance"
-              className="rounded-full border border-gray-400 px-8 py-4 text-center font-semibold transition hover:scale-105"
+              className="rounded-full border border-[#2E4358] px-8 py-4 text-center font-semibold text-[#0F1A28] transition hover:scale-105"
             >
               View Performance
             </a>
@@ -163,7 +163,7 @@ export default function Home() {
 
           <div className="mt-12 grid gap-4 md:grid-cols-4">
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Capital Focus
               </p>
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
@@ -172,7 +172,7 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Risk Framework
               </p>
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
@@ -181,7 +181,7 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Market Position
               </p>
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
@@ -190,12 +190,10 @@ export default function Home() {
             </div>
 
             <div className="rounded-2xl border border-white/40 bg-white/50 p-5 backdrop-blur-sm">
-              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Objective
               </p>
-              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">
-                Growth
-              </p>
+              <p className="mt-2 text-2xl font-bold text-[#0F1A28]">Growth</p>
             </div>
           </div>
         </div>
@@ -203,17 +201,21 @@ export default function Home() {
 
       <FadeInSection id="overview" className="px-6 pb-24">
         <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-2">
-          <div className="rounded-3xl bg-white/60 p-8 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1">
-            <h3 className="mb-3 text-xl font-semibold">Strategic Positioning</h3>
-            <p className="text-gray-600">
+          <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1">
+            <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+              Strategic Positioning
+            </h3>
+            <p className="text-[#2E4358]">
               KCG is designed to communicate a premium, disciplined identity for
               partners, clients, and capital relationships.
             </p>
           </div>
 
-          <div className="rounded-3xl bg-white/60 p-8 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1">
-            <h3 className="mb-3 text-xl font-semibold">Growth Framework</h3>
-            <p className="text-gray-600">
+          <div className="rounded-3xl border border-white/40 bg-white/60 p-8 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1">
+            <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+              Growth Framework
+            </h3>
+            <p className="text-[#2E4358]">
               We focus on long-term brand strength, structured presentation, and
               consistent execution across all touchpoints.
             </p>
@@ -223,37 +225,43 @@ export default function Home() {
 
       <FadeInSection
         id="credibility"
-        className="bg-[#0F1A28] px-6 py-24 text-white"
+        className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-6 py-24"
       >
         <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#AFC3D1]">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             Credibility
           </p>
 
-          <h2 className="max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
+          <h2 className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-6xl">
             Built to communicate trust, structure, and investor-facing strength.
           </h2>
 
           <div className="mt-14 grid gap-8 md:grid-cols-3">
-            <div className="rounded-3xl border border-white/10 p-8 transition duration-300 hover:-translate-y-1">
-              <h3 className="mb-3 text-xl font-semibold">Institutional Tone</h3>
-              <p className="text-sm text-gray-300">
+            <div className="rounded-3xl border border-white/40 bg-white/55 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+                Institutional Tone
+              </h3>
+              <p className="text-sm text-[#2E4358]">
                 The brand and website presentation are structured to feel
                 premium, disciplined, and investor-ready.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/10 p-8 transition duration-300 hover:-translate-y-1">
-              <h3 className="mb-3 text-xl font-semibold">Clear Framework</h3>
-              <p className="text-sm text-gray-300">
+            <div className="rounded-3xl border border-white/40 bg-white/55 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+                Clear Framework
+              </h3>
+              <p className="text-sm text-[#2E4358]">
                 Every section reinforces clarity, long-term thinking, and
                 consistent execution.
               </p>
             </div>
 
-            <div className="rounded-3xl border border-white/10 p-8 transition duration-300 hover:-translate-y-1">
-              <h3 className="mb-3 text-xl font-semibold">Premium Positioning</h3>
-              <p className="text-sm text-gray-300">
+            <div className="rounded-3xl border border-white/40 bg-white/55 p-8 shadow-md backdrop-blur-md transition duration-300 hover:-translate-y-1">
+              <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
+                Premium Positioning
+              </h3>
+              <p className="text-sm text-[#2E4358]">
                 The overall experience is built to support high-trust
                 communication and serious market presence.
               </p>
@@ -264,7 +272,7 @@ export default function Home() {
 
       <FadeInSection id="performance" className="bg-[#F3F7FA] px-6 py-24">
         <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             Performance Snapshot
           </p>
 
@@ -273,42 +281,42 @@ export default function Home() {
             credibility.
           </h2>
 
-          <p className="mb-12 max-w-3xl text-lg text-gray-600">
+          <p className="mb-12 max-w-3xl text-lg text-[#2E4358]">
             Replace these placeholders with your real numbers as your public
             reporting and investor presentation evolve.
           </p>
 
           <div className="grid gap-6 md:grid-cols-4">
             <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
                 Target Return
               </p>
               <h3 className="text-3xl font-bold text-[#0F1A28]">5–30%</h3>
-              <p className="mt-2 text-sm text-gray-500">Monthly range</p>
+              <p className="mt-2 text-sm text-[#5A7188]">Monthly range</p>
             </div>
 
             <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
                 Risk Profile
               </p>
               <h3 className="text-3xl font-bold text-[#0F1A28]">Controlled</h3>
-              <p className="mt-2 text-sm text-gray-500">Structured exposure</p>
+              <p className="mt-2 text-sm text-[#5A7188]">Structured exposure</p>
             </div>
 
             <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
                 Core Asset
               </p>
               <h3 className="text-3xl font-bold text-[#0F1A28]">XAUUSD</h3>
-              <p className="mt-2 text-sm text-gray-500">Primary focus</p>
+              <p className="mt-2 text-sm text-[#5A7188]">Primary focus</p>
             </div>
 
             <div className="rounded-3xl border border-gray-100 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1">
-              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-gray-500">
+              <p className="mb-3 text-sm uppercase tracking-[0.15em] text-[#5A7188]">
                 Execution
               </p>
               <h3 className="text-3xl font-bold text-[#0F1A28]">Disciplined</h3>
-              <p className="mt-2 text-sm text-gray-500">Rule-based framework</p>
+              <p className="mt-2 text-sm text-[#5A7188]">Rule-based framework</p>
             </div>
           </div>
         </div>
@@ -317,7 +325,7 @@ export default function Home() {
       <FadeInSection id="contact" className="px-6 py-24">
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
           <div>
-            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-gray-500">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
               Contact
             </p>
 
@@ -325,7 +333,7 @@ export default function Home() {
               Start the conversation with Kaizen Capital Group.
             </h2>
 
-            <p className="mt-6 max-w-lg text-lg text-gray-600">
+            <p className="mt-6 max-w-lg text-lg text-[#2E4358]">
               The form below opens a real email draft addressed to your business
               email with the visitor’s details already filled in.
             </p>
@@ -335,7 +343,7 @@ export default function Home() {
                 href="mailto:cottrell@kaizencapitalgrp.com"
                 className="block rounded-2xl border border-white/40 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:-translate-y-1"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Email
                 </p>
                 <p className="mt-2 text-sm text-[#0F1A28]">
@@ -349,7 +357,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="block rounded-2xl border border-white/40 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:-translate-y-1"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Telegram
                 </p>
                 <p className="mt-2 text-sm text-[#0F1A28]">@YOUR_USERNAME</p>
@@ -361,7 +369,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="block rounded-2xl border border-white/40 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:-translate-y-1"
               >
-                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-500">
+                <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Book a Call
                 </p>
                 <p className="mt-2 text-sm text-[#0F1A28]">
@@ -447,19 +455,19 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <footer className="border-t border-black/5 bg-[#E1EAF0] px-6 py-10">
+      <footer className="border-t border-black/5 bg-[#DCE7EE] px-6 py-10">
         <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-xs font-medium uppercase tracking-[0.2em] text-gray-500">
+            <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#5A7188]">
               Kaizen Capital Group
             </p>
-            <p className="mt-2 max-w-md text-sm text-gray-600">
+            <p className="mt-2 max-w-md text-sm text-[#2E4358]">
               Built around disciplined execution, premium positioning, and
               long-term credibility.
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-6 text-sm text-gray-600">
+          <div className="flex flex-wrap gap-6 text-sm text-[#2E4358]">
             <a href="#home" className="hover:opacity-70">
               Home
             </a>
