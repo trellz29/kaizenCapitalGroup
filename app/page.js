@@ -39,20 +39,44 @@ function FadeInSection({ children, className = "", id = "" }) {
 }
 
 function FundCard({
-  category,
+  label,
   name,
   focus,
   strategy,
   managers,
   brokerage,
+  status,
   extra,
+  primaryLink,
+  secondaryLinks = [],
 }) {
+  const statusLower = status.toLowerCase();
+
+  const statusClass =
+    statusLower === "live"
+      ? "bg-[#DCEFE3] text-[#1F5E36]"
+      : statusLower === "re-launching"
+      ? "bg-[#EEF2F7] text-[#35506A]"
+      : statusLower === "discontinuation"
+      ? "bg-[#F3E4E4] text-[#7A2F2F]"
+      : "bg-[#E8EEF3] text-[#5A7188]";
+
   return (
     <div className="rounded-3xl border border-white/50 bg-white/70 p-8 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
-        {category}
-      </p>
-      <h3 className="text-2xl font-bold text-[#0F1A28]">{name}</h3>
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="mb-2 text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+            {label}
+          </p>
+          <h3 className="text-2xl font-bold text-[#0F1A28]">{name}</h3>
+        </div>
+
+        <span
+          className={`rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] ${statusClass}`}
+        >
+          {status}
+        </span>
+      </div>
 
       <div className="mt-4 space-y-2 text-sm text-[#2E4358]">
         <p>
@@ -76,6 +100,33 @@ function FundCard({
           </p>
         ) : null}
       </div>
+
+      {(primaryLink || secondaryLinks.length > 0) && (
+        <div className="mt-6 flex flex-wrap gap-3">
+          {primaryLink ? (
+            <a
+              href={primaryLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-[#0F1A28] px-5 py-2 text-sm font-semibold text-white transition hover:scale-105"
+            >
+              Get Started
+            </a>
+          ) : null}
+
+          {secondaryLinks.map((link, index) => (
+            <a
+              key={`${name}-${index}`}
+              href={link.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-[#2E4358] px-5 py-2 text-sm font-semibold text-[#0F1A28] transition hover:scale-105"
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -90,9 +141,7 @@ export default function Home() {
   });
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 24);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 24);
 
     onScroll();
     window.addEventListener("scroll", onScroll);
@@ -114,7 +163,6 @@ export default function Home() {
     const subject = encodeURIComponent(
       `KCG Website Inquiry from ${formData.name}`
     );
-
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
@@ -156,7 +204,7 @@ export default function Home() {
             <a href="#activity" className="hover:opacity-70">
               Activity
             </a>
-            <a href="#performance" className="hover:opacity-70">
+            <a href="#why-kcg" className="hover:opacity-70">
               Why KCG
             </a>
             <a href="#contact-form" className="hover:opacity-70">
@@ -265,142 +313,183 @@ export default function Home() {
       <FadeInSection id="funds" className="bg-[#F3F7FA] px-6 py-24">
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-            Our Funds & Trading Systems
+            KCG Multiplied Funds
           </p>
 
           <h2 className="mb-6 text-4xl font-bold text-[#0F1A28] md:text-5xl">
-            KCG funds structured across manual, hybrid, and algorithmic
-            execution.
+            Live funds, developing systems, and structured strategies across KCG.
           </h2>
 
           <p className="mb-12 max-w-3xl text-lg text-[#2E4358]">
-            These are your real KCG fund names and structures, organized for a
-            cleaner public presentation.
+            Explore KCG’s live offerings and developing fund structures. Live
+            funds include direct access links where available.
           </p>
 
-          <div className="mb-8">
-            <h3 className="mb-6 text-2xl font-bold text-[#0F1A28]">
-              Manual / Hybrid Funds
-            </h3>
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            <FundCard
+              label="Fund 1"
+              name="KaizenCapitalGroup.Xau-TMGM"
+              focus="Gold trading"
+              strategy="Gold Scalping & Intra-day"
+              managers="1"
+              brokerage="TMGM"
+              status="Live"
+              primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM"
+              secondaryLinks={[
+                {
+                  label: "Ratings",
+                  url: "https://ratings.tmgmplatform.com/widgets/shared/5173e304d7494051b27287f70426a327?lang=en%3Fpreview%3DP3U9ODIxMzA2JmE9MTM0NjMmcD0xMzgzNCZ3PTEmcz01MTczZTMwNGQ3NDk0MDUxYjI3Mjg3ZjcwNDI2YTMyNw%3D%3D",
+                },
+              ]}
+            />
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              <FundCard
-                category="Fund 01"
-                name="Trellz Gold Trading Fund"
-                focus="Gold trading"
-                strategy="Gold Scalping"
-                managers="1"
-                brokerage="MultiBank"
-              />
-              <FundCard
-                category="Fund 02"
-                name="TradeXMarkets Fund"
-                focus="Gold & potentially Oil"
-                strategy="Gold Trading (Oil algorithmic approach) Manual & automated trading mix"
-                managers="2"
-                brokerage="MultiBank"
-              />
-              <FundCard
-                category="Fund 03"
-                name="VaultKano Fund"
-                focus="Crypto (BTC) & Gold"
-                strategy="Manual & automated trading mix"
-                managers="2"
-                brokerage="MultiBank"
-              />
-              <FundCard
-                category="Fund 04"
-                name="Forex Profit Snipers Fund"
-                focus="Forex & Gold"
-                strategy="Gold Scalping + Macro / Swing Trading"
-                managers="2"
-                brokerage="TradeSmart"
-                extra="United States Included"
-              />
-              <FundCard
-                category="Fund 05"
-                name="Phoenix"
-                focus="Gold & FX currencies"
-                strategy="To be defined"
-                managers="1"
-                brokerage="MultiBank"
-                extra="Speculative"
-              />
-              <FundCard
-                category="Fund 12"
-                name="A&M Fund"
-                focus="Gold trading"
-                strategy="Manual trading"
-                managers="1 trader"
-                brokerage="MultiBank"
-              />
-            </div>
-          </div>
+            <FundCard
+              label="Fund 1a"
+              name="KaizenCapitalGroup.Xau-Mb"
+              focus="Gold trading"
+              strategy="Gold Scalping & Intra-day"
+              managers="1"
+              brokerage="MultiBank"
+              status="Live"
+              primaryLink="https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30"
+            />
 
-          <div className="mb-8">
-            <h3 className="mb-6 text-2xl font-bold text-[#0F1A28]">
-              Algorithmic / Automated Funds
-            </h3>
+            <FundCard
+              label="Fund 2"
+              name="TradeXMarkets Fund"
+              focus="Gold & potentially Oil"
+              strategy="Gold Trading (Oil algorithmic approach) Manual & automated trading mix"
+              managers="2"
+              brokerage="MultiBank"
+              status="N/A"
+            />
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              <FundCard
-                category="Fund 06"
-                name="Phoenix"
-                focus="Forex mixed assets"
-                strategy="Automated trading mix of all instruments (exact strategy to be explained)"
-                managers="Potential fully automated managed fund (1)"
-                brokerage="MultiBank"
-              />
-              <FundCard
-                category="Fund 07"
-                name="Forex Fortune Fund"
-                focus="EURUSD"
-                strategy="Automated trading mix of EUR instruments (exact strategy to be explained)"
-                managers="1"
-                brokerage="MultiBank"
-              />
-              <FundCard
-                category="Fund 09"
-                name="Algo Amalgamation Fund"
-                focus="Multi-asset (Gold, Forex, Crypto & others covered in Funds 1–8)"
-                strategy="Fully algorithmic trading — amalgamation of strategies from Funds 1–8 into one unified system"
-                managers="Mixture of algorithmic bots"
-                brokerage="MultiBank / TradeSmart / TMGM"
-              />
-              <FundCard
-                category="Fund 10"
-                name="PfaneTXau Fund"
-                focus="All CFD indices and commodities"
-                strategy="Swarm"
-                managers="1 (potentially 2)"
-                brokerage="To be confirmed"
-              />
-              <FundCard
-                category="Fund 11"
-                name="MAMALYN Fund"
-                focus="EUR/USD"
-                strategy="Fully algorithmic trading"
-                managers="1"
-                brokerage="MultiBank"
-              />
-            </div>
-          </div>
+            <FundCard
+              label="Fund 3"
+              name="VaultKano Fund"
+              focus="Crypto (BTC) & Gold"
+              strategy="Manual & automated trading mix"
+              managers="2"
+              brokerage="MultiBank"
+              status="Re-Launching"
+            />
 
-          <div>
-            <h3 className="mb-6 text-2xl font-bold text-[#0F1A28]">
-              Coming Soon / Repurposing
-            </h3>
+            <FundCard
+              label="Fund 4"
+              name="Forex Profit Snipers Fund"
+              focus="Forex & Gold"
+              strategy="Gold Scalping + Macro / Swing Trading"
+              managers="2"
+              brokerage="TradeSmart"
+              status="N/A"
+              extra="United States Included"
+            />
 
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-              <FundCard
-                category="Fund 08"
-                name="Repurposing Fund"
-                focus="To be defined"
-                strategy="To be defined"
-                managers="To be defined"
-                brokerage="MultiBank"
-              />
-            </div>
+            <FundCard
+              label="Fund 5"
+              name="Trellz + Phoenix"
+              focus="Gold & FX currencies"
+              strategy="To be defined"
+              managers="2"
+              brokerage="MultiBank"
+              status="N/A"
+              extra="Speculative"
+            />
+
+            <FundCard
+              label="Fund 6"
+              name="Phoenix"
+              focus="Forex mixed assets"
+              strategy="Automated trading mix of all instruments (exact strategy to be explained)"
+              managers="Potential fully automated managed fund (1)"
+              brokerage="MultiBank"
+              status="N/A"
+            />
+
+            <FundCard
+              label="Fund 7"
+              name="Forex Fortune Fund"
+              focus="EURUSD"
+              strategy="Automated trading mix of EUR instruments (exact strategy to be explained)"
+              managers="1"
+              brokerage="MultiBank"
+              status="N/A"
+            />
+
+            <FundCard
+              label="Fund 8"
+              name="The Alpha Fund"
+              focus="Gold trading"
+              strategy="Manual trading"
+              managers="2 traders"
+              brokerage="TMGM"
+              status="Live"
+              primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha"
+              secondaryLinks={[
+                {
+                  label: "Ratings",
+                  url: "https://ratings.tmgmplatform.com/widgets/shared/05a7391d205e4c82982ea3141e98aee5?lang=en?preview=P3U9N2M1Y2IwJmE9MTg5ODgmcD0xOTUwMCZ3PTEmcz0wNWE3MzkxZDIwNWU0YzgyOTgyZWEzMTQxZTk4YWVlNQ==",
+                },
+              ]}
+            />
+
+            <FundCard
+              label="Fund 9"
+              name="Algo Amalgamation Fund"
+              focus="Multi-asset (Gold, Forex, Crypto & others covered in Funds 1–8)"
+              strategy="Fully algorithmic trading — amalgamation of strategies from Funds 1–8 into one unified system"
+              managers="Mixture of algorithmic bots (no human managers)"
+              brokerage="MultiBank / TradeSmart / TMGM"
+              status="N/A"
+            />
+
+            <FundCard
+              label="Fund 10"
+              name="PfaneTXau Fund"
+              focus="All CFD indices and commodities"
+              strategy="Swarm"
+              managers="1 (potentially 2)"
+              brokerage="To be confirmed"
+              status="Discontinuation"
+            />
+
+            <FundCard
+              label="Fund 11"
+              name="MAMALYN Fund"
+              focus="EUR/USD"
+              strategy="Fully algorithmic trading"
+              managers="1"
+              brokerage="MultiBank"
+              status="Live"
+              primaryLink="https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars"
+              secondaryLinks={[
+                {
+                  label: "FX Blue",
+                  url: "https://www.fxblue.com/users/mamalyn",
+                },
+                {
+                  label: "Myfxbook",
+                  url: "https://www.myfxbook.com/members/Panevino83/mamalyn-mt4-31229860/11078849",
+                },
+              ]}
+            />
+
+            <FundCard
+              label="Fund 12"
+              name="CXFund"
+              focus="Gold trading"
+              strategy="Manual trading"
+              managers="2 traders"
+              brokerage="TMGM"
+              status="Live"
+              primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026"
+              secondaryLinks={[
+                {
+                  label: "Ratings",
+                  url: "https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb?lang=en?preview=P3U9NjJiODU0JmE9MTg3MzkmcD0xOTI0NyZ3PTEmcz1jYzMwNmFkOTdlZjI0M2E1YWEwOTJjZDRkMGQyMjZiYg==",
+                },
+              ]}
+            />
           </div>
         </div>
       </FadeInSection>
@@ -421,7 +510,7 @@ export default function Home() {
                 <div>
                   <p className="font-semibold text-[#0F1A28]">BUY XAUUSD</p>
                   <p className="text-sm text-[#5A7188]">
-                    Fund: Trellz Gold Trading Fund • 0.10 lots
+                    Fund: KaizenCapitalGroup.Xau-TMGM • 0.10 lots
                   </p>
                 </div>
                 <p className="text-sm font-semibold text-[#2E4358]">
@@ -460,7 +549,7 @@ export default function Home() {
       </FadeInSection>
 
       <FadeInSection
-        id="performance"
+        id="why-kcg"
         className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-6 py-24"
       >
         <div className="mx-auto max-w-6xl">
