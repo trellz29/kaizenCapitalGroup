@@ -188,6 +188,33 @@ function FundCard({
   );
 }
 
+function FunnelCard({ title, description, points, cta }) {
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)] sm:p-8">
+      <h3 className="text-2xl font-bold text-[#0F1A28]">{title}</h3>
+      <p className="mt-4 text-sm leading-7 text-[#2E4358]">{description}</p>
+
+      <div className="mt-6 space-y-3">
+        {points.map((point, idx) => (
+          <div
+            key={`${title}-${idx}`}
+            className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3 text-sm text-[#2E4358]"
+          >
+            {point}
+          </div>
+        ))}
+      </div>
+
+      <a
+        href="#contact-form"
+        className="mt-6 inline-block rounded-full bg-[#0F1A28] px-6 py-3 text-sm font-semibold text-white transition hover:scale-105 hover:bg-[#1A2A3D]"
+      >
+        {cta}
+      </a>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -260,6 +287,9 @@ export default function Home() {
             </a>
             <a href="#funds" className="hover:opacity-70">
               Funds
+            </a>
+            <a href="#investor-funnel" className="hover:opacity-70">
+              Investors
             </a>
             <a href="#activity" className="hover:opacity-70">
               Activity
@@ -714,6 +744,61 @@ export default function Home() {
       </FadeInSection>
 
       <FadeInSection
+        id="investor-funnel"
+        className="px-4 py-20 sm:px-6 sm:py-24"
+      >
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+            Investor Funnel
+          </p>
+
+          <h2 className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">
+            Structured pathways for investors, allocators, and strategic capital partners.
+          </h2>
+
+          <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">
+            KCG is building a premium entry point for serious capital conversations.
+            Choose the route that best reflects your interest, then move directly into the inquiry flow.
+          </p>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <FunnelCard
+              title="Private Investors"
+              description="Built for individuals seeking structured exposure, disciplined execution, and premium communication."
+              points={[
+                "Explore current live fund opportunities",
+                "Review fit based on your goals and capital profile",
+                "Begin a direct conversation with KCG",
+              ]}
+              cta="Investor Inquiry"
+            />
+
+            <FunnelCard
+              title="Fund Allocation"
+              description="Designed for larger capital conversations, managed allocation discussions, and more formal fund placement interest."
+              points={[
+                "Discuss allocation objectives",
+                "Review strategy alignment and suitable structures",
+                "Position for a more advanced capital conversation",
+              ]}
+              cta="Discuss Allocation"
+            />
+
+            <FunnelCard
+              title="Strategic Partnerships"
+              description="For broker relationships, business partnerships, platform collaborations, and long-term institutional growth opportunities."
+              points={[
+                "Review synergy and strategic fit",
+                "Explore growth, distribution, or platform alignment",
+                "Open a partnership discussion with KCG",
+              ]}
+              cta="Partnership Inquiry"
+            />
+          </div>
+        </div>
+      </FadeInSection>
+
+      <FadeInSection
         id="activity"
         className="px-4 py-20 sm:px-6 sm:py-24"
       >
@@ -1017,6 +1102,9 @@ export default function Home() {
             </a>
             <a href="#funds" className="hover:opacity-70">
               Funds
+            </a>
+            <a href="#investor-funnel" className="hover:opacity-70">
+              Investors
             </a>
             <a href="#contact-form" className="hover:opacity-70">
               Contact
