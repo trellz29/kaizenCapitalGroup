@@ -92,17 +92,26 @@ function FundCard({
 
   const statusClass =
     statusLower === "live"
-      ? "bg-[#DCEFE3] text-[#1F5E36]"
+      ? "bg-[#DCEFE3] text-[#1F5E36] border border-[#B8D8C4]"
       : statusLower === "re-launching"
-      ? "bg-[#EEF2F7] text-[#35506A]"
+      ? "bg-[#EEF2F7] text-[#35506A] border border-[#D3DDE8]"
       : statusLower === "discontinuation"
-      ? "bg-[#F3E4E4] text-[#7A2F2F]"
+      ? "bg-[#F3E4E4] text-[#7A2F2F] border border-[#E5C6C6]"
       : statusLower === "disconnected"
-      ? "bg-[#F3E4E4] text-[#7A2F2F]"
-      : "bg-[#E8EEF3] text-[#5A7188]";
+      ? "bg-[#F3E4E4] text-[#7A2F2F] border border-[#E5C6C6]"
+      : "bg-[#E8EEF3] text-[#5A7188] border border-[#D3DDE8]";
+
+  const accentClass =
+    statusLower === "live"
+      ? "from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]"
+      : "from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4]";
 
   return (
-    <div className="rounded-3xl border border-white/50 bg-white/70 p-5 shadow-sm backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-6 lg:p-8">
+    <div className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)] sm:p-6 lg:p-8">
+      <div
+        className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentClass}`}
+      />
+
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#5A7188] sm:text-xs">
@@ -120,26 +129,32 @@ function FundCard({
         </span>
       </div>
 
-      <div className="mt-4 space-y-2 text-sm leading-6 text-[#2E4358]">
-        <p>
+      <div className="mt-5 grid gap-3 text-sm leading-6 text-[#2E4358]">
+        <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3">
           <span className="font-semibold text-[#0F1A28]">Focus:</span> {focus}
-        </p>
-        <p>
+        </div>
+
+        <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3">
           <span className="font-semibold text-[#0F1A28]">Strategy:</span>{" "}
           {strategy}
-        </p>
-        <p>
-          <span className="font-semibold text-[#0F1A28]">Managers:</span>{" "}
-          {managers}
-        </p>
-        <p>
-          <span className="font-semibold text-[#0F1A28]">Brokerage:</span>{" "}
-          {brokerage}
-        </p>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3">
+            <span className="font-semibold text-[#0F1A28]">Managers:</span>{" "}
+            {managers}
+          </div>
+
+          <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3">
+            <span className="font-semibold text-[#0F1A28]">Brokerage:</span>{" "}
+            {brokerage}
+          </div>
+        </div>
+
         {extra ? (
-          <p>
+          <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3">
             <span className="font-semibold text-[#0F1A28]">Notes:</span> {extra}
-          </p>
+          </div>
         ) : null}
       </div>
 
@@ -150,7 +165,7 @@ function FundCard({
               href={primaryLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full bg-[#0F1A28] px-5 py-2 text-center text-sm font-semibold text-white transition hover:scale-105"
+              className="rounded-full bg-[#0F1A28] px-5 py-2 text-center text-sm font-semibold text-white transition hover:scale-105 hover:bg-[#1A2A3D]"
             >
               Get Started
             </a>
@@ -162,7 +177,7 @@ function FundCard({
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border border-[#2E4358] px-5 py-2 text-center text-sm font-semibold text-[#0F1A28] transition hover:scale-105"
+              className="rounded-full border border-[#2E4358] bg-white/60 px-5 py-2 text-center text-sm font-semibold text-[#0F1A28] transition hover:scale-105 hover:bg-[#EDF4F8]"
             >
               {link.label}
             </a>
@@ -498,15 +513,31 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="funds" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
+      <FadeInSection
+        id="funds"
+        className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24"
+      >
         <div className="mx-auto max-w-6xl">
-          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-            KCG Multiplied Funds
-          </p>
+          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+                KCG Multiplied Funds
+              </p>
 
-          <h2 className="mb-6 text-4xl font-bold text-[#0F1A28] md:text-5xl">
-            Live funds, developing systems, and structured strategies across KCG.
-          </h2>
+              <h2 className="text-4xl font-bold text-[#0F1A28] md:text-5xl">
+                Live funds, developing systems, and structured strategies across KCG.
+              </h2>
+            </div>
+
+            <div className="rounded-2xl border border-white/50 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-md">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Premium Section
+              </p>
+              <p className="mt-1 text-sm text-[#2E4358]">
+                Refined for stronger investor presentation.
+              </p>
+            </div>
+          </div>
 
           <p className="mb-12 max-w-3xl text-lg text-[#2E4358]">
             Explore KCG’s live offerings and developing fund structures. Live
@@ -682,7 +713,10 @@ export default function Home() {
         </div>
       </FadeInSection>
 
-      <FadeInSection id="activity" className="px-4 py-20 sm:px-6 sm:py-24">
+      <FadeInSection
+        id="activity"
+        className="px-4 py-20 sm:px-6 sm:py-24"
+      >
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
             Live Trading Activity
