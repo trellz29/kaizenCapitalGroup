@@ -117,6 +117,7 @@ function FundCard({
           <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#5A7188] sm:text-xs">
             {label}
           </p>
+
           <h3 className="break-words text-xl font-bold leading-tight text-[#0F1A28] sm:text-2xl">
             {name}
           </h3>
@@ -192,6 +193,7 @@ function FunnelCard({ title, description, points, cta }) {
   return (
     <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)] sm:p-8">
       <h3 className="text-2xl font-bold text-[#0F1A28]">{title}</h3>
+
       <p className="mt-4 text-sm leading-7 text-[#2E4358]">{description}</p>
 
       <div className="mt-6 space-y-3">
@@ -211,6 +213,31 @@ function FunnelCard({ title, description, points, cta }) {
       >
         {cta}
       </a>
+    </div>
+  );
+}
+
+function QualificationCard({ title, subtitle, bullets }) {
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(15,26,40,0.10)]">
+      <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+        Best Fit
+      </p>
+
+      <h3 className="mt-2 text-xl font-bold text-[#0F1A28]">{title}</h3>
+
+      <p className="mt-3 text-sm leading-6 text-[#2E4358]">{subtitle}</p>
+
+      <div className="mt-5 space-y-3">
+        {bullets.map((bullet, idx) => (
+          <div
+            key={`${title}-${idx}`}
+            className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3 text-sm text-[#2E4358]"
+          >
+            {bullet}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
@@ -235,6 +262,7 @@ export default function Home() {
 
   const handleChange = (e) => {
     setSubmitted(false);
+
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -247,6 +275,7 @@ export default function Home() {
     const subject = encodeURIComponent(
       `KCG Website Inquiry from ${formData.name}`
     );
+
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
     );
@@ -254,6 +283,7 @@ export default function Home() {
     window.location.href = `mailto:cottrell@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
 
     setSubmitted(true);
+
     setFormData({
       name: "",
       email: "",
@@ -279,24 +309,31 @@ export default function Home() {
             <a href="#home" className="hover:opacity-70">
               Home
             </a>
+
             <a href="#overview" className="hover:opacity-70">
               Overview
             </a>
+
             <a href="#market-data" className="hover:opacity-70">
               Market Data
             </a>
+
             <a href="#funds" className="hover:opacity-70">
               Funds
             </a>
+
             <a href="#investor-funnel" className="hover:opacity-70">
               Investors
             </a>
+
             <a href="#activity" className="hover:opacity-70">
               Activity
             </a>
+
             <a href="#why-kcg" className="hover:opacity-70">
               Why KCG
             </a>
+
             <a href="#contact-form" className="hover:opacity-70">
               Contact
             </a>
@@ -352,6 +389,7 @@ export default function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Funds Active
               </p>
+
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">12</p>
             </div>
 
@@ -359,6 +397,7 @@ export default function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Active Users
               </p>
+
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">4</p>
             </div>
 
@@ -366,6 +405,7 @@ export default function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Avg Monthly Return
               </p>
+
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">9.2%</p>
             </div>
 
@@ -373,6 +413,7 @@ export default function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Total Volume
               </p>
+
               <p className="mt-2 text-2xl font-bold text-[#0F1A28]">$847.2M</p>
             </div>
           </div>
@@ -385,6 +426,7 @@ export default function Home() {
             <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
               Strategic Positioning
             </h3>
+
             <p className="text-[#2E4358]">
               KCG is designed to communicate a premium, disciplined identity for
               partners, clients, and capital relationships.
@@ -395,6 +437,7 @@ export default function Home() {
             <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
               Growth Framework
             </h3>
+
             <p className="text-[#2E4358]">
               We focus on long-term brand strength, structured presentation, and
               consistent execution across all touchpoints.
@@ -555,7 +598,8 @@ export default function Home() {
               </p>
 
               <h2 className="text-4xl font-bold text-[#0F1A28] md:text-5xl">
-                Live funds, developing systems, and structured strategies across KCG.
+                Live funds, developing systems, and structured strategies across
+                KCG.
               </h2>
             </div>
 
@@ -563,6 +607,7 @@ export default function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                 Premium Section
               </p>
+
               <p className="mt-1 text-sm text-[#2E4358]">
                 Refined for stronger investor presentation.
               </p>
@@ -753,12 +798,14 @@ export default function Home() {
           </p>
 
           <h2 className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">
-            Structured pathways for investors, allocators, and strategic capital partners.
+            Structured pathways for investors, allocators, and strategic capital
+            partners.
           </h2>
 
           <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">
-            KCG is building a premium entry point for serious capital conversations.
-            Choose the route that best reflects your interest, then move directly into the inquiry flow.
+            KCG is building a premium entry point for serious capital
+            conversations. Choose the route that best reflects your interest,
+            then move directly into the inquiry flow.
           </p>
 
           <div className="mt-12 grid gap-6 md:grid-cols-3">
@@ -795,6 +842,64 @@ export default function Home() {
               cta="Partnership Inquiry"
             />
           </div>
+
+          <div className="mt-16">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+              Qualification Paths
+            </p>
+
+            <h3 className="max-w-3xl text-3xl font-bold leading-tight text-[#0F1A28] md:text-4xl">
+              Identify your best-fit route before entering the inquiry process.
+            </h3>
+
+            <p className="mt-4 max-w-3xl text-lg text-[#2E4358]">
+              These qualification cards help visitors self-select the most
+              relevant path, making investor conversations cleaner and more
+              intentional.
+            </p>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              <QualificationCard
+                title="Private Investor"
+                subtitle="Best for individuals exploring KCG opportunities and seeking a structured introduction."
+                bullets={[
+                  "Looking for fund access",
+                  "Interested in disciplined capital exposure",
+                  "Ready to begin with an initial conversation",
+                ]}
+              />
+
+              <QualificationCard
+                title="Allocator / Larger Capital"
+                subtitle="Built for more formal capital conversations, allocation reviews, and larger deployment interest."
+                bullets={[
+                  "Exploring larger allocation discussions",
+                  "Reviewing structure and strategy fit",
+                  "Interested in a more advanced capital dialogue",
+                ]}
+              />
+
+              <QualificationCard
+                title="Strategic Partner"
+                subtitle="For brokers, platforms, operators, and growth partners exploring long-term alignment."
+                bullets={[
+                  "Interested in distribution or partnership",
+                  "Exploring platform or business alignment",
+                  "Looking for strategic synergies with KCG",
+                ]}
+              />
+
+              <QualificationCard
+                title="General Inquiry"
+                subtitle="For visitors who are still learning about KCG and want to start with a broader conversation."
+                bullets={[
+                  "Still determining best fit",
+                  "Want general information first",
+                  "Need guidance on the right entry path",
+                ]}
+              />
+            </div>
+          </div>
         </div>
       </FadeInSection>
 
@@ -816,10 +921,12 @@ export default function Home() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-[#0F1A28]">BUY XAUUSD</p>
+
                   <p className="text-sm text-[#5A7188]">
                     Fund: KaizenCapitalGroup.Xau-TMGM • 0.10 lots
                   </p>
                 </div>
+
                 <p className="text-sm font-semibold text-[#2E4358]">
                   +12.4 pips
                 </p>
@@ -830,10 +937,12 @@ export default function Home() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-[#0F1A28]">SELL EURUSD</p>
+
                   <p className="text-sm text-[#5A7188]">
                     Fund: MAMALYN Fund • 0.05 lots
                   </p>
                 </div>
+
                 <p className="text-sm font-semibold text-[#2E4358]">
                   +8.1 pips
                 </p>
@@ -844,10 +953,12 @@ export default function Home() {
               <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                 <div>
                   <p className="font-semibold text-[#0F1A28]">BUY BTCUSD</p>
+
                   <p className="text-sm text-[#5A7188]">
                     Fund: VaultKano Fund • 0.01 lots
                   </p>
                 </div>
+
                 <p className="text-sm font-semibold text-[#2E4358]">+2.7%</p>
               </div>
             </div>
@@ -874,6 +985,7 @@ export default function Home() {
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Structured Execution
               </h3>
+
               <p className="text-sm text-[#2E4358]">
                 Every layer of KCG is built around consistency, clarity, and
                 disciplined decision-making.
@@ -884,6 +996,7 @@ export default function Home() {
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Premium Positioning
               </h3>
+
               <p className="text-sm text-[#2E4358]">
                 The presentation is designed to feel trusted, investor-facing,
                 and institutionally credible.
@@ -894,6 +1007,7 @@ export default function Home() {
               <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">
                 Scalable Systems
               </h3>
+
               <p className="text-sm text-[#2E4358]">
                 Your ecosystem can expand into funds, bots, dashboards,
                 reporting, and deeper automation later.
@@ -957,8 +1071,8 @@ export default function Home() {
             </h2>
 
             <p className="mt-6 max-w-lg text-lg text-[#2E4358]">
-              The form below opens a real email draft addressed to your
-              business email with the visitor’s details already filled in.
+              The form below opens a real email draft addressed to your business
+              email with the visitor’s details already filled in.
             </p>
 
             <div className="mt-8 space-y-4">
@@ -969,6 +1083,7 @@ export default function Home() {
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Email
                 </p>
+
                 <p className="mt-2 break-all text-sm text-[#0F1A28]">
                   cottrell@kaizencapitalgrp.com
                 </p>
@@ -983,6 +1098,7 @@ export default function Home() {
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Telegram
                 </p>
+
                 <p className="mt-2 text-sm text-[#0F1A28]">@YOUR_USERNAME</p>
               </a>
 
@@ -995,6 +1111,7 @@ export default function Home() {
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
                   Book a Call
                 </p>
+
                 <p className="mt-2 text-sm text-[#0F1A28]">
                   Schedule a consultation
                 </p>
@@ -1017,6 +1134,7 @@ export default function Home() {
                 >
                   Name
                 </label>
+
                 <input
                   id="name"
                   name="name"
@@ -1036,6 +1154,7 @@ export default function Home() {
                 >
                   Email
                 </label>
+
                 <input
                   id="email"
                   name="email"
@@ -1055,6 +1174,7 @@ export default function Home() {
                 >
                   Message
                 </label>
+
                 <textarea
                   id="message"
                   name="message"
@@ -1084,6 +1204,7 @@ export default function Home() {
             <p className="text-xs font-medium uppercase tracking-[0.2em] text-[#5A7188]">
               Kaizen Capital Group
             </p>
+
             <p className="mt-2 max-w-md text-sm text-[#2E4358]">
               Built around disciplined execution, premium positioning, and
               long-term credibility.
@@ -1094,18 +1215,23 @@ export default function Home() {
             <a href="#home" className="hover:opacity-70">
               Home
             </a>
+
             <a href="#overview" className="hover:opacity-70">
               Overview
             </a>
+
             <a href="#market-data" className="hover:opacity-70">
               Market Data
             </a>
+
             <a href="#funds" className="hover:opacity-70">
               Funds
             </a>
+
             <a href="#investor-funnel" className="hover:opacity-70">
               Investors
             </a>
+
             <a href="#contact-form" className="hover:opacity-70">
               Contact
             </a>
