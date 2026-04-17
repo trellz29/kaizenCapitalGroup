@@ -38,6 +38,44 @@ function FadeInSection({ children, className = "", id = "" }) {
   );
 }
 
+function TradingViewWidget({
+  widgetType,
+  config,
+  className = "",
+  minHeight = "320px",
+}) {
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.innerHTML = "";
+
+    const widget = document.createElement("div");
+    widget.className = "tradingview-widget-container__widget";
+    widget.style.height = "100%";
+    widget.style.width = "100%";
+
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.async = true;
+    script.src = `https://s3.tradingview.com/external-embedding/embed-widget-${widgetType}.js`;
+    script.innerHTML = JSON.stringify(config);
+
+    container.appendChild(widget);
+    container.appendChild(script);
+  }, [widgetType, config]);
+
+  return (
+    <div
+      ref={containerRef}
+      className={`tradingview-widget-container overflow-hidden rounded-3xl border border-white/50 bg-white/70 shadow-sm backdrop-blur-md ${className}`}
+      style={{ minHeight }}
+    />
+  );
+}
+
 function FundCard({
   label,
   name,
@@ -58,6 +96,8 @@ function FundCard({
       : statusLower === "re-launching"
       ? "bg-[#EEF2F7] text-[#35506A]"
       : statusLower === "discontinuation"
+      ? "bg-[#F3E4E4] text-[#7A2F2F]"
+      : statusLower === "disconnected"
       ? "bg-[#F3E4E4] text-[#7A2F2F]"
       : "bg-[#E8EEF3] text-[#5A7188]";
 
@@ -200,6 +240,9 @@ export default function Home() {
             <a href="#overview" className="hover:opacity-70">
               Overview
             </a>
+            <a href="#market-data" className="hover:opacity-70">
+              Market Data
+            </a>
             <a href="#funds" className="hover:opacity-70">
               Funds
             </a>
@@ -223,7 +266,10 @@ export default function Home() {
         </div>
       </nav>
 
-      <FadeInSection id="home" className="px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32">
+      <FadeInSection
+        id="home"
+        className="px-4 pb-16 pt-28 sm:px-6 sm:pb-20 sm:pt-32"
+      >
         <div className="mx-auto max-w-6xl rounded-[28px] bg-gradient-to-br from-white/70 via-[#C9D8E2]/70 to-[#9FB4C1]/70 p-6 shadow-[0_25px_80px_rgba(15,26,40,0.12)] backdrop-blur-md sm:rounded-[32px] sm:p-12">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#2E4358] sm:text-sm sm:tracking-[0.2em]">
             Kaizen Capital Group
@@ -312,6 +358,146 @@ export default function Home() {
         </div>
       </FadeInSection>
 
+      <FadeInSection
+        id="market-data"
+        className="px-4 py-20 sm:px-6 sm:py-24"
+      >
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+            Live Market Data
+          </p>
+
+          <h2 className="mb-6 text-4xl font-bold text-[#0F1A28] md:text-5xl">
+            Real-time market visibility for the instruments KCG watches most.
+          </h2>
+
+          <p className="mb-10 max-w-3xl text-lg text-[#2E4358]">
+            This section adds live market widgets for gold, EUR/USD, Bitcoin,
+            DXY, and oil so the site feels more active, current, and
+            institutional.
+          </p>
+
+          <div className="mb-6">
+            <TradingViewWidget
+              widgetType="ticker-tape"
+              minHeight="72px"
+              config={{
+                symbols: [
+                  { proName: "OANDA:XAUUSD", title: "Gold" },
+                  { proName: "FX:EURUSD", title: "EUR/USD" },
+                  { proName: "BITSTAMP:BTCUSD", title: "Bitcoin" },
+                  { proName: "TVC:DXY", title: "DXY" },
+                  { proName: "TVC:USOIL", title: "Oil" },
+                ],
+                showSymbolLogo: true,
+                isTransparent: true,
+                displayMode: "adaptive",
+                colorTheme: "light",
+                locale: "en",
+              }}
+            />
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-3">
+            <TradingViewWidget
+              widgetType="symbol-overview"
+              minHeight="420px"
+              config={{
+                symbols: [["OANDA:XAUUSD|1D"]],
+                chartOnly: false,
+                width: "100%",
+                height: "100%",
+                locale: "en",
+                colorTheme: "light",
+                autosize: true,
+                showVolume: false,
+                showMA: false,
+                hideDateRanges: false,
+                hideMarketStatus: false,
+                hideSymbolLogo: false,
+                scalePosition: "right",
+                scaleMode: "Normal",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "12",
+                noTimeScale: false,
+                valuesTracking: "1",
+                changeMode: "price-and-percent",
+                chartType: "area",
+                lineWidth: 2,
+                lineColor: "#0F1A28",
+                topColor: "rgba(143,168,184,0.45)",
+                bottomColor: "rgba(143,168,184,0.08)",
+                dateRanges: ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W"],
+              }}
+            />
+
+            <TradingViewWidget
+              widgetType="symbol-overview"
+              minHeight="420px"
+              config={{
+                symbols: [["FX:EURUSD|1D"]],
+                chartOnly: false,
+                width: "100%",
+                height: "100%",
+                locale: "en",
+                colorTheme: "light",
+                autosize: true,
+                showVolume: false,
+                showMA: false,
+                hideDateRanges: false,
+                hideMarketStatus: false,
+                hideSymbolLogo: false,
+                scalePosition: "right",
+                scaleMode: "Normal",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "12",
+                noTimeScale: false,
+                valuesTracking: "1",
+                changeMode: "price-and-percent",
+                chartType: "area",
+                lineWidth: 2,
+                lineColor: "#2E4358",
+                topColor: "rgba(201,216,226,0.45)",
+                bottomColor: "rgba(201,216,226,0.08)",
+                dateRanges: ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W"],
+              }}
+            />
+
+            <TradingViewWidget
+              widgetType="symbol-overview"
+              minHeight="420px"
+              config={{
+                symbols: [["BITSTAMP:BTCUSD|1D"]],
+                chartOnly: false,
+                width: "100%",
+                height: "100%",
+                locale: "en",
+                colorTheme: "light",
+                autosize: true,
+                showVolume: false,
+                showMA: false,
+                hideDateRanges: false,
+                hideMarketStatus: false,
+                hideSymbolLogo: false,
+                scalePosition: "right",
+                scaleMode: "Normal",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "12",
+                noTimeScale: false,
+                valuesTracking: "1",
+                changeMode: "price-and-percent",
+                chartType: "area",
+                lineWidth: 2,
+                lineColor: "#5A7188",
+                topColor: "rgba(220,231,238,0.55)",
+                bottomColor: "rgba(220,231,238,0.12)",
+                dateRanges: ["1d|1", "1m|30", "3m|60", "12m|1D", "60m|1W"],
+              }}
+            />
+          </div>
+        </div>
+      </FadeInSection>
+
       <FadeInSection id="funds" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-6xl">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
@@ -347,7 +533,7 @@ export default function Home() {
 
             <FundCard
               label="Fund 1a"
-              name="KaizenCapitalGroup.Xau-Mb"
+              name="KaizenCapitalGroup.Xau-MB"
               focus="Gold trading"
               strategy="Gold Scalping & Intra-day"
               managers="1"
@@ -378,9 +564,9 @@ export default function Home() {
 
             <FundCard
               label="Fund 4"
-              name="Forex Profit Snipers Fund"
-              focus="Forex & Gold"
-              strategy="Gold Scalping + Macro / Swing Trading"
+              name="Exodus Investments"
+              focus="Crypto & Gold"
+              strategy="Scalping + Macro / Swing Trading"
               managers="2"
               brokerage="TradeSmart"
               status="N/A"
@@ -389,7 +575,7 @@ export default function Home() {
 
             <FundCard
               label="Fund 5"
-              name="Phoenix"
+              name="KCG + Phoenix"
               focus="Gold & FX currencies"
               strategy="To be defined"
               managers="1"
@@ -410,7 +596,7 @@ export default function Home() {
 
             <FundCard
               label="Fund 7"
-              name="Exodus Investments"
+              name="Forex fotune AI"
               focus="EURUSD"
               strategy="Automated trading mix of EUR instruments (exact strategy to be explained)"
               managers="1"
@@ -483,7 +669,7 @@ export default function Home() {
               strategy="Manual trading"
               managers="2 traders"
               brokerage="TMGM"
-              status="Live"
+              status="Disconnected"
               primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026"
               secondaryLinks={[
                 {
@@ -791,6 +977,9 @@ export default function Home() {
             </a>
             <a href="#overview" className="hover:opacity-70">
               Overview
+            </a>
+            <a href="#market-data" className="hover:opacity-70">
+              Market Data
             </a>
             <a href="#funds" className="hover:opacity-70">
               Funds
