@@ -245,9 +245,12 @@ function QualificationCard({ title, subtitle, bullets }) {
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    inquiryType: "",
+    capitalLevel: "",
     message: "",
   });
 
@@ -273,11 +276,11 @@ export default function Home() {
     e.preventDefault();
 
     const subject = encodeURIComponent(
-      `KCG Website Inquiry from ${formData.name}`
+      `KCG Investor Inquiry from ${formData.name}`
     );
 
     const body = encodeURIComponent(
-      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+      `Name: ${formData.name}\nEmail: ${formData.email}\nInquiry Type: ${formData.inquiryType}\nCapital / Interest Level: ${formData.capitalLevel}\n\nMessage:\n${formData.message}`
     );
 
     window.location.href = `mailto:cottrell@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
@@ -287,6 +290,8 @@ export default function Home() {
     setFormData({
       name: "",
       email: "",
+      inquiryType: "",
+      capitalLevel: "",
       message: "",
     });
   };
@@ -1038,23 +1043,23 @@ export default function Home() {
       <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
         <div className="mx-auto max-w-5xl rounded-[28px] border border-white/40 bg-white/70 p-8 text-center shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md sm:rounded-[32px] sm:p-10 md:p-16">
           <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-            Ready to Automate Your CFD Trading?
+            Investor Inquiry Flow
           </p>
 
           <h2 className="mx-auto max-w-3xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-6xl">
-            Start building with Kaizen Capital Group.
+            Begin a serious conversation with Kaizen Capital Group.
           </h2>
 
           <p className="mx-auto mt-6 max-w-2xl text-lg text-[#2E4358]">
-            Use the section below to begin the conversation, request
-            information, or position KCG for your next phase of growth.
+            This section is structured for investors, allocators, strategic
+            partners, and qualified inquiries seeking a direct KCG conversation.
           </p>
 
           <a
             href="#contact-form"
             className="mt-10 inline-block rounded-full bg-[#0F1A28] px-10 py-4 font-semibold text-white transition hover:scale-105"
           >
-            Get Started
+            Start Investor Inquiry
           </a>
         </div>
       </FadeInSection>
@@ -1063,16 +1068,17 @@ export default function Home() {
         <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
           <div>
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
-              Get In Touch
+              Investor Contact
             </p>
 
             <h2 className="max-w-xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">
-              Start the conversation with Kaizen Capital Group.
+              Submit your investor or partnership inquiry.
             </h2>
 
             <p className="mt-6 max-w-lg text-lg text-[#2E4358]">
-              The form below opens a real email draft addressed to your business
-              email with the visitor’s details already filled in.
+              Use the form to identify your inquiry type, your level of capital
+              interest, and the nature of your conversation. A pre-filled draft
+              will open directly to your KCG business email.
             </p>
 
             <div className="mt-8 space-y-4">
@@ -1113,7 +1119,7 @@ export default function Home() {
                 </p>
 
                 <p className="mt-2 text-sm text-[#0F1A28]">
-                  Schedule a consultation
+                  Schedule an investor consultation
                 </p>
               </a>
             </div>
@@ -1122,7 +1128,7 @@ export default function Home() {
           <div className="rounded-[28px] border border-white/30 bg-white/70 p-6 shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md sm:rounded-[32px] sm:p-8">
             {submitted && (
               <div className="mb-5 rounded-2xl border border-[#C9D8E2] bg-[#EDF4F8] px-4 py-3 text-sm text-[#0F1A28]">
-                Your email draft was opened successfully.
+                Your investor inquiry draft was opened successfully.
               </div>
             )}
 
@@ -1141,7 +1147,7 @@ export default function Home() {
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Your name"
+                  placeholder="Your full name"
                   className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[#0F1A28] outline-none transition focus:border-[#9FB4C1]"
                   required
                 />
@@ -1169,6 +1175,62 @@ export default function Home() {
 
               <div>
                 <label
+                  htmlFor="inquiryType"
+                  className="mb-2 block text-sm font-medium text-[#0F1A28]"
+                >
+                  Inquiry Type
+                </label>
+
+                <select
+                  id="inquiryType"
+                  name="inquiryType"
+                  value={formData.inquiryType}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[#0F1A28] outline-none transition focus:border-[#9FB4C1]"
+                  required
+                >
+                  <option value="">Select inquiry type</option>
+                  <option value="Private Investor">Private Investor</option>
+                  <option value="Fund Allocation">Fund Allocation</option>
+                  <option value="Strategic Partnership">
+                    Strategic Partnership
+                  </option>
+                  <option value="General Inquiry">General Inquiry</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="capitalLevel"
+                  className="mb-2 block text-sm font-medium text-[#0F1A28]"
+                >
+                  Capital / Interest Level
+                </label>
+
+                <select
+                  id="capitalLevel"
+                  name="capitalLevel"
+                  value={formData.capitalLevel}
+                  onChange={handleChange}
+                  className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[#0F1A28] outline-none transition focus:border-[#9FB4C1]"
+                  required
+                >
+                  <option value="">Select level</option>
+                  <option value="Exploring / Learning">
+                    Exploring / Learning
+                  </option>
+                  <option value="Under $10,000">Under $10,000</option>
+                  <option value="$10,000 - $50,000">$10,000 - $50,000</option>
+                  <option value="$50,000 - $250,000">$50,000 - $250,000</option>
+                  <option value="$250,000+">$250,000+</option>
+                  <option value="Strategic / Non-capital partnership">
+                    Strategic / Non-capital partnership
+                  </option>
+                </select>
+              </div>
+
+              <div>
+                <label
                   htmlFor="message"
                   className="mb-2 block text-sm font-medium text-[#0F1A28]"
                 >
@@ -1178,10 +1240,10 @@ export default function Home() {
                 <textarea
                   id="message"
                   name="message"
-                  rows="5"
+                  rows="6"
                   value={formData.message}
                   onChange={handleChange}
-                  placeholder="Tell us about your goals..."
+                  placeholder="Tell KCG about your goals, background, allocation interest, or partnership reason..."
                   className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-[#0F1A28] outline-none transition focus:border-[#9FB4C1]"
                   required
                 />
@@ -1191,7 +1253,7 @@ export default function Home() {
                 type="submit"
                 className="w-full rounded-full bg-[#0F1A28] px-6 py-4 font-semibold text-white transition hover:scale-[1.02]"
               >
-                Submit Inquiry
+                Submit Investor Inquiry
               </button>
             </form>
           </div>
