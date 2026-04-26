@@ -242,6 +242,29 @@ function QualificationCard({ title, subtitle, bullets }) {
   );
 }
 
+function TestimonialCard({ quote, name, role }) {
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(15,26,40,0.10)] sm:p-8">
+      <p className="text-4xl leading-none text-[#9FB4C1]">“</p>
+      <p className="mt-3 text-sm leading-7 text-[#2E4358]">{quote}</p>
+      <div className="mt-6">
+        <p className="text-sm font-semibold text-[#0F1A28]">{name}</p>
+        <p className="text-xs uppercase tracking-[0.12em] text-[#5A7188]">
+          {role}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function LogoPlaceholder({ name }) {
+  return (
+    <div className="flex h-20 items-center justify-center rounded-2xl border border-white/50 bg-white/65 px-6 text-center text-sm font-semibold text-[#5A7188] shadow-sm backdrop-blur-md">
+      {name}
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -329,6 +352,10 @@ export default function Home() {
 
             <a href="#investor-funnel" className="hover:opacity-70">
               Investors
+            </a>
+
+            <a href="#social-proof" className="hover:opacity-70">
+              Proof
             </a>
 
             <a href="#activity" className="hover:opacity-70">
@@ -909,6 +936,128 @@ export default function Home() {
       </FadeInSection>
 
       <FadeInSection
+        id="social-proof"
+        className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24"
+      >
+        <div className="mx-auto max-w-6xl">
+          <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+            Social Proof
+          </p>
+
+          <h2 className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">
+            Built for credibility, reinforced by presentation, consistency, and
+            long-term brand trust.
+          </h2>
+
+          <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">
+            This section creates the structure for investor confidence by
+            showcasing testimonials, future proof points, and trusted partner
+            visibility in one place.
+          </p>
+
+          <div className="mt-12 grid gap-6 md:grid-cols-3">
+            <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Reputation
+              </p>
+              <p className="mt-3 text-3xl font-bold text-[#0F1A28]">
+                Premium Brand Positioning
+              </p>
+              <p className="mt-4 text-sm leading-7 text-[#2E4358]">
+                KCG is presented as a structured, disciplined, investor-facing
+                brand built for long-term credibility.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Access
+              </p>
+              <p className="mt-3 text-3xl font-bold text-[#0F1A28]">
+                Live + Developing Strategies
+              </p>
+              <p className="mt-4 text-sm leading-7 text-[#2E4358]">
+                The site is structured to present live funds, future strategies,
+                and multiple entry paths for capital conversations.
+              </p>
+            </div>
+
+            <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md sm:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">
+                Trust
+              </p>
+              <p className="mt-3 text-3xl font-bold text-[#0F1A28]">
+                Investor Inquiry Flow
+              </p>
+              <p className="mt-4 text-sm leading-7 text-[#2E4358]">
+                Serious inquiries are guided into a more qualified, structured,
+                and institutionally aligned contact experience.
+              </p>
+            </div>
+          </div>
+
+          <div className="mt-16">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+              Testimonials Structure
+            </p>
+
+            <h3 className="max-w-3xl text-3xl font-bold leading-tight text-[#0F1A28] md:text-4xl">
+              Space for future testimonials, investor feedback, and strategic
+              endorsements.
+            </h3>
+
+            <p className="mt-4 max-w-3xl text-lg text-[#2E4358]">
+              These are styled placeholders you can later replace with real
+              investor comments, partner feedback, or member success statements.
+            </p>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              <TestimonialCard
+                quote="KCG presents itself with structure, clarity, and a noticeably premium investor-facing standard."
+                name="Future Testimonial"
+                role="Investor / Allocator"
+              />
+
+              <TestimonialCard
+                quote="The platform feels built for disciplined long-term positioning rather than short-term noise."
+                name="Future Testimonial"
+                role="Strategic Partner"
+              />
+
+              <TestimonialCard
+                quote="From presentation to funnel structure, the brand reflects seriousness, direction, and growth intent."
+                name="Future Testimonial"
+                role="Capital Partner"
+              />
+            </div>
+          </div>
+
+          <div className="mt-16">
+            <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">
+              Partner / Logo Structure
+            </p>
+
+            <h3 className="max-w-3xl text-3xl font-bold leading-tight text-[#0F1A28] md:text-4xl">
+              A clean logo strip ready for broker relationships, platforms, media,
+              and strategic affiliations.
+            </h3>
+
+            <p className="mt-4 max-w-3xl text-lg text-[#2E4358]">
+              Replace these placeholders with real logos when you are ready to
+              publicly display broker, platform, or partner associations.
+            </p>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              <LogoPlaceholder name="Broker / Partner Logo" />
+              <LogoPlaceholder name="Platform Logo" />
+              <LogoPlaceholder name="Media / Network Logo" />
+              <LogoPlaceholder name="Strategic Partner Logo" />
+            </div>
+          </div>
+        </div>
+      </FadeInSection>
+
+      <FadeInSection
         id="activity"
         className="px-4 py-20 sm:px-6 sm:py-24"
       >
@@ -1034,8 +1183,9 @@ export default function Home() {
           </h2>
 
           <p className="mx-auto mt-6 max-w-3xl text-lg text-[#2E4358]">
-            This section is ready for future testimonials, partner logos,
-            member counts, and social proof as your platform grows.
+            This section is now reinforced by your social proof block,
+            testimonial structure, and partner logo framework as the platform
+            continues to grow.
           </p>
         </div>
       </FadeInSection>
@@ -1292,6 +1442,10 @@ export default function Home() {
 
             <a href="#investor-funnel" className="hover:opacity-70">
               Investors
+            </a>
+
+            <a href="#social-proof" className="hover:opacity-70">
+              Proof
             </a>
 
             <a href="#contact-form" className="hover:opacity-70">
