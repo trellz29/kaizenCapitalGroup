@@ -224,6 +224,336 @@ function LiveTickerItem({ symbol, price, change, positive }) {
 /* ═══════════════════════════════════════════════════════════════════════
    MAIN PAGE
 ═══════════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   CALENDLY EMBED
+═══════════════════════════════════════════════════════════════ */
+function CalendlyEmbed() {
+  const [loaded, setLoaded] = useState(false);
+  const [ref, inView] = useInView(0.1);
+  useEffect(() => {
+    if (!inView) return;
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => setLoaded(true);
+    document.head.appendChild(script);
+    return () => { try { document.head.removeChild(script); } catch {} };
+  }, [inView]);
+  return (
+    <div ref={ref} className="rounded-3xl border border-white/60 bg-white/75 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md overflow-hidden">
+      {!loaded && <div className="flex h-48 items-center justify-center"><div className="flex flex-col items-center gap-3"><div className="h-8 w-8 rounded-full border-2 border-[#9FB4C1] border-t-[#0F1A28] animate-spin" /><p className="text-sm text-[#5A7188]">Loading booking calendar...</p></div></div>}
+      <div className="calendly-inline-widget" data-url="https://calendly.com/trellzp12/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=0F1A28&primary_color=0F1A28" style={{ minWidth: "320px", height: loaded ? "700px" : "0px", transition: "height 0.3s ease" }} />
+    </div>
+  );
+}
+
+function TelegramCard() {
+  return (
+    <div className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,26,40,0.14)] sm:p-8">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]" />
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl text-white">✈</div>
+      <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#5A7188]">Direct Message</p>
+      <h3 className="text-2xl font-bold text-[#0F1A28]">Telegram</h3>
+      <p className="mt-3 text-sm leading-6 text-[#2E4358]">The fastest way to start a conversation with KCG.</p>
+      <div className="mt-4 rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><p className="text-xs text-[#5A7188]">Handle</p><p className="font-semibold text-[#0F1A28]">@trellz_P</p></div>
+      <a href="https://t.me/trellz_P" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F1A28] px-6 py-3.5 font-semibold text-white hover:bg-[#1A2A3D]"><span>✈</span> Message on Telegram</a>
+    </div>
+  );
+}
+
+function BotStatusCard({ name, type, status, instrument, trades, winRate, uptime }) {
+  const [pulse, setPulse] = useState(0);
+  useEffect(() => { const i = setInterval(() => setPulse(p => (p + 1) % 3), 1200); return () => clearInterval(i); }, []);
+  const isLive = status === "LIVE";
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,26,40,0.14)] sm:p-6">
+      <div className="mb-4 flex items-start justify-between">
+        <div>
+          <div className="mb-1 flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isLive ? "bg-[#1F5E36] animate-pulse" : "bg-[#9FB4C1]"}`} /><span className={`text-[10px] font-bold uppercase tracking-[0.18em] ${isLive ? "text-[#1F5E36]" : "text-[#9FB4C1]"}`}>{status}</span></div>
+          <h3 className="font-bold text-[#0F1A28]">{name}</h3>
+          <p className="text-xs text-[#5A7188]">{type}</p>
+        </div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F1A28] text-lg">🤖</div>
+      </div>
+      <div className="mb-4 rounded-xl bg-[#F7FAFC]/80 px-3 py-2"><p className="text-[10px] font-semibold uppercase tracking-wider text-[#5A7188]">Instrument</p><p className="font-bold text-[#0F1A28]">{instrument}</p></div>
+      <div className="grid grid-cols-3 gap-2">{[{label:"Trades",value:trades},{label:"Win Rate",value:winRate},{label:"Uptime",value:uptime}].map(s=><div key={s.label} className="rounded-xl bg-[#F7FAFC]/80 px-2 py-2 text-center"><p className="text-[9px] font-semibold uppercase tracking-wider text-[#5A7188]">{s.label}</p><p className="text-sm font-bold text-[#0F1A28]">{s.value}</p></div>)}</div>
+      {isLive && <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#DCEFE3]/50 px-3 py-2"><div className="flex gap-0.5">{[0,1,2].map(i=><div key={i} className="w-1 rounded-full bg-[#1F5E36] transition-all duration-300" style={{height:pulse===i?"16px":"6px",opacity:pulse===i?1:0.4}}/>)}</div><span className="text-[10px] font-bold text-[#1F5E36]">Actively executing</span></div>}
+    </div>
+  );
+}
+
+function AlgoFlowDiagram() {
+  const [ref, inView] = useInView(0.2);
+  const steps = [{icon:"📊",label:"Market Data",sub:"Real-time feed"},{icon:"🧠",label:"AI Analysis",sub:"Signal generation"},{icon:"⚡",label:"Execution",sub:"Automated orders"},{icon:"🛡️",label:"Risk Control",sub:"Drawdown limits"},{icon:"📈",label:"Returns",sub:"Compounding growth"}];
+  return (
+    <div ref={ref} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md sm:p-8">
+      <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#5A7188]">Algorithm Flow</p>
+      <h3 className="mb-6 text-2xl font-bold text-[#0F1A28]">How KCG automated systems execute.</h3>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {steps.map((step,i)=>(
+          <div key={step.label} className="flex items-center gap-3 sm:flex-col sm:items-center sm:text-center">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#0F1A28] text-xl" style={{opacity:inView?1:0,transform:inView?"scale(1)":"scale(0.5)",transition:`all 0.5s ease ${i*150}ms`}}>{step.icon}</div>
+            <div><p className="font-semibold text-[#0F1A28] text-sm">{step.label}</p><p className="text-xs text-[#5A7188]">{step.sub}</p></div>
+            {i<steps.length-1&&<div className="hidden sm:block text-[#C9D8E2] text-xl mx-2" style={{opacity:inView?1:0,transition:`opacity 0.5s ease ${i*150+300}ms`}}>→</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LiveSignalFeed() {
+  const [signals, setSignals] = useState([
+    {id:1,bot:"KCG Alpha Bot",action:"BUY",pair:"XAUUSD",confidence:"94%",time:"2s ago",positive:true},
+    {id:2,bot:"MAMALYN System",action:"SELL",pair:"EURUSD",confidence:"87%",time:"18s ago",positive:false},
+    {id:3,bot:"KCG Gold Scalper",action:"BUY",pair:"XAUUSD",confidence:"91%",time:"45s ago",positive:true},
+    {id:4,bot:"Forex Fortune AI",action:"BUY",pair:"EURUSD",confidence:"83%",time:"1m ago",positive:true},
+  ]);
+  useEffect(()=>{
+    const pairs=["XAUUSD","EURUSD","GBPUSD","XAGUSD"],bots=["KCG Alpha Bot","MAMALYN System","KCG Gold Scalper","Forex Fortune AI"];
+    const interval=setInterval(()=>{
+      const positive=Math.random()>0.35;
+      setSignals(prev=>[{id:Date.now(),bot:bots[Math.floor(Math.random()*bots.length)],action:positive?"BUY":"SELL",pair:pairs[Math.floor(Math.random()*pairs.length)],confidence:`${Math.floor(Math.random()*15+80)}%`,time:"just now",positive},...prev.slice(0,3)]);
+    },4000);
+    return()=>clearInterval(interval);
+  },[]);
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md sm:p-8">
+      <div className="mb-5 flex items-center justify-between">
+        <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#5A7188]">Live Signal Feed</p><h3 className="text-xl font-bold text-[#0F1A28]">Real-time bot signals</h3></div>
+        <div className="flex items-center gap-1.5 rounded-full bg-[#DCEFE3] px-3 py-1.5"><span className="h-1.5 w-1.5 rounded-full bg-[#1F5E36] animate-pulse"/><span className="text-[10px] font-bold text-[#1F5E36]">LIVE</span></div>
+      </div>
+      <div className="space-y-3">{signals.map((s,i)=>(
+        <div key={s.id} className="flex items-center justify-between rounded-2xl bg-[#F7FAFC]/80 px-4 py-3" style={{opacity:1-i*0.15}}>
+          <div className="flex items-center gap-3"><span className={`rounded-lg px-2 py-1 text-[10px] font-black ${s.positive?"bg-[#DCEFE3] text-[#1F5E36]":"bg-[#F3E4E4] text-[#7A2F2F]"}`}>{s.action}</span><div><p className="text-sm font-bold text-[#0F1A28]">{s.pair}</p><p className="text-[10px] text-[#9FB4C1]">{s.bot}</p></div></div>
+          <div className="text-right"><p className="text-sm font-bold text-[#2E4358]">{s.confidence}</p><p className="text-[10px] text-[#9FB4C1]">{s.time}</p></div>
+        </div>
+      ))}</div>
+    </div>
+  );
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CALENDLY EMBED
+═══════════════════════════════════════════════════════════════ */
+function CalendlyEmbed() {
+  const [loaded, setLoaded] = useState(false);
+  const [ref, inView] = useInView(0.1);
+  useEffect(() => {
+    if (!inView) return;
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => setLoaded(true);
+    document.head.appendChild(script);
+    return () => { try { document.head.removeChild(script); } catch {} };
+  }, [inView]);
+  return (
+    <div ref={ref} className="rounded-3xl border border-white/60 bg-white/75 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md overflow-hidden">
+      {!loaded && <div className="flex h-48 items-center justify-center"><div className="flex flex-col items-center gap-3"><div className="h-8 w-8 rounded-full border-2 border-[#9FB4C1] border-t-[#0F1A28] animate-spin" /><p className="text-sm text-[#5A7188]">Loading booking calendar...</p></div></div>}
+      <div className="calendly-inline-widget" data-url="https://calendly.com/trellzp12/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=0F1A28&primary_color=0F1A28" style={{ minWidth: "320px", height: loaded ? "700px" : "0px", transition: "height 0.3s ease" }} />
+    </div>
+  );
+}
+
+function TelegramCard() {
+  return (
+    <div className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,26,40,0.14)] sm:p-8">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]" />
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl text-white">✈</div>
+      <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#5A7188]">Direct Message</p>
+      <h3 className="text-2xl font-bold text-[#0F1A28]">Telegram</h3>
+      <p className="mt-3 text-sm leading-6 text-[#2E4358]">The fastest way to start a conversation with KCG.</p>
+      <div className="mt-4 rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><p className="text-xs text-[#5A7188]">Handle</p><p className="font-semibold text-[#0F1A28]">@trellz_P</p></div>
+      <a href="https://t.me/trellz_P" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F1A28] px-6 py-3.5 font-semibold text-white hover:bg-[#1A2A3D]"><span>✈</span> Message on Telegram</a>
+    </div>
+  );
+}
+
+function BotStatusCard({ name, type, status, instrument, trades, winRate, uptime }) {
+  const [pulse, setPulse] = useState(0);
+  useEffect(() => { const i = setInterval(() => setPulse(p => (p + 1) % 3), 1200); return () => clearInterval(i); }, []);
+  const isLive = status === "LIVE";
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,26,40,0.14)] sm:p-6">
+      <div className="mb-4 flex items-start justify-between">
+        <div>
+          <div className="mb-1 flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isLive ? "bg-[#1F5E36] animate-pulse" : "bg-[#9FB4C1]"}`} /><span className={`text-[10px] font-bold uppercase tracking-[0.18em] ${isLive ? "text-[#1F5E36]" : "text-[#9FB4C1]"}`}>{status}</span></div>
+          <h3 className="font-bold text-[#0F1A28]">{name}</h3>
+          <p className="text-xs text-[#5A7188]">{type}</p>
+        </div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F1A28] text-lg">🤖</div>
+      </div>
+      <div className="mb-4 rounded-xl bg-[#F7FAFC]/80 px-3 py-2"><p className="text-[10px] font-semibold uppercase tracking-wider text-[#5A7188]">Instrument</p><p className="font-bold text-[#0F1A28]">{instrument}</p></div>
+      <div className="grid grid-cols-3 gap-2">{[{label:"Trades",value:trades},{label:"Win Rate",value:winRate},{label:"Uptime",value:uptime}].map(s=><div key={s.label} className="rounded-xl bg-[#F7FAFC]/80 px-2 py-2 text-center"><p className="text-[9px] font-semibold uppercase tracking-wider text-[#5A7188]">{s.label}</p><p className="text-sm font-bold text-[#0F1A28]">{s.value}</p></div>)}</div>
+      {isLive && <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#DCEFE3]/50 px-3 py-2"><div className="flex gap-0.5">{[0,1,2].map(i=><div key={i} className="w-1 rounded-full bg-[#1F5E36] transition-all duration-300" style={{height:pulse===i?"16px":"6px",opacity:pulse===i?1:0.4}}/>)}</div><span className="text-[10px] font-bold text-[#1F5E36]">Actively executing</span></div>}
+    </div>
+  );
+}
+
+function AlgoFlowDiagram() {
+  const [ref, inView] = useInView(0.2);
+  const steps = [{icon:"📊",label:"Market Data",sub:"Real-time feed"},{icon:"🧠",label:"AI Analysis",sub:"Signal generation"},{icon:"⚡",label:"Execution",sub:"Automated orders"},{icon:"🛡️",label:"Risk Control",sub:"Drawdown limits"},{icon:"📈",label:"Returns",sub:"Compounding growth"}];
+  return (
+    <div ref={ref} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md sm:p-8">
+      <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#5A7188]">Algorithm Flow</p>
+      <h3 className="mb-6 text-2xl font-bold text-[#0F1A28]">How KCG automated systems execute.</h3>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {steps.map((step,i)=>(
+          <div key={step.label} className="flex items-center gap-3 sm:flex-col sm:items-center sm:text-center">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#0F1A28] text-xl" style={{opacity:inView?1:0,transform:inView?"scale(1)":"scale(0.5)",transition:`all 0.5s ease ${i*150}ms`}}>{step.icon}</div>
+            <div><p className="font-semibold text-[#0F1A28] text-sm">{step.label}</p><p className="text-xs text-[#5A7188]">{step.sub}</p></div>
+            {i<steps.length-1&&<div className="hidden sm:block text-[#C9D8E2] text-xl mx-2" style={{opacity:inView?1:0,transition:`opacity 0.5s ease ${i*150+300}ms`}}>→</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LiveSignalFeed() {
+  const [signals, setSignals] = useState([
+    {id:1,bot:"KCG Alpha Bot",action:"BUY",pair:"XAUUSD",confidence:"94%",time:"2s ago",positive:true},
+    {id:2,bot:"MAMALYN System",action:"SELL",pair:"EURUSD",confidence:"87%",time:"18s ago",positive:false},
+    {id:3,bot:"KCG Gold Scalper",action:"BUY",pair:"XAUUSD",confidence:"91%",time:"45s ago",positive:true},
+    {id:4,bot:"Forex Fortune AI",action:"BUY",pair:"EURUSD",confidence:"83%",time:"1m ago",positive:true},
+  ]);
+  useEffect(()=>{
+    const pairs=["XAUUSD","EURUSD","GBPUSD","XAGUSD"],bots=["KCG Alpha Bot","MAMALYN System","KCG Gold Scalper","Forex Fortune AI"];
+    const interval=setInterval(()=>{
+      const positive=Math.random()>0.35;
+      setSignals(prev=>[{id:Date.now(),bot:bots[Math.floor(Math.random()*bots.length)],action:positive?"BUY":"SELL",pair:pairs[Math.floor(Math.random()*pairs.length)],confidence:`${Math.floor(Math.random()*15+80)}%`,time:"just now",positive},...prev.slice(0,3)]);
+    },4000);
+    return()=>clearInterval(interval);
+  },[]);
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md sm:p-8">
+      <div className="mb-5 flex items-center justify-between">
+        <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#5A7188]">Live Signal Feed</p><h3 className="text-xl font-bold text-[#0F1A28]">Real-time bot signals</h3></div>
+        <div className="flex items-center gap-1.5 rounded-full bg-[#DCEFE3] px-3 py-1.5"><span className="h-1.5 w-1.5 rounded-full bg-[#1F5E36] animate-pulse"/><span className="text-[10px] font-bold text-[#1F5E36]">LIVE</span></div>
+      </div>
+      <div className="space-y-3">{signals.map((s,i)=>(
+        <div key={s.id} className="flex items-center justify-between rounded-2xl bg-[#F7FAFC]/80 px-4 py-3" style={{opacity:1-i*0.15}}>
+          <div className="flex items-center gap-3"><span className={`rounded-lg px-2 py-1 text-[10px] font-black ${s.positive?"bg-[#DCEFE3] text-[#1F5E36]":"bg-[#F3E4E4] text-[#7A2F2F]"}`}>{s.action}</span><div><p className="text-sm font-bold text-[#0F1A28]">{s.pair}</p><p className="text-[10px] text-[#9FB4C1]">{s.bot}</p></div></div>
+          <div className="text-right"><p className="text-sm font-bold text-[#2E4358]">{s.confidence}</p><p className="text-[10px] text-[#9FB4C1]">{s.time}</p></div>
+        </div>
+      ))}</div>
+    </div>
+  );
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   CALENDLY EMBED
+═══════════════════════════════════════════════════════════════ */
+function CalendlyEmbed() {
+  const [loaded, setLoaded] = useState(false);
+  const [ref, inView] = useInView(0.1);
+  useEffect(() => {
+    if (!inView) return;
+    const script = document.createElement("script");
+    script.src = "https://assets.calendly.com/assets/external/widget.js";
+    script.async = true;
+    script.onload = () => setLoaded(true);
+    document.head.appendChild(script);
+    return () => { try { document.head.removeChild(script); } catch {} };
+  }, [inView]);
+  return (
+    <div ref={ref} className="rounded-3xl border border-white/60 bg-white/75 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md overflow-hidden">
+      {!loaded && <div className="flex h-48 items-center justify-center"><div className="flex flex-col items-center gap-3"><div className="h-8 w-8 rounded-full border-2 border-[#9FB4C1] border-t-[#0F1A28] animate-spin" /><p className="text-sm text-[#5A7188]">Loading booking calendar...</p></div></div>}
+      <div className="calendly-inline-widget" data-url="https://calendly.com/trellzp12/30min?hide_landing_page_details=1&hide_gdpr_banner=1&background_color=ffffff&text_color=0F1A28&primary_color=0F1A28" style={{ minWidth: "320px", height: loaded ? "700px" : "0px", transition: "height 0.3s ease" }} />
+    </div>
+  );
+}
+
+function TelegramCard() {
+  return (
+    <div className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,26,40,0.14)] sm:p-8">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]" />
+      <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl text-white">✈</div>
+      <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#5A7188]">Direct Message</p>
+      <h3 className="text-2xl font-bold text-[#0F1A28]">Telegram</h3>
+      <p className="mt-3 text-sm leading-6 text-[#2E4358]">The fastest way to start a conversation with KCG.</p>
+      <div className="mt-4 rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><p className="text-xs text-[#5A7188]">Handle</p><p className="font-semibold text-[#0F1A28]">@trellz_P</p></div>
+      <a href="https://t.me/trellz_P" className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F1A28] px-6 py-3.5 font-semibold text-white hover:bg-[#1A2A3D]"><span>✈</span> Message on Telegram</a>
+    </div>
+  );
+}
+
+function BotStatusCard({ name, type, status, instrument, trades, winRate, uptime }) {
+  const [pulse, setPulse] = useState(0);
+  useEffect(() => { const i = setInterval(() => setPulse(p => (p + 1) % 3), 1200); return () => clearInterval(i); }, []);
+  const isLive = status === "LIVE";
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_28px_80px_rgba(15,26,40,0.14)] sm:p-6">
+      <div className="mb-4 flex items-start justify-between">
+        <div>
+          <div className="mb-1 flex items-center gap-2"><span className={`h-2 w-2 rounded-full ${isLive ? "bg-[#1F5E36] animate-pulse" : "bg-[#9FB4C1]"}`} /><span className={`text-[10px] font-bold uppercase tracking-[0.18em] ${isLive ? "text-[#1F5E36]" : "text-[#9FB4C1]"}`}>{status}</span></div>
+          <h3 className="font-bold text-[#0F1A28]">{name}</h3>
+          <p className="text-xs text-[#5A7188]">{type}</p>
+        </div>
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0F1A28] text-lg">🤖</div>
+      </div>
+      <div className="mb-4 rounded-xl bg-[#F7FAFC]/80 px-3 py-2"><p className="text-[10px] font-semibold uppercase tracking-wider text-[#5A7188]">Instrument</p><p className="font-bold text-[#0F1A28]">{instrument}</p></div>
+      <div className="grid grid-cols-3 gap-2">{[{label:"Trades",value:trades},{label:"Win Rate",value:winRate},{label:"Uptime",value:uptime}].map(s=><div key={s.label} className="rounded-xl bg-[#F7FAFC]/80 px-2 py-2 text-center"><p className="text-[9px] font-semibold uppercase tracking-wider text-[#5A7188]">{s.label}</p><p className="text-sm font-bold text-[#0F1A28]">{s.value}</p></div>)}</div>
+      {isLive && <div className="mt-4 flex items-center gap-2 rounded-xl bg-[#DCEFE3]/50 px-3 py-2"><div className="flex gap-0.5">{[0,1,2].map(i=><div key={i} className="w-1 rounded-full bg-[#1F5E36] transition-all duration-300" style={{height:pulse===i?"16px":"6px",opacity:pulse===i?1:0.4}}/>)}</div><span className="text-[10px] font-bold text-[#1F5E36]">Actively executing</span></div>}
+    </div>
+  );
+}
+
+function AlgoFlowDiagram() {
+  const [ref, inView] = useInView(0.2);
+  const steps = [{icon:"📊",label:"Market Data",sub:"Real-time feed"},{icon:"🧠",label:"AI Analysis",sub:"Signal generation"},{icon:"⚡",label:"Execution",sub:"Automated orders"},{icon:"🛡️",label:"Risk Control",sub:"Drawdown limits"},{icon:"📈",label:"Returns",sub:"Compounding growth"}];
+  return (
+    <div ref={ref} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md sm:p-8">
+      <p className="mb-2 text-xs font-bold uppercase tracking-[0.2em] text-[#5A7188]">Algorithm Flow</p>
+      <h3 className="mb-6 text-2xl font-bold text-[#0F1A28]">How KCG automated systems execute.</h3>
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        {steps.map((step,i)=>(
+          <div key={step.label} className="flex items-center gap-3 sm:flex-col sm:items-center sm:text-center">
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-[#0F1A28] text-xl" style={{opacity:inView?1:0,transform:inView?"scale(1)":"scale(0.5)",transition:`all 0.5s ease ${i*150}ms`}}>{step.icon}</div>
+            <div><p className="font-semibold text-[#0F1A28] text-sm">{step.label}</p><p className="text-xs text-[#5A7188]">{step.sub}</p></div>
+            {i<steps.length-1&&<div className="hidden sm:block text-[#C9D8E2] text-xl mx-2" style={{opacity:inView?1:0,transition:`opacity 0.5s ease ${i*150+300}ms`}}>→</div>}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function LiveSignalFeed() {
+  const [signals, setSignals] = useState([
+    {id:1,bot:"KCG Alpha Bot",action:"BUY",pair:"XAUUSD",confidence:"94%",time:"2s ago",positive:true},
+    {id:2,bot:"MAMALYN System",action:"SELL",pair:"EURUSD",confidence:"87%",time:"18s ago",positive:false},
+    {id:3,bot:"KCG Gold Scalper",action:"BUY",pair:"XAUUSD",confidence:"91%",time:"45s ago",positive:true},
+    {id:4,bot:"Forex Fortune AI",action:"BUY",pair:"EURUSD",confidence:"83%",time:"1m ago",positive:true},
+  ]);
+  useEffect(()=>{
+    const pairs=["XAUUSD","EURUSD","GBPUSD","XAGUSD"],bots=["KCG Alpha Bot","MAMALYN System","KCG Gold Scalper","Forex Fortune AI"];
+    const interval=setInterval(()=>{
+      const positive=Math.random()>0.35;
+      setSignals(prev=>[{id:Date.now(),bot:bots[Math.floor(Math.random()*bots.length)],action:positive?"BUY":"SELL",pair:pairs[Math.floor(Math.random()*pairs.length)],confidence:`${Math.floor(Math.random()*15+80)}%`,time:"just now",positive},...prev.slice(0,3)]);
+    },4000);
+    return()=>clearInterval(interval);
+  },[]);
+  return (
+    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md sm:p-8">
+      <div className="mb-5 flex items-center justify-between">
+        <div><p className="text-xs font-bold uppercase tracking-[0.2em] text-[#5A7188]">Live Signal Feed</p><h3 className="text-xl font-bold text-[#0F1A28]">Real-time bot signals</h3></div>
+        <div className="flex items-center gap-1.5 rounded-full bg-[#DCEFE3] px-3 py-1.5"><span className="h-1.5 w-1.5 rounded-full bg-[#1F5E36] animate-pulse"/><span className="text-[10px] font-bold text-[#1F5E36]">LIVE</span></div>
+      </div>
+      <div className="space-y-3">{signals.map((s,i)=>(
+        <div key={s.id} className="flex items-center justify-between rounded-2xl bg-[#F7FAFC]/80 px-4 py-3" style={{opacity:1-i*0.15}}>
+          <div className="flex items-center gap-3"><span className={`rounded-lg px-2 py-1 text-[10px] font-black ${s.positive?"bg-[#DCEFE3] text-[#1F5E36]":"bg-[#F3E4E4] text-[#7A2F2F]"}`}>{s.action}</span><div><p className="text-sm font-bold text-[#0F1A28]">{s.pair}</p><p className="text-[10px] text-[#9FB4C1]">{s.bot}</p></div></div>
+          <div className="text-right"><p className="text-sm font-bold text-[#2E4358]">{s.confidence}</p><p className="text-[10px] text-[#9FB4C1]">{s.time}</p></div>
+        </div>
+      ))}</div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -596,6 +926,7 @@ export default function Home() {
         {/* ════════════════════════════════
             INVESTOR FUNNEL
         ════════════════════════════════ */}
+        <Reveal id="ai-systems" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24"><div className="mx-auto max-w-6xl"><h2 className="mb-8 text-4xl font-bold text-[#0F1A28]">AI and Automation Systems</h2><StaggerReveal className="mb-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4" stagger={80}><BotStatusCard name="KCG Gold Scalper" type="Algorithmic" status="LIVE" instrument="XAU/USD" trades="3,241" winRate="79.4%" uptime="99.8%"/><BotStatusCard name="MAMALYN System" type="Fully Automated" status="LIVE" instrument="EUR/USD" trades="2,847" winRate="68.9%" uptime="99.6%"/><BotStatusCard name="Alpha Momentum" type="Semi-Automated" status="LIVE" instrument="XAU/USD" trades="1,893" winRate="73.2%" uptime="98.9%"/><BotStatusCard name="Forex Fortune AI" type="AI-Powered" status="DEVELOPING" instrument="EUR/USD" trades="-" winRate="-" uptime="-"/></StaggerReveal><div className="grid gap-6 lg:grid-cols-2"><Reveal direction="left"><AlgoFlowDiagram/></Reveal><Reveal direction="right"><LiveSignalFeed/></Reveal></div></div></Reveal>
         <FadeInSection id="investor-funnel" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Investor Funnel</p>
@@ -725,6 +1056,7 @@ export default function Home() {
         </FadeInSection>
 
         {/* ════════════════════════════════
+        <Reveal id="book-a-call" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24"><div className="mx-auto max-w-6xl"><h2 className="mb-8 text-4xl font-bold text-[#0F1A28]">Book a call or message directly.</h2><div className="grid gap-8 lg:grid-cols-3"><div className="lg:col-span-2"><Reveal direction="left"><CalendlyEmbed /></Reveal></div><div className="flex flex-col gap-6"><Reveal direction="right"><TelegramCard /></Reveal></div></div></div></Reveal>
             INVESTOR INQUIRY CTA
         ════════════════════════════════ */}
         <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
