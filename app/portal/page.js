@@ -131,7 +131,7 @@ export default function PortalPage() {
     e.preventDefault();
     const subject = encodeURIComponent(`KCG Portal Access Application — ${formData.name}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nInvestor Type: ${formData.type}\nCapital Level: ${formData.capital}\n\nWhy they want access:\n${formData.reason}`);
-    window.location.href = `mailto:cottrell@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:support@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   };
 

@@ -116,7 +116,7 @@ export default function ContactPage() {
     e.preventDefault();
     const subject = encodeURIComponent(`KCG Investor Inquiry from ${formData.name}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nInquiry Type: ${formData.inquiryType}\nCapital / Interest Level: ${formData.capitalLevel}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:cottrell@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:support@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setFormData({ name: "", email: "", inquiryType: "", capitalLevel: "", message: "" });
   };
@@ -150,7 +150,7 @@ export default function ContactPage() {
             {[
               { icon: "📅", label: "Book a Call", value: "calendly.com/trellzp12/30min", sub: "Schedule a 30-min investor consultation", href: "https://calendly.com/trellzp12/30min", cta: "Book Now" },
               { icon: "✈", label: "Telegram", value: "@trellz_P", sub: "Fastest way to reach KCG directly", href: "https://t.me/trellz_P", cta: "Message Now" },
-              { icon: "✉", label: "Email", value: "cottrell@kaizencapitalgrp.com", sub: "Formal inquiries and documentation", href: "mailto:cottrell@kaizencapitalgrp.com", cta: "Send Email" },
+              { icon: "✉", label: "Email", value: "support@kaizencapitalgrp.com", sub: "Formal inquiries and documentation", href: "mailto:support@kaizencapitalgrp.com", cta: "Send Email" },
             ].map(c => (
               <Reveal key={c.label}>
                 <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)]">

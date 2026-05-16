@@ -265,7 +265,7 @@ export default function Home() {
     e.preventDefault();
     const subject = encodeURIComponent(`KCG Investor Inquiry from ${formData.name}`);
     const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nInquiry Type: ${formData.inquiryType}\nCapital / Interest Level: ${formData.capitalLevel}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:cottrell@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:support@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setFormData({ name: "", email: "", inquiryType: "", capitalLevel: "", message: "" });
   };
@@ -747,9 +747,9 @@ export default function Home() {
               <p className="mt-6 max-w-lg text-lg text-[#2E4358]">Use the form to identify your inquiry type, your level of capital interest, and the nature of your conversation. A pre-filled draft will open directly to your KCG business email.</p>
               <div className="mt-8 space-y-4">
                 {[
-                  { href: "mailto:cottrell@kaizencapitalgrp.com", label: "Email", value: "cottrell@kaizencapitalgrp.com" },
-                  { href: "https://t.me/YOUR_USERNAME", label: "Telegram", value: "@YOUR_USERNAME" },
-                  { href: "https://calendly.com/YOUR_LINK", label: "Book a Call", value: "Schedule an investor consultation" },
+                  { href: "mailto:support@kaizencapitalgrp.com", label: "Email", value: "support@kaizencapitalgrp.com" },
+                  { href: "https://t.me/trellz_P", label: "Telegram", value: "@trellz_P" },
+                  { href: "https://calendly.com/trellzp12/30min", label: "Book a Call", value: "calendly.com/trellzp12/30min" },
                 ].map((contact) => (
                   <a key={contact.label} href={contact.href} target={contact.href.startsWith("mailto") ? undefined : "_blank"} rel="noopener noreferrer" className="block rounded-2xl border border-white/40 bg-white/60 p-5 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
                     <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">{contact.label}</p>
