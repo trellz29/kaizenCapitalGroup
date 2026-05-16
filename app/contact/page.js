@@ -29,9 +29,12 @@ function Reveal({ children, className = "", delay = 0, direction = "up" }) {
 }
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" }, { href: "/about", label: "About" },
-  { href: "/funds", label: "Funds" }, { href: "/performance", label: "Performance" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/funds", label: "Funds" },
+  { href: "/performance", label: "Performance" },
   { href: "/contact", label: "Contact" },
+  { href: "/portal", label: "Portal" },
 ];
 
 function Nav() {

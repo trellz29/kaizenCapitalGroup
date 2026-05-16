@@ -42,9 +42,12 @@ function StaggerReveal({ children, className = "", stagger = 60 }) {
 }
 
 const NAV_LINKS = [
-  { href: "/", label: "Home" }, { href: "/about", label: "About" },
-  { href: "/funds", label: "Funds" }, { href: "/performance", label: "Performance" },
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/funds", label: "Funds" },
+  { href: "/performance", label: "Performance" },
   { href: "/contact", label: "Contact" },
+  { href: "/portal", label: "Portal" },
 ];
 
 function Nav() {
