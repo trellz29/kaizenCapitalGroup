@@ -110,6 +110,19 @@ function LockedCard({ title, description, icon, tier }) {
   );
 }
 
+
+export const metadata = {
+  title: 'Investor Portal | Kaizen Capital Group',
+  description: 'Apply for exclusive investor portal access. Verified members get access to live fund reports, strategy documents, and direct investor communications.',
+  openGraph: {
+    title: 'Investor Portal | Kaizen Capital Group',
+    description: 'Apply for exclusive investor portal access. Verified members get access to live fund reports, strategy documents, and direct investor communications.',
+    url: 'https://kaizen-capital-group.vercel.app',
+    siteName: 'Kaizen Capital Group',
+    type: 'website',
+  },
+};
+
 export default function PortalPage() {
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", type: "", capital: "", reason: "" });

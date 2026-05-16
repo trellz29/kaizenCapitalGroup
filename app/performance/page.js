@@ -169,6 +169,19 @@ const LIVE_FUNDS = [
   { label:"Fund 11", name:"MAMALYN Fund", brokerage:"MultiBank", focus:"EUR/USD", totalReturn:"+31.5%", winRate:"68.9%", maxDrawdown:"-7.4%", sharpe:"1.74", riskLevel:"High", minInvestment:"$3,000", sparkData:[6,9,11,14,13,17,16,20,22,21,25,28,27,31] },
 ];
 
+
+export const metadata = {
+  title: 'Performance | Kaizen Capital Group',
+  description: 'Data-driven execution across all KCG systems. Live fund performance, growth trajectory, risk-adjusted returns and system activity.',
+  openGraph: {
+    title: 'Performance | Kaizen Capital Group',
+    description: 'Data-driven execution across all KCG systems. Live fund performance, growth trajectory, risk-adjusted returns and system activity.',
+    url: 'https://kaizen-capital-group.vercel.app',
+    siteName: 'Kaizen Capital Group',
+    type: 'website',
+  },
+};
+
 export default function PerformancePage() {
   const [activeTab, setActiveTab] = useState("YTD");
   const tabs = ["1M", "3M", "6M", "YTD", "1Y"];

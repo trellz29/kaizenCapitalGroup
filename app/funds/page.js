@@ -181,6 +181,19 @@ const FUND_DATA = [
   {label:"Fund 12",name:"CXFund",focus:"Gold trading",status:"Disconnected",strategy:"Manual trading",managers:"2 traders",brokerage:"TMGM",primaryLink:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026",secondaryLinks:[{label:"Ratings",url:"https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb"}]},
 ];
 
+
+export const metadata = {
+  title: 'Funds | Kaizen Capital Group',
+  description: 'Explore all 12 KCG funds across Gold, Forex, Crypto and multi-asset strategies. Live funds, developing systems, and structured capital strategies.',
+  openGraph: {
+    title: 'Funds | Kaizen Capital Group',
+    description: 'Explore all 12 KCG funds across Gold, Forex, Crypto and multi-asset strategies. Live funds, developing systems, and structured capital strategies.',
+    url: 'https://kaizen-capital-group.vercel.app',
+    siteName: 'Kaizen Capital Group',
+    type: 'website',
+  },
+};
+
 export default function FundsPage() {
   const [filter, setFilter] = useState("All");
   const filters = ["All", "Live", "Re-Launching", "N/A", "Disconnected", "Discontinuation"];
