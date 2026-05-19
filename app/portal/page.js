@@ -111,7 +111,7 @@ function LockedCard({ title, description, icon, tier }) {
 }
 
 
-export const metadata = {
+const metadata = {
   title: 'Investor Portal | Kaizen Capital Group',
   description: 'Apply for exclusive investor portal access. Verified members get access to live fund reports, strategy documents, and direct investor communications.',
   openGraph: {

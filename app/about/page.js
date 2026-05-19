@@ -88,7 +88,7 @@ function Nav() {
 }
 
 
-export const metadata = {
+const metadata = {
   title: 'About KCG | Kaizen Capital Group',
   description: 'Kaizen Capital Group is an institutional capital strategy platform built around structure, credibility, and long-term growth across 12 active funds.',
   openGraph: {

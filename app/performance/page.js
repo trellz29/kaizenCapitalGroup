@@ -170,7 +170,7 @@ const LIVE_FUNDS = [
 ];
 
 
-export const metadata = {
+const metadata = {
   title: 'Performance | Kaizen Capital Group',
   description: 'Data-driven execution across all KCG systems. Live fund performance, growth trajectory, risk-adjusted returns and system activity.',
   openGraph: {

@@ -96,7 +96,7 @@ function CalendlyEmbed() {
 }
 
 
-export const metadata = {
+const metadata = {
   title: 'Contact | Kaizen Capital Group',
   description: 'Start a serious conversation with KCG. Book a call, message on Telegram, or submit a formal investor inquiry.',
   openGraph: {
