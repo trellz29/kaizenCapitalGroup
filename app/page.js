@@ -226,8 +226,8 @@ function LiveTickerItem({ symbol, price, change, positive }) {
 ═══════════════════════════════════════════════════════════════════════ */
 
 function CalendlyEmbed() {
-  const [loaded, setLoaded] = React.useState(false);
-  React.useEffect(() => {
+  const [loaded, setLoaded] = useState(false);
+  useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://assets.calendly.com/assets/external/widget.js";
     script.async = true;
@@ -292,12 +292,12 @@ function AlgoFlowDiagram() {
 }
 
 function LiveSignalFeed() {
-  const [signals, setSignals] = React.useState([
+  const [signals, setSignals] = useState([
     {id:1,action:"BUY",pair:"XAUUSD",confidence:"94%",time:"2s ago",positive:true},
     {id:2,action:"SELL",pair:"EURUSD",confidence:"87%",time:"18s ago",positive:false},
     {id:3,action:"BUY",pair:"XAUUSD",confidence:"91%",time:"45s ago",positive:true},
   ]);
-  React.useEffect(()=>{
+  useEffect(()=>{
     const pairs=["XAUUSD","EURUSD","GBPUSD"];
     const interval=setInterval(()=>{
       const positive=Math.random()>0.35;
