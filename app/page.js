@@ -358,14 +358,22 @@ export default function Home() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`KCG Investor Inquiry from ${formData.name}`);
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\nInquiry Type: ${formData.inquiryType}\nCapital / Interest Level: ${formData.capitalLevel}\n\nMessage:\n${formData.message}`);
-    window.location.href = `mailto:support@kaizencapitalgrp.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
-    setFormData({ name: "", email: "", inquiryType: "", capitalLevel: "", message: "" });
-  };
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setSubmitted(true);
+        setFormData({name:'',email:'',inquiryType:'',capitalLevel:'',message:''});
+      }
+    } catch(err) {
+      console.error(err);
+    }
+  }
 
   const navLinks = [
     { href: "#home", label: "Home" },
