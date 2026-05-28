@@ -900,6 +900,31 @@ export default function Home() {
           </div>
         </section>
 
+
+        <section id="community" className="bg-[#0F1A28] px-4 py-20 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-6xl text-center">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#9FB4C1]">Join the Community</p>
+            <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">Don't invest alone.</h2>
+            <p className="mx-auto mb-12 max-w-2xl text-lg text-[#9FB4C1]">Join thousands of traders and investors in the KCG community. Get live signals, market updates, fund news, and direct access to the KCG team — completely free.</p>
+            <div className="grid gap-6 sm:grid-cols-2 max-w-3xl mx-auto">
+              <a href="https://t.me/KaizenCapitalGroup" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/10">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#229ED9] text-3xl">✈</div>
+                <h3 className="mb-2 text-2xl font-bold text-white">Telegram</h3>
+                <p className="mb-6 text-center text-[#9FB4C1]">Live signals, market alerts, and real-time updates from KCG analysts. Join our growing community of active traders.</p>
+                <div className="mb-6 flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"/><span className="text-sm font-semibold text-white">Active Now</span></div>
+                <span className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#229ED9] px-6 py-3 font-semibold text-white transition group-hover:opacity-90">Join Telegram Channel →</span>
+              </a>
+              <a href="https://discord.gg/quz8e9XjZ" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/10">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#5865F2] text-3xl">💬</div>
+                <h3 className="mb-2 text-2xl font-bold text-white">Discord</h3>
+                <p className="mb-6 text-center text-[#9FB4C1]">Deep discussions, strategy breakdowns, investor networking, and exclusive KCG content. Your edge starts here.</p>
+                <div className="mb-6 flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"/><span className="text-sm font-semibold text-white">Free to Join</span></div>
+                <span className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#5865F2] px-6 py-3 font-semibold text-white transition group-hover:opacity-90">Join Discord Server →</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
             INVESTOR INQUIRY CTA
         ════════════════════════════════ */}
         <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
