@@ -771,16 +771,7 @@ export default function Home() {
                 <TestimonialCard quote="From presentation to funnel structure, the brand reflects seriousness, direction, and growth intent." name="Future Testimonial" role="Capital Partner" />
               </div>
             </div>
-            <div className="mt-16">
-              <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Partner / Logo Structure</p>
-              <h3 className="max-w-3xl text-3xl font-bold leading-tight text-[#0F1A28] md:text-4xl">A clean logo strip ready for broker relationships, platforms, media, and strategic affiliations.</h3>
-              <p className="mt-4 max-w-3xl text-lg text-[#2E4358]">Replace these placeholders with real logos when you are ready to publicly display broker, platform, or partner associations.</p>
-              <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-                <LogoPlaceholder name="Broker / Partner Logo" />
-                <LogoPlaceholder name="Platform Logo" />
-                <LogoPlaceholder name="Media / Network Logo" />
-                <LogoPlaceholder name="Strategic Partner Logo" />
-              </div>
+            
             </div>
           </div>
         </FadeInSection>
