@@ -914,7 +914,7 @@ export default function Home() {
                 <div className="mb-6 flex items-center gap-2 rounded-full bg-white/10 px-4 py-2"><span className="h-2 w-2 rounded-full bg-green-400 animate-pulse"/><span className="text-sm font-semibold text-white">Active Now</span></div>
                 <span className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#229ED9] px-6 py-3 font-semibold text-white transition group-hover:opacity-90">Join Telegram Channel →</span>
               </a>
-              <a href="https://discord.gg/quz8e9XjZ" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/10">
+              <a href="https://discord.gg/rJWSD6dhWm" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-md transition hover:-translate-y-1 hover:bg-white/10">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#5865F2] text-3xl">💬</div>
                 <h3 className="mb-2 text-2xl font-bold text-white">Discord</h3>
                 <p className="mb-6 text-center text-[#9FB4C1]">Deep discussions, strategy breakdowns, investor networking, and exclusive KCG content. Your edge starts here.</p>
