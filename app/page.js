@@ -866,6 +866,40 @@ export default function Home() {
           </div>
         </section>
 
+
+        <section id="brokerages" className="bg-white/50 px-4 py-20 sm:px-6 sm:py-24">
+          <div className="mx-auto max-w-6xl">
+            <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5A7188]">Required Partners</p>
+            <h2 className="mb-4 text-4xl font-bold text-[#0F1A28] md:text-5xl">Approved Brokerages</h2>
+            <div className="mb-10 rounded-2xl border border-[#C9D8E2] bg-[#F3F7FA] px-6 py-5">
+              <p className="text-[#0F1A28] font-semibold text-lg">⚠️ Important: To invest with KCG, you must hold a live account with one of our approved brokerage partners below. All KCG funds are deployed exclusively through these platforms.</p>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-3">
+              <a href="https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl font-black text-white">TM</div>
+                <h3 className="mb-1 text-xl font-bold text-[#0F1A28]">TMGM</h3>
+                <p className="mb-4 text-center text-sm text-[#5A7188]">Global multi-asset broker with deep liquidity and fast execution. Used for Fund 1 and Fund 1a.</p>
+                <div className="mb-4 rounded-xl bg-[#F3F7FA] px-3 py-1.5 text-xs font-semibold text-[#2E4358]">Referral: IB1750127193A</div>
+                <span className="mt-auto inline-flex items-center gap-2 rounded-full bg-[#0F1A28] px-5 py-2.5 text-sm font-semibold text-white transition group-hover:bg-[#1A2A3D]">Open Account →</span>
+              </a>
+              <a href="https://tradfi.multibankgroup.com/en/account/live-account?ibNum=8836606" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl font-black text-white">MB</div>
+                <h3 className="mb-1 text-xl font-bold text-[#0F1A28]">MultiBank</h3>
+                <p className="mb-4 text-center text-sm text-[#5A7188]">One of the world's largest financial derivatives providers, regulated globally. Used for Fund 1a.</p>
+                <div className="mb-4 rounded-xl bg-[#F3F7FA] px-3 py-1.5 text-xs font-semibold text-[#2E4358]">IB: 8836606</div>
+                <span className="mt-auto inline-flex items-center gap-2 rounded-full bg-[#0F1A28] px-5 py-2.5 text-sm font-semibold text-white transition group-hover:bg-[#1A2A3D]">Open Account →</span>
+              </a>
+              <a href="https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
+                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl font-black text-white">GX</div>
+                <h3 className="mb-1 text-xl font-bold text-[#0F1A28]">GenesisFX</h3>
+                <p className="mb-4 text-center text-sm text-[#5A7188]">Specialist forex broker with competitive spreads and dedicated support.</p>
+                <div className="mb-4 rounded-xl bg-[#F3F7FA] px-3 py-1.5 text-xs font-semibold text-[#2E4358]">Ref: GFXBEBEF21B</div>
+                <span className="mt-auto inline-flex items-center gap-2 rounded-full bg-[#0F1A28] px-5 py-2.5 text-sm font-semibold text-white transition group-hover:bg-[#1A2A3D]">Open Account →</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
             INVESTOR INQUIRY CTA
         ════════════════════════════════ */}
         <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
