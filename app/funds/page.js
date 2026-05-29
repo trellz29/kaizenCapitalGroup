@@ -215,17 +215,6 @@ const FUND_DATA = [
 ];
 
 
-const metadata = {
-  title: 'Funds | Kaizen Capital Group',
-  description: 'Explore all 12 KCG funds across Gold, Forex, Crypto and multi-asset strategies. Live funds, developing systems, and structured capital strategies.',
-  openGraph: {
-    title: 'Funds | Kaizen Capital Group',
-    description: 'Explore all 12 KCG funds across Gold, Forex, Crypto and multi-asset strategies. Live funds, developing systems, and structured capital strategies.',
-    url: 'https://kaizen-capital-group.vercel.app',
-    siteName: 'Kaizen Capital Group',
-    type: 'website',
-  },
-};
 
 export default function FundsPage() {
   const [filter, setFilter] = useState("All");
