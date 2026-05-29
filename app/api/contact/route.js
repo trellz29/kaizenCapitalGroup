@@ -1,42 +1,34 @@
-import { Resend } from 'resend';
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-const TRELLO_API_KEY = process.env.TRELLO_API_KEY;
-const TRELLO_TOKEN = process.env.TRELLO_TOKEN;
-const TRELLO_LIST_ID = '69dd658b7a468e2c65dd1d75';
+import { Resend } from "resend";
 
 export async function POST(request) {
   try {
-    const { name, email, inquiryType, capitalLevel, message } = await request.json();
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const { name, email, phone, capital, message } = await request.json();
 
-    // Send email via Resend
     await resend.emails.send({
-      from: 'KCG Website <support@kaizencapitalgrp.com>',
-      to: 'support@kaizencapitalgrp.com',
-      subject: `New Investor Inquiry from ${name}`,
-      html: `
-        <h2>New Investor Inquiry</h2>
+      from: "KCG Contact Form <support@kaizencapitalgrp.com>",
+      to: "support@kaizencapitalgrp.com",
+      subject: `KCG Investor Inquiry from ${name}`,
+      html: `<h2>New Investor Inquiry</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Inquiry Type:</strong> ${inquiryType}</p>
-        <p><strong>Capital Level:</strong> ${capitalLevel}</p>
-        <p><strong>Message:</strong></p>
-        <p>${message}</p>
-      `,
+        <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+        <p><strong>Capital:</strong> ${capital || "Not provided"}</p>
+        <p><strong>Message:</strong> ${message}</p>`,
     });
 
-    // Create Trello card
-    const cardDesc = `Email: ${email}\nInquiry Type: ${inquiryType}\nCapital Level: ${capitalLevel}\n\nMessage:\n${message}`;
-    await fetch(`https://api.trello.com/1/cards?key=${TRELLO_API_KEY}&token=${TRELLO_TOKEN}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        name: `${name} - ${inquiryType}`,
-        desc: cardDesc,
-        idList: TRELLO_LIST_ID,
-      }),
-    });
+    const trelloRes = await fetch(
+      `https://api.trello.com/1/cards?key=${process.env.TRELLO_API_KEY}&token=${process.env.TRELLO_TOKEN}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          idList: "69dd658b7a468e2c65dd1d75",
+          name: `${name} – ${email}`,
+          desc: `Phone: ${phone || "N/A"}\nCapital: ${capital || "N/A"}\nMessage: ${message}`,
+        }),
+      }
+    );
 
     return Response.json({ success: true });
   } catch (error) {
