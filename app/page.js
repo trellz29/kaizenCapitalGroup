@@ -916,6 +916,20 @@ export default function Home() {
           </div>
         </section>
 
+        {/* NEWSLETTER */}
+        <section className="bg-white/40 px-4 py-16 sm:px-6 sm:py-20 backdrop-blur-sm">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Stay Informed</p>
+            <h2 className="mb-3 text-3xl font-bold text-[#0F1A28] sm:text-4xl">Get KCG Fund Updates</h2>
+            <p className="mb-8 text-[#2E4358]">New fund launches, performance milestones, and market insights — straight to your inbox.</p>
+            <a href="https://t.me/KaizenCapitalGroup" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#0F1A28] px-8 py-3.5 text-sm font-semibold text-white transition hover:scale-105 hover:opacity-90">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L6.196 13.32l-2.965-.924c-.644-.203-.658-.644.136-.953l11.57-4.461c.537-.194 1.006.131.957.239z"/></svg>
+              Join Telegram Community
+            </a>
+            <p className="mt-4 text-xs text-[#5A7188]">Free to join. Updates posted directly to the group.</p>
+          </div>
+        </section>
+
             INVESTOR INQUIRY CTA
         ════════════════════════════════ */}
         <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
