@@ -48,39 +48,6 @@ const NAV_LINKS = [
   { href: "/performance", label: "Performance" },
   { href: "/contact", label: "Contact" },
   { href: "/portal", label: "Portal" },
-  {
-    label:"Fund 14",
-    name:"KTAi Sentinel Dynamics (US_500 & TECH100)",
-    focus:"US Equities CFD (S&P 500 & NASDAQ 100)",
-    status:"Live",
-    strategy:"AI-driven forecasting with time-varying auto-adaptive algorithms. 80% forecast accuracy across multiple horizons.",
-    managers:"Kooy Labs Inc.",
-    brokerage:"GenesisFX",
-    totalReturn:"+101.2%",
-    winRate:"92.59%",
-    maxDrawdown:"-7.16%",
-    minInvestment:"\,000",
-    riskLevel:"Medium",
-    extra:"72-day live track record (Mar–May 2026). Same Sentinel Dynamics system as ES & NQ, implemented on CFD instruments.",
-    primaryLink:"https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B",
-  },
-  {
-    label:"Fund 15",
-    name:"KTAi Stellite FOREX",
-    focus:"G10 Forex Pairs",
-    status:"Live",
-    strategy:"Systematic trend-following with multi-timeframe consensus scoring. Volatility-adaptive trailing stops and autonomous Corrective Control system.",
-    managers:"Kooy Labs Inc.",
-    brokerage:"GenesisFX",
-    totalReturn:"+88.69%",
-    winRate:"44.30%",
-    maxDrawdown:"-4.65%",
-    sharpe:"1.46",
-    minInvestment:"\,000",
-    riskLevel:"Low",
-    extra:"15-month track record (Jan 2025 – Apr 2026). CAGR: 61.31%. No human intervention required — fully autonomous risk management.",
-    primaryLink:"https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B",
-  },
 ];
 
 function Nav() {
@@ -211,7 +178,9 @@ const FUND_DATA = [
   {label:"Fund 9",name:"Algo Amalgamation Fund",focus:"Multi-asset (Gold, Forex, Crypto & others)",strategy:"Fully algorithmic — amalgamation of strategies from Funds 1–8",managers:"Mixture of algorithmic bots",brokerage:"MultiBank / TradeSmart / TMGM",status:"N/A"},
   {label:"Fund 10",name:"PfaneTXau Fund",focus:"All CFD indices and commodities",strategy:"Swarm",managers:"1 (potentially 2)",brokerage:"To be confirmed",status:"Discontinuation"},
   {label:"Fund 11",name:"MAMALYN Fund",focus:"EUR/USD",status:"Live",strategy:"Fully algorithmic trading",managers:"1",brokerage:"MultiBank",totalReturn:"+31.5%",winRate:"68.9%",maxDrawdown:"-7.4%",sharpe:"1.74",riskLevel:"High",minInvestment:"$3,000",sparkData:[6,9,11,14,13,17,16,20,22,21,25,28,27,31],monthlyReturns:[{month:"J",val:5.2},{month:"F",val:3.1},{month:"M",val:-2.1},{month:"A",val:6.4},{month:"M",val:4.8},{month:"J",val:-1.2},{month:"J",val:5.9},{month:"A",val:4.1}],primaryLink:"https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars",secondaryLinks:[{label:"FX Blue",url:"https://www.fxblue.com/users/mamalyn"},{label:"Myfxbook",url:"https://www.myfxbook.com/members/Panevino83/mamalyn-mt4-31229860/11078849"}]},
-  {label:"Fund 12",name:"CXFund",focus:"Gold trading",status:"Disconnected",strategy:"Manual trading",managers:"2 traders",brokerage:"TMGM",primaryLink:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026",secondaryLinks:[{label:"Ratings",url:"https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb"}]},
+  {label:"Fund 12",name:"CXFund",focus:"Gold trading",status:"Disconnected",strategy:"Manual trading",managers:"2 traders",brokerage:"TMGM",primaryLink:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026",secondaryLinks:[{label:"Ratings",url:"https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb"}]},,
+  {label:"Fund 14",name:"KTAi Sentinel Dynamics (US_500 & TECH100)",focus:"US Equities CFD (S&P 500 & NASDAQ 100)",status:"Live",strategy:"AI-driven forecasting with time-varying auto-adaptive algorithms. 80% forecast accuracy across multiple horizons.",managers:"Kooy Labs Inc.",brokerage:"GenesisFX",totalReturn:"+101.2%",winRate:"92.59%",maxDrawdown:"-7.16%",minInvestment:"$250,000",riskLevel:"Medium",extra:"72-day live track record (Mar-May 2026). Same Sentinel Dynamics system as ES & NQ, implemented on CFD instruments.",primaryLink:"https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B"},
+  {label:"Fund 15",name:"KTAi Stellite FOREX",focus:"G10 Forex Pairs",status:"Live",strategy:"Systematic trend-following with multi-timeframe consensus scoring. Volatility-adaptive trailing stops and autonomous Corrective Control system.",managers:"Kooy Labs Inc.",brokerage:"GenesisFX",totalReturn:"+88.69%",winRate:"44.30%",maxDrawdown:"-4.65%",sharpe:"1.46",minInvestment:"$250,000",riskLevel:"Low",extra:"15-month track record (Jan 2025 - Apr 2026). CAGR: 61.31%. No human intervention required — fully autonomous risk management.",primaryLink:"https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B"}
 ];
 
 
