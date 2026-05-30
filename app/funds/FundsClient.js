@@ -209,10 +209,10 @@ export default function FundsPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-[#1F5E36] animate-pulse" />
               <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2E4358]">KCG Multiplied Funds</span>
             </div>
-            <h1 className="max-w-4xl text-5xl font-bold leading-tight text-[#0F1A28] sm:text-6xl md:text-7xl" style={{ animation: "fadeUp 0.7s ease-out 0.2s both" }}>12 funds. One<br />institutional platform.</h1>
+            <h1 className="max-w-4xl text-5xl font-bold leading-tight text-[#0F1A28] sm:text-6xl md:text-7xl" style={{ animation: "fadeUp 0.7s ease-out 0.2s both" }}>14 funds. One<br />institutional platform.</h1>
             <p className="mt-6 max-w-2xl text-lg text-[#2E4358]" style={{ animation: "fadeUp 0.7s ease-out 0.35s both" }}>Explore KCG's complete fund ecosystem across Gold, Forex, Crypto, and multi-asset instruments. Live funds include direct access links, performance metrics, and risk profiles.</p>
             <div className="mt-10 grid gap-4 sm:grid-cols-4" style={{ animation: "fadeUp 0.7s ease-out 0.45s both" }}>
-              {[{label:"Total Funds",value:"12"},{label:"Live Funds",value:"4"},{label:"Brokerages",value:"3"},{label:"Avg Return",value:"9.2%"}].map(s=>(
+              {[{label:"Total Funds",value:"14"},{label:"Live Funds",value:"6"},{label:"Brokerages",value:"3"},{label:"Avg Return",value:"9.2%"}].map(s=>(
                 <div key={s.label} className="rounded-2xl border border-white/50 bg-white/55 p-4 backdrop-blur-sm">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#5A7188]">{s.label}</p>
                   <p className="mt-1 text-2xl font-bold text-[#0F1A28]">{s.value}</p>
