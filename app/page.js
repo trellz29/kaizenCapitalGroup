@@ -251,6 +251,7 @@ function TelegramCard() {
       <p className="mt-2 text-sm text-[#2E4358]">Fastest way to reach KCG directly.</p>
       <div className="mt-3 rounded-xl bg-[#F7FAFC] px-4 py-2"><p className="text-xs text-[#5A7188]">Handle</p><p className="font-semibold text-[#0F1A28]">@trellz_P</p></div>
       <a href="/privacy" className="text-xs text-[#5A7188] hover:text-[#0F1A28] transition">Privacy Policy</a>
+              <a href="/disclaimer" className="text-xs text-[#5A7188] hover:text-[#0F1A28] transition">Risk Disclaimer</a>
                 <a href="https://t.me/trellz_P" className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#0F1A28] px-6 py-3 font-semibold text-white hover:bg-[#1A2A3D]">✈ Message on Telegram</a>
     </div>
   );
