@@ -930,8 +930,6 @@ export default function Home() {
           </div>
         </section>
 
-            INVESTOR INQUIRY CTA
-        ════════════════════════════════ */}
         <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-5xl rounded-[28px] border border-white/40 bg-white/70 p-8 text-center shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md sm:rounded-[32px] sm:p-10 md:p-16">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Investor Inquiry Flow</p>
