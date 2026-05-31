@@ -2,6 +2,19 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
+export const metadata = {
+  title: 'Contact | Kaizen Capital Group',
+  description: 'Get in touch with Kaizen Capital Group. Schedule a call, submit an investor inquiry, or connect directly with the team.',
+  openGraph: {
+    title: 'Contact | Kaizen Capital Group',
+    description: 'Get in touch with Kaizen Capital Group. Schedule a call, submit an investor inquiry, or connect directly with the team.',
+    url: 'https://www.kaizencapitalgrp.com/contact',
+    siteName: 'Kaizen Capital Group',
+    type: 'website',
+  },
+};
+
+
 function useInView(threshold = 0.1) {
   const ref = useRef(null);
   const [inView, setInView] = useState(false);
