@@ -76,7 +76,7 @@ function Nav() {
         </div>
       </div>
       {menuOpen && (
-        <div className="border-t border-white/30 bg-[#E6EEF2]/96 backdrop-blur-xl md:hidden">
+        <div className="border-t border-white/30 bg-[#E6EEF2]/96 backdrop-blur-xl md:hidden nav-mobile-open">
           <div className="mx-auto max-w-6xl px-4 py-4 space-y-1">
             {NAV_LINKS.map(l => <Link key={l.href} href={l.href} onClick={() => setMenuOpen(false)} className="block rounded-xl px-4 py-3 text-sm font-medium text-[#2E4358] transition hover:bg-white/60">{l.label}</Link>)}
             <div className="pt-2"><Link href="/contact" className="block rounded-full bg-[#0F1A28] px-5 py-3 text-center text-sm font-semibold text-white">Get Started</Link></div>

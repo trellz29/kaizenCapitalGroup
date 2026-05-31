@@ -487,7 +487,7 @@ export default function Home() {
 
           {/* Mobile menu */}
           {menuOpen && (
-            <div className="animate-slide-down border-t border-white/30 bg-[#E6EEF2]/96 backdrop-blur-xl md:hidden">
+            <div className="animate-slide-down border-t border-white/30 bg-[#E6EEF2]/96 backdrop-blur-xl md:hidden nav-mobile-open">
               <div className="mx-auto max-w-6xl px-4 py-4 space-y-1 sm:px-6">
                 {navLinks.map((l) => (
                   <a

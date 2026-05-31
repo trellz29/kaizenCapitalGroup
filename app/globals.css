@@ -72,3 +72,12 @@ html.dark [class*="shadow-"] {
 *, *::before, *::after {
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
+
+/* ===== MOBILE NAV ANIMATION ===== */
+@keyframes navSlideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.nav-mobile-open {
+  animation: navSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
