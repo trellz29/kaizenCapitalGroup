@@ -81,3 +81,15 @@ html.dark [class*="shadow-"] {
 .nav-mobile-open {
   animation: navSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* ===== SKELETON LOADING ===== */
+@keyframes shimmer {
+  0% { background-position: -400px 0; }
+  100% { background-position: calc(400px + 100%) 0; }
+}
+.skeleton-pulse {
+  background: linear-gradient(90deg, #DCE7EE 25%, #E8F0F5 50%, #DCE7EE 75%);
+  background-size: 400px 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 12px;
+}

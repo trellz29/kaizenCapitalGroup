@@ -188,6 +188,8 @@ const FUND_DATA = [
 
 export default function FundsPage() {
   const [filter, setFilter] = useState("All");
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
   const filters = ["All", "Live", "Re-Launching", "N/A", "Disconnected", "Discontinuation"];
   const filtered = filter === "All" ? FUND_DATA : FUND_DATA.filter(f => f.status === filter);
 
@@ -233,10 +235,34 @@ export default function FundsPage() {
                 </button>
               ))}
             </div>
-            <StaggerReveal className="grid gap-6 md:grid-cols-2 xl:grid-cols-3" stagger={60}>
-              {filtered.map(fund=><FundCard key={fund.label} {...fund}/>)}
-            </StaggerReveal>
-            {filtered.length===0&&<div className="py-20 text-center text-[#5A7188]">No funds match this filter.</div>}
+            {!mounted ? (
+              <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {[...Array(6)].map((_,i) => (
+                  <div key={i} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.07)]">
+                    <div className="mb-4 flex justify-between">
+                      <div className="skeleton-pulse h-4 w-16 rounded"/>
+                      <div className="skeleton-pulse h-5 w-12 rounded-full"/>
+                    </div>
+                    <div className="skeleton-pulse mb-2 h-5 w-3/4 rounded"/>
+                    <div className="skeleton-pulse mb-4 h-4 w-1/2 rounded"/>
+                    <div className="mb-4 grid grid-cols-2 gap-2">
+                      {[...Array(4)].map((_,j) => (
+                        <div key={j} className="rounded-2xl bg-[#F7FAFC]/80 p-3">
+                          <div className="skeleton-pulse mb-1 h-2 w-16 rounded"/>
+                          <div className="skeleton-pulse h-4 w-12 rounded"/>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="skeleton-pulse h-9 w-full rounded-2xl"/>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <StaggerReveal className="grid gap-6 md:grid-cols-2 xl:grid-cols-3" stagger={60}>
+                {filtered.map(fund=><FundCard key={fund.label} {...fund}/>)}
+              </StaggerReveal>
+            )}
+            {mounted && filtered.length===0&&<div className="py-20 text-center text-[#5A7188]">No funds match this filter.</div>}
           </div>
         </section>
 
