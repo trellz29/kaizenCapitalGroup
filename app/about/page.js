@@ -2,17 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-export const metadata = {
-  title: 'About | Kaizen Capital Group',
-  description: 'Learn about Kaizen Capital Group — an institutional capital strategy platform built around structure, credibility, and long-term growth.',
-  openGraph: {
-    title: 'About | Kaizen Capital Group',
-    description: 'Learn about Kaizen Capital Group — an institutional capital strategy platform built around structure, credibility, and long-term growth.',
-    url: 'https://www.kaizencapitalgrp.com/about',
-    siteName: 'Kaizen Capital Group',
-    type: 'website',
-  },
-};
 
 
 function useInView(threshold = 0.1) {

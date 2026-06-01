@@ -2,17 +2,6 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-export const metadata = {
-  title: 'Performance | Kaizen Capital Group',
-  description: 'Track live and historical performance across KCG funds. Transparent reporting on returns, drawdowns, and risk metrics.',
-  openGraph: {
-    title: 'Performance | Kaizen Capital Group',
-    description: 'Track live and historical performance across KCG funds. Transparent reporting on returns, drawdowns, and risk metrics.',
-    url: 'https://www.kaizencapitalgrp.com/performance',
-    siteName: 'Kaizen Capital Group',
-    type: 'website',
-  },
-};
 
 
 function useInView(threshold = 0.1) {
