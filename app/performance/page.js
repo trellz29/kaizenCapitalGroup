@@ -184,17 +184,6 @@ const LIVE_FUNDS = [
 ];
 
 
-const metadata = {
-  title: 'Performance | Kaizen Capital Group',
-  description: 'Data-driven execution across all KCG systems. Live fund performance, growth trajectory, risk-adjusted returns and system activity.',
-  openGraph: {
-    title: 'Performance | Kaizen Capital Group',
-    description: 'Data-driven execution across all KCG systems. Live fund performance, growth trajectory, risk-adjusted returns and system activity.',
-    url: 'https://kaizen-capital-group.vercel.app',
-    siteName: 'Kaizen Capital Group',
-    type: 'website',
-  },
-};
 
 export default function PerformancePage() {
   const [activeTab, setActiveTab] = useState("YTD");

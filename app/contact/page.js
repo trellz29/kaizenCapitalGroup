@@ -110,17 +110,6 @@ function CalendlyEmbed() {
 }
 
 
-const metadata = {
-  title: 'Contact | Kaizen Capital Group',
-  description: 'Start a serious conversation with KCG. Book a call, message on Telegram, or submit a formal investor inquiry.',
-  openGraph: {
-    title: 'Contact | Kaizen Capital Group',
-    description: 'Start a serious conversation with KCG. Book a call, message on Telegram, or submit a formal investor inquiry.',
-    url: 'https://kaizen-capital-group.vercel.app',
-    siteName: 'Kaizen Capital Group',
-    type: 'website',
-  },
-};
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
