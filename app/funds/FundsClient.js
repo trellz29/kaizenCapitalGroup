@@ -48,6 +48,7 @@ const NAV_LINKS = [
   { href: "/performance", label: "Performance" },
   { href: "/contact", label: "Contact" },
   { href: "/portal", label: "Portal" },
+  { href: "/insights", label: "Insights" },
 ];
 
 function Nav() {
