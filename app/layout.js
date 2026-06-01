@@ -26,13 +26,15 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-            <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F3F4YLRLF"></script>
-      <script dangerouslySetInnerHTML={{ __html: `
+      <head>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-7F3F4YLRLF"></script>
+        <script dangerouslySetInnerHTML={{ __html: `
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-7F3F4YLRLF');
       ` }} />
+      </head>
       <body className="min-h-full flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var t=localStorage.getItem('kcg-theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}}catch(e){}})();" }} />
         {children}
