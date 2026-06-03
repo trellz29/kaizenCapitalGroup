@@ -1020,6 +1020,12 @@ export default function Home() {
             <div className="flex flex-wrap gap-6 text-sm text-[#2E4358]">
               {navLinks.map((l) => <a key={l.href} href={l.href} className="hover:opacity-70 transition-opacity">{l.label}</a>)}
             </div>
+            <div className="flex items-center gap-4">
+              <a href="https://t.me/KaizenCapitalGroup" target="_blank" rel="noopener noreferrer" aria-label="Telegram" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#0F1A28] text-white transition hover:opacity-80" style={{fontSize:"16px"}}>✈</a>
+              <a href="https://discord.gg/rJWSD6dhWm" target="_blank" rel="noopener noreferrer" aria-label="Discord" className="flex h-9 w-9 items-center justify-center rounded-full bg-[#5865F2] text-white transition hover:opacity-80" style={{fontSize:"16px"}}>💬</a>
+            </div>
+            <div className="hidden">
+            </div>
           </div>
         </footer>
 
