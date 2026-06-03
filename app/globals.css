@@ -28,7 +28,9 @@ html.dark body {
   color: #E8EFF4;
 }
 
-html.dark main {
+html.dark main,
+html.dark main section,
+html.dark main > div {
   background-color: #0D1420 !important;
   color: #E8EFF4 !important;
 }
