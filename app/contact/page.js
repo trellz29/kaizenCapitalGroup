@@ -38,6 +38,8 @@ const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
   { href: "/portal", label: "Portal" },
   { href: "/insights", label: "Insights" },
+  { href: "https://t.me/KaizenCapitalGroup", label: "Telegram" },
+  { href: "https://discord.gg/rJWSD6dhWm", label: "Discord" },
 ];
 
 function Nav() {
