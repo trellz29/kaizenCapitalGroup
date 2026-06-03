@@ -73,6 +73,21 @@ html.dark [class*="shadow-"] {
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+/* ===== LIGHT MODE EXPLICIT RESETS ===== */
+html:not(.dark) body {
+  background: #E6EEF2;
+  color: #0F1A28;
+}
+
+html:not(.dark) main {
+  background-color: #E6EEF2 !important;
+  color: #0F1A28 !important;
+}
+
+html:not(.dark) .bg-\[\#E6EEF2\] {
+  background-color: #E6EEF2 !important;
+}
 /* ===== MOBILE NAV ANIMATION ===== */
 @keyframes navSlideDown {
   from { opacity: 0; transform: translateY(-8px); }

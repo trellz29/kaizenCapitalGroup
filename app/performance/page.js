@@ -121,9 +121,9 @@ function GrowthChart({ data, width = 600, height = 220 }) {
         <defs><linearGradient id="gfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#2E4358" stopOpacity="0.2"/><stop offset="100%" stopColor="#2E4358" stopOpacity="0.01"/></linearGradient></defs>
         {yTicks.map((t, i) => <g key={i}><line x1={pad.l} y1={t.y} x2={pad.l+cw} y2={t.y} stroke="#C9D8E2" strokeWidth="1" strokeDasharray="4 4"/><text x={pad.l-8} y={t.y+4} textAnchor="end" fontSize="10" fill="#9FB4C1">{t.label}</text></g>)}
         {fillD && <path d={fillD} fill="url(#gfill)"/>}
-        {pathD && <path d={pathD} fill="none" stroke="#0F1A28" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>}
+        {pathD && <path d={pathD} fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>}
         {xLabels.map((d, i) => <text key={i} x={toX(data.indexOf(d))} y={height-8} textAnchor="middle" fontSize="10" fill="#9FB4C1">{d.label}</text>)}
-        {visible.length > 1 && <circle cx={toX(data.indexOf(visible[visible.length-1]))} cy={toY(visible[visible.length-1].value)} r="5" fill="#0F1A28"/>}
+        {visible.length > 1 && <circle cx={toX(data.indexOf(visible[visible.length-1]))} cy={toY(visible[visible.length-1].value)} r="5" fill="currentColor"/>}
       </svg>
     </div>
   );
