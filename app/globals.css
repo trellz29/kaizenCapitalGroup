@@ -94,6 +94,19 @@ html.dark [class*="shadow-"] {
 }
 
 
+
+/* ── Gradient section overrides (page.js WHY KCG, etc.) ── */
+html.dark .bg-gradient-to-br,
+html.dark [class*="from-\[#DCE7EE\]"],
+html.dark [class*="from-\[#C9D8E2\]"],
+html.dark [class*="from-\[#B4C7D4\]"],
+html.dark [class*="via-\[#C9D8E2\]"],
+html.dark [class*="to-\[#B4C7D4\]"],
+html.dark [class*="to-\[#D4E3EC\]"],
+html.dark [class*="from-\[#E6EEF2\]"] {
+  background: #0D1420 !important;
+  background-image: none !important;
+}
 /* ===== LIGHT MODE EXPLICIT RESETS ===== */
 html:not(.dark) body {
   background: #E6EEF2;
