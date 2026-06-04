@@ -7,6 +7,13 @@ import PillNav from "./components/PillNav";
 import HeroGSAP from "./components/HeroGSAP";
 import ParallaxGallery from "./components/ParallaxGallery";
 import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
+import MagneticCursor from "./components/MagneticCursor";
+import GrainOverlay from "./components/GrainOverlay";
+import TiltCard from "./components/TiltCard";
+import TextReveal from "./components/TextReveal";
+import FloatingOrbs from "./components/FloatingOrbs";
+import SmoothScroll from "./components/SmoothScroll";
+import AnimatedBackground from "./components/AnimatedBackground";
 
 /* --- Animated Counter Hook ------------------------------------------- */
 function useCounter(target, duration = 2000, start = false) {
@@ -113,7 +120,7 @@ function FundCard({ label, name, focus, strategy, managers, brokerage, status, e
     ? "from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]"
     : "from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4]";
   return (
-    <div className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)] sm:p-6 lg:p-8">
+    <TiltCard className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md kcg-glow-border sm:p-6 lg:p-8">
       <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentClass}`} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
@@ -139,14 +146,14 @@ function FundCard({ label, name, focus, strategy, managers, brokerage, status, e
           ))}
         </div>
       )}
-    </div>
+    </TiltCard>
   );
 }
 
 /* --- Funnel Card ------------------------------------------------------ */
 function FunnelCard({ title, description, points, cta }) {
   return (
-    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)] sm:p-8">
+    <TiltCard className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md kcg-glow-border sm:p-8">
       <h3 className="text-2xl font-bold text-[#0F1A28]">{title}</h3>
       <p className="mt-4 text-sm leading-7 text-[#2E4358]">{description}</p>
       <div className="mt-6 space-y-3">
@@ -155,14 +162,14 @@ function FunnelCard({ title, description, points, cta }) {
         ))}
       </div>
       <a href="#contact-form" className="mt-6 inline-block rounded-full bg-[#0F1A28] px-6 py-3 text-sm font-semibold text-white transition hover:scale-105 hover:bg-[#1A2A3D]">{cta}</a>
-    </div>
+    </TiltCard>
   );
 }
 
 /* --- Qualification Card ----------------------------------------------- */
 function QualificationCard({ title, subtitle, bullets }) {
   return (
-    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(15,26,40,0.10)]">
+    <TiltCard intensity={4} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md kcg-glow-border">
       <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">Best Fit</p>
       <h3 className="mt-2 text-xl font-bold text-[#0F1A28]">{title}</h3>
       <p className="mt-3 text-sm leading-6 text-[#2E4358]">{subtitle}</p>
@@ -171,21 +178,21 @@ function QualificationCard({ title, subtitle, bullets }) {
           <div key={idx} className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3 text-sm text-[#2E4358]">{bullet}</div>
         ))}
       </div>
-    </div>
+    </TiltCard>
   );
 }
 
 /* --- Testimonial Card ------------------------------------------------- */
 function TestimonialCard({ quote, name, role }) {
   return (
-    <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(15,26,40,0.10)] sm:p-8">
+    <TiltCard intensity={4} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md kcg-glow-border sm:p-8">
       <p className="text-4xl leading-none text-[#9FB4C1]">"</p>
       <p className="mt-3 text-sm leading-7 text-[#2E4358]">{quote}</p>
       <div className="mt-6">
         <p className="text-sm font-semibold text-[#0F1A28]">{name}</p>
         <p className="text-xs uppercase tracking-[0.12em] text-[#5A7188]">{role}</p>
       </div>
-    </div>
+    </TiltCard>
   );
 }
 
@@ -207,13 +214,13 @@ function AnimatedStatCard({ label, value, suffix = "", prefix = "", decimals = 0
     : counted.toLocaleString();
 
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-white/50 bg-white/55 p-5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:bg-white/70 hover:shadow-[0_12px_30px_rgba(15,26,40,0.10)]">
+    <TiltCard intensity={5} className="group relative overflow-hidden rounded-2xl border border-white/50 bg-white/55 p-5 backdrop-blur-sm kcg-glow-border hover:bg-white/70 hover:shadow-[0_12px_30px_rgba(15,26,40,0.10)]">
       <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#5A7188]">{label}</p>
-      <p className="mt-2 text-2xl font-bold text-[#0F1A28] tabular-nums">
+      <p className="mt-2 text-2xl font-bold text-[#0F1A28] tabular-nums" style={{ overflow: "hidden" }}>
         {prefix}{display}{suffix}
       </p>
-    </div>
+    </TiltCard>
   );
 }
 
@@ -406,6 +413,10 @@ export default function Home() {
       <AnimatePresence>
         {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
       </AnimatePresence>
+      <MagneticCursor />
+      <GrainOverlay />
+      <FloatingOrbs />
+      <SmoothScroll />
       <PillNav />
       <div style={{opacity: showLoading ? 0 : 1, transition: "opacity 0.7s ease", pointerEvents: showLoading ? "none" : "auto"}}>
       {/* -- Global keyframe animations -- */}
@@ -455,6 +466,44 @@ export default function Home() {
           background-size: 400% 400%;
           animation: gradientShift 12s ease infinite;
         }
+        @keyframes borderFlow {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes magneticPulse {
+          0%, 100% { box-shadow: 0 0 0 0 rgba(159,180,193,0); }
+          50% { box-shadow: 0 0 0 12px rgba(159,180,193,0.12); }
+        }
+        .kcg-glow-border { position: relative; overflow: hidden; }
+        .kcg-glow-border::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          border: 1px solid rgba(159,180,193,0);
+          background: linear-gradient(135deg, rgba(159,180,193,0.3) 0%, rgba(201,216,226,0.05) 50%, rgba(159,180,193,0.3) 100%);
+          background-size: 200% 200%;
+          opacity: 0;
+          transition: opacity 0.35s ease;
+          pointer-events: none;
+          z-index: 1;
+        }
+        .kcg-glow-border:hover::after { opacity: 1; animation: borderFlow 3s ease infinite; }
+        .kcg-hover-lift {
+          transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), box-shadow 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        .kcg-hover-lift:hover {
+          transform: translateY(-6px) !important;
+          box-shadow: 0 28px 70px rgba(15,26,40,0.13) !important;
+        }
+        .kcg-magnetic-btn {
+          transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease;
+        }
+        .kcg-magnetic-btn:hover {
+          transform: scale(1.05);
+        }
+        html { scroll-behavior: smooth; }
       `}</style>
 
       <main className="min-h-screen bg-[#E6EEF2] text-[#0F1A28] overflow-x-hidden">
@@ -553,6 +602,9 @@ export default function Home() {
           {/* Glowing orbs */}
           <div className="absolute top-1/4 left-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9FB4C1]/20 blur-[100px] pointer-events-none" style={{ animation: "pulseGlow 6s ease-in-out infinite" }} />
           <div className="absolute top-2/3 right-1/4 h-64 w-64 rounded-full bg-[#C9D8E2]/25 blur-[80px] pointer-events-none" style={{ animation: "pulseGlow 8s ease-in-out 2s infinite" }} />
+
+          {/* Particle network */}
+          <AnimatedBackground />
 
           {/* Content */}
           <HeroGSAP />
@@ -671,10 +723,10 @@ export default function Home() {
               { title: "Strategic Positioning", body: "KCG is designed to communicate a premium, disciplined identity for partners, clients, and capital relationships." },
               { title: "Growth Framework", body: "We focus on long-term brand strength, structured presentation, and consistent execution across all touchpoints." },
             ].map((card) => (
-              <div key={card.title} className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-lg backdrop-blur-md transition duration-300 hover:-translate-y-1 sm:p-8">
+              <TiltCard key={card.title} className="rounded-3xl border border-white/40 bg-white/60 p-6 shadow-lg backdrop-blur-md kcg-glow-border sm:p-8">
                 <h3 className="mb-3 text-xl font-semibold text-[#0F1A28]">{card.title}</h3>
                 <p className="text-[#2E4358]">{card.body}</p>
-              </div>
+              </TiltCard>
             ))}
           </div>
         </FadeInSection>
@@ -828,15 +880,15 @@ export default function Home() {
         <FadeInSection id="social-proof" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Social Proof</p>
-            <h2 className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">Built for credibility, reinforced by presentation, consistency, and long-term brand trust.</h2>
+            <TextReveal as="h2" className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">Built for credibility, reinforced by presentation, consistency, and long-term brand trust.</TextReveal>
             <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">This section creates the structure for investor confidence by showcasing testimonials, future proof points, and trusted partner visibility in one place.</p>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               {[{ label: "Reputation", title: "Premium Brand Positioning", body: "KCG is presented as a structured, disciplined, investor-facing brand built for long-term credibility." }, { label: "Access", title: "Live + Developing Strategies", body: "The site is structured to present live funds, future strategies, and multiple entry paths for capital conversations." }, { label: "Trust", title: "Investor Inquiry Flow", body: "Serious inquiries are guided into a more qualified, structured, and institutionally aligned contact experience." }].map((c) => (
-                <div key={c.label} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md sm:p-8">
+                <TiltCard key={c.label} className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md kcg-glow-border sm:p-8">
                   <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">{c.label}</p>
                   <p className="mt-3 text-3xl font-bold text-[#0F1A28]">{c.title}</p>
                   <p className="mt-4 text-sm leading-7 text-[#2E4358]">{c.body}</p>
-                </div>
+                </TiltCard>
               ))}
             </div>
             <div className="mt-16">
@@ -859,14 +911,14 @@ export default function Home() {
         <FadeInSection id="activity" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Live Trading Activity</p>
-            <h2 className="mb-10 text-4xl font-bold text-[#0F1A28] md:text-5xl">Live-style activity feed for your future execution flow.</h2>
+            <TextReveal as="h2" className="mb-10 text-4xl font-bold text-[#0F1A28] md:text-5xl">Live-style activity feed for your future execution flow.</TextReveal>
             <div className="grid gap-4">
               {[
                 { action: "BUY XAUUSD", fund: "KaizenCapitalGroup.Xau-TMGM", lots: "0.10 lots", result: "+12.4 pips" },
                 { action: "SELL EURUSD", fund: "MAMALYN Fund", lots: "0.05 lots", result: "+8.1 pips" },
                 { action: "BUY BTCUSD", fund: "VaultKano Fund", lots: "0.01 lots", result: "+2.7%" },
               ].map((trade, i) => (
-                <div key={i} className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md transition hover:-translate-y-0.5 hover:shadow-md">
+                <TiltCard key={i} intensity={3} className="rounded-2xl border border-white/40 bg-white/70 p-5 shadow-sm backdrop-blur-md kcg-glow-border">
                   <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3">
                       <div className="h-2 w-2 rounded-full bg-[#1F5E36] animate-pulse" />
@@ -877,7 +929,7 @@ export default function Home() {
                     </div>
                     <p className="text-sm font-semibold text-[#1F5E36]">{trade.result}</p>
                   </div>
-                </div>
+                </TiltCard>
               ))}
             </div>
           </div>
@@ -914,7 +966,7 @@ export default function Home() {
         <FadeInSection className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl text-center">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Trusted by Traders Worldwide</p>
-            <h2 className="mx-auto max-w-4xl text-4xl font-bold text-[#0F1A28] md:text-5xl">Built to support a growing global KCG presence across traders, clients, and capital partners.</h2>
+            <TextReveal as="h2" className="mx-auto max-w-4xl text-4xl font-bold text-[#0F1A28] md:text-5xl">Built to support a growing global KCG presence across traders, clients, and capital partners.</TextReveal>
             <p className="mx-auto mt-6 max-w-3xl text-lg text-[#2E4358]">This section is now reinforced by your social proof block, testimonial structure, and partner logo framework as the platform continues to grow.</p>
           </div>
         </FadeInSection>
@@ -927,7 +979,7 @@ export default function Home() {
         <section id="book-a-call" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5A7188]">Start a Conversation</p>
-            <h2 className="mb-8 text-4xl font-bold text-[#0F1A28] md:text-5xl">Book a call or message directly.</h2>
+            <TextReveal as="h2" className="mb-8 text-4xl font-bold text-[#0F1A28] md:text-5xl">Book a call or message directly.</TextReveal>
             <div className="grid gap-8 lg:grid-cols-3">
               <div className="lg:col-span-2">
                 <p className="mb-4 text-sm font-bold uppercase tracking-widest text-[#5A7188]">Schedule a 30-Minute Call</p>
@@ -944,12 +996,12 @@ export default function Home() {
         <section id="brokerages" className="bg-white/50 px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5A7188]">Required Partners</p>
-            <h2 className="mb-4 text-4xl font-bold text-[#0F1A28] md:text-5xl">Approved Brokerages</h2>
+            <TextReveal as="h2" className="mb-4 text-4xl font-bold text-[#0F1A28] md:text-5xl">Approved Brokerages</TextReveal>
             <div className="mb-10 rounded-2xl border border-[#C9D8E2] bg-[#F3F7FA] px-6 py-5">
               <p className="text-[#0F1A28] font-semibold text-lg">⚠️ Important: To invest with KCG, you must hold a live account with one of our approved brokerage partners below. All KCG funds are deployed exclusively through these platforms.</p>
             </div>
             <div className="grid gap-6 sm:grid-cols-3">
-              <a href="https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
+              <a href="https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md kcg-glow-border kcg-hover-lift">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl font-black text-white">TM</div>
                 <h3 className="mb-1 text-xl font-bold text-[#0F1A28]">TMGM</h3>
                 <p className="mb-4 text-center text-sm text-[#5A7188]">Global multi-asset broker with deep liquidity and fast execution. Used for Fund 1 and Fund 1a.</p>
