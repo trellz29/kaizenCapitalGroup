@@ -456,7 +456,7 @@ export default function Home() {
         {/* ================================
             NAVBAR
         ================================ */}
-        <nav className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
+        <nav style={{display:"none"}} className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
           scrolled
             ? "border-b border-white/40 bg-[#E6EEF2]/92 shadow-[0_8px_30px_rgba(15,26,40,0.08)] backdrop-blur-xl"
             : "border-b border-white/20 bg-white/40 backdrop-blur-md"
