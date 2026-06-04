@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./components/LoadingScreen";
+import PillNav from "./components/PillNav";
 import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
 
 /* --- Animated Counter Hook ------------------------------------------- */
@@ -399,6 +400,7 @@ export default function Home() {
       <AnimatePresence>
         {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
       </AnimatePresence>
+      <PillNav />
       <div style={{opacity: showLoading ? 0 : 1, transition: "opacity 0.7s ease", pointerEvents: showLoading ? "none" : "auto"}}>
       {/* -- Global keyframe animations -- */}
       <style>{`
