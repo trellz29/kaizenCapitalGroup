@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./components/LoadingScreen";
 import PillNav from "./components/PillNav";
 import HeroGSAP from "./components/HeroGSAP";
+import ParallaxGallery from "./components/ParallaxGallery";
 import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
 
 /* --- Animated Counter Hook ------------------------------------------- */
@@ -770,6 +771,8 @@ export default function Home() {
         ================================ */}
 
         
+        <ParallaxGallery />
+
         <VisFunds />
 
         <section id="ai-systems" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
