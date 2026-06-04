@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { AnimatePresence } from "framer-motion";
+import LoadingScreen from "./components/LoadingScreen";
 import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
 
-/* ─── Animated Counter Hook ─────────────────────────────────────────── */
+/* --- Animated Counter Hook ------------------------------------------- */
 function useCounter(target, duration = 2000, start = false) {
   const [value, setValue] = useState(0);
   useEffect(() => {
@@ -21,7 +23,7 @@ function useCounter(target, duration = 2000, start = false) {
   return value;
 }
 
-/* ─── Fade-in Section ────────────────────────────────────────────────── */
+/* --- Fade-in Section -------------------------------------------------- */
 function FadeInSection({ children, className = "", id = "" }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -46,7 +48,7 @@ function FadeInSection({ children, className = "", id = "" }) {
   );
 }
 
-/* ─── Floating Particle ──────────────────────────────────────────────── */
+/* --- Floating Particle ------------------------------------------------ */
 function FloatingParticle({ x, y, size, duration, delay, opacity }) {
   return (
     <div
@@ -63,7 +65,7 @@ function FloatingParticle({ x, y, size, duration, delay, opacity }) {
   );
 }
 
-/* ─── TradingView Widget ─────────────────────────────────────────────── */
+/* --- TradingView Widget ----------------------------------------------- */
 function TradingViewWidget({ widgetType, config, className = "", minHeight = "320px" }) {
   const containerRef = useRef(null);
   useEffect(() => {
@@ -91,7 +93,7 @@ function TradingViewWidget({ widgetType, config, className = "", minHeight = "32
   );
 }
 
-/* ─── Fund Card ──────────────────────────────────────────────────────── */
+/* --- Fund Card -------------------------------------------------------- */
 function FundCard({ label, name, focus, strategy, managers, brokerage, status, extra, primaryLink, secondaryLinks = [] }) {
   const statusLower = status.toLowerCase();
   const statusClass =
@@ -134,7 +136,7 @@ function FundCard({ label, name, focus, strategy, managers, brokerage, status, e
   );
 }
 
-/* ─── Funnel Card ────────────────────────────────────────────────────── */
+/* --- Funnel Card ------------------------------------------------------ */
 function FunnelCard({ title, description, points, cta }) {
   return (
     <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_70px_rgba(15,26,40,0.12)] sm:p-8">
@@ -150,7 +152,7 @@ function FunnelCard({ title, description, points, cta }) {
   );
 }
 
-/* ─── Qualification Card ─────────────────────────────────────────────── */
+/* --- Qualification Card ----------------------------------------------- */
 function QualificationCard({ title, subtitle, bullets }) {
   return (
     <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(15,26,40,0.10)]">
@@ -166,7 +168,7 @@ function QualificationCard({ title, subtitle, bullets }) {
   );
 }
 
-/* ─── Testimonial Card ───────────────────────────────────────────────── */
+/* --- Testimonial Card ------------------------------------------------- */
 function TestimonialCard({ quote, name, role }) {
   return (
     <div className="rounded-3xl border border-white/60 bg-white/75 p-6 shadow-[0_12px_40px_rgba(15,26,40,0.05)] backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_20px_55px_rgba(15,26,40,0.10)] sm:p-8">
@@ -180,7 +182,7 @@ function TestimonialCard({ quote, name, role }) {
   );
 }
 
-/* ─── Logo Placeholder ───────────────────────────────────────────────── */
+/* --- Logo Placeholder ------------------------------------------------- */
 function LogoPlaceholder({ name }) {
   return (
     <div className="flex h-20 items-center justify-center rounded-2xl border border-white/50 bg-white/65 px-6 text-center text-sm font-semibold text-[#5A7188] shadow-sm backdrop-blur-md">
@@ -189,7 +191,7 @@ function LogoPlaceholder({ name }) {
   );
 }
 
-/* ─── Animated Stat Card ─────────────────────────────────────────────── */
+/* --- Animated Stat Card ----------------------------------------------- */
 function AnimatedStatCard({ label, value, suffix = "", prefix = "", decimals = 0, started }) {
   const numericTarget = parseFloat(value.replace(/[^0-9.]/g, ""));
   const counted = useCounter(numericTarget * Math.pow(10, decimals), 2200, started);
@@ -208,7 +210,7 @@ function AnimatedStatCard({ label, value, suffix = "", prefix = "", decimals = 0
   );
 }
 
-/* ─── Live Ticker Item ───────────────────────────────────────────────── */
+/* --- Live Ticker Item ------------------------------------------------- */
 function LiveTickerItem({ symbol, price, change, positive }) {
   return (
     <div className="flex items-center gap-3 whitespace-nowrap">
@@ -222,9 +224,9 @@ function LiveTickerItem({ symbol, price, change, positive }) {
   );
 }
 
-/* ═══════════════════════════════════════════════════════════════════════
+/* =======================================================================
    MAIN PAGE
-═══════════════════════════════════════════════════════════════════════ */
+======================================================================= */
 
 function CalendlyEmbed() {
   const [loaded, setLoaded] = useState(false);
@@ -325,6 +327,7 @@ function LiveSignalFeed() {
 }
 
 export default function Home() {
+  const [showLoading, setShowLoading] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -393,7 +396,11 @@ export default function Home() {
 
   return (
     <>
-      {/* ── Global keyframe animations ── */}
+      <AnimatePresence>
+        {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
+      </AnimatePresence>
+      <div style={{opacity: showLoading ? 0 : 1, transition: "opacity 0.7s ease", pointerEvents: showLoading ? "none" : "auto"}}>
+      {/* -- Global keyframe animations -- */}
       <style>{`
         @keyframes floatUp {
           0% { transform: translateY(0px) scale(1); }
@@ -444,9 +451,9 @@ export default function Home() {
 
       <main className="min-h-screen bg-[#E6EEF2] text-[#0F1A28] overflow-x-hidden">
 
-        {/* ════════════════════════════════
+        {/* ================================
             NAVBAR
-        ════════════════════════════════ */}
+        ================================ */}
         <nav className={`fixed top-0 left-0 z-50 w-full transition-all duration-300 ${
           scrolled
             ? "border-b border-white/40 bg-[#E6EEF2]/92 shadow-[0_8px_30px_rgba(15,26,40,0.08)] backdrop-blur-xl"
@@ -511,9 +518,9 @@ export default function Home() {
           )}
         </nav>
 
-        {/* ════════════════════════════════
+        {/* ================================
             HERO — Phase 2 Upgraded
-        ════════════════════════════════ */}
+        ================================ */}
         <section id="home" className="relative min-h-screen overflow-hidden px-4 pb-16 pt-24 sm:px-6 sm:pt-28">
 
           {/* Animated gradient background */}
@@ -632,9 +639,9 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ════════════════════════════════
+        {/* ================================
             OVERVIEW
-        ════════════════════════════════ */}
+        ================================ */}
         
         <VisHome />
 
@@ -652,9 +659,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             MARKET DATA
-        ════════════════════════════════ */}
+        ================================ */}
         
         <VisOverview />
 
@@ -674,9 +681,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             FUNDS
-        ════════════════════════════════ */}
+        ================================ */}
         
         <VisMarketData />
 
@@ -711,9 +718,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             INVESTOR FUNNEL
-        ════════════════════════════════ */}
+        ================================ */}
 
         
         <VisFunds />
@@ -762,9 +769,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             SOCIAL PROOF
-        ════════════════════════════════ */}
+        ================================ */}
         
         <VisInvestorFunnel />
 
@@ -796,9 +803,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             ACTIVITY
-        ════════════════════════════════ */}
+        ================================ */}
         <FadeInSection id="activity" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Live Trading Activity</p>
@@ -826,9 +833,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             WHY KCG
-        ════════════════════════════════ */}
+        ================================ */}
         
         <VisActivity />
 
@@ -851,9 +858,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             TRUSTED WORLDWIDE
-        ════════════════════════════════ */}
+        ================================ */}
         <FadeInSection className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl text-center">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Trusted by Traders Worldwide</p>
@@ -862,7 +869,7 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
 
         
         <VisWhyKCG />
@@ -968,9 +975,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             CONTACT FORM
-        ════════════════════════════════ */}
+        ================================ */}
         <FadeInSection id="contact-form" className="px-4 pb-24 sm:px-6">
           <div className="mx-auto grid max-w-6xl gap-10 md:grid-cols-2">
             <div>
@@ -1032,9 +1039,9 @@ export default function Home() {
           </div>
         </FadeInSection>
 
-        {/* ════════════════════════════════
+        {/* ================================
             FOOTER
-        ════════════════════════════════ */}
+        ================================ */}
         <footer className="border-t border-black/5 bg-[#DCE7EE] px-4 py-10 sm:px-6">
           <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
@@ -1059,6 +1066,8 @@ export default function Home() {
         </footer>
 
       </main>
-    </>
+
+      </div>
+        </>
   );
 }
