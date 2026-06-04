@@ -387,7 +387,7 @@ export default function Home() {
     { href: "#activity", label: "Activity" },
     { href: "#why-kcg", label: "Why KCG" },
     { href: "#contact-form", label: "Contact" },
-    { href: "#community", label: "Community" },
+    { href: "https://t.me/KaizenCapitalGroup", label: "Community" },
   ];
 
   return (
