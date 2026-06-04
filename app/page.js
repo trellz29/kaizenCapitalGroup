@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
+import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
 
 /* ─── Animated Counter Hook ─────────────────────────────────────────── */
 function useCounter(target, duration = 2000, start = false) {
@@ -634,6 +635,9 @@ export default function Home() {
         {/* ════════════════════════════════
             OVERVIEW
         ════════════════════════════════ */}
+        
+        <VisHome />
+
         <FadeInSection id="overview" className="px-4 pb-20 sm:px-6 sm:pb-24">
           <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 md:gap-8">
             {[
@@ -651,6 +655,9 @@ export default function Home() {
         {/* ════════════════════════════════
             MARKET DATA
         ════════════════════════════════ */}
+        
+        <VisOverview />
+
         <FadeInSection id="market-data" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Live Market Data</p>
@@ -670,6 +677,9 @@ export default function Home() {
         {/* ════════════════════════════════
             FUNDS
         ════════════════════════════════ */}
+        
+        <VisMarketData />
+
         <FadeInSection id="funds" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -705,6 +715,9 @@ export default function Home() {
             INVESTOR FUNNEL
         ════════════════════════════════ */}
 
+        
+        <VisFunds />
+
         <section id="ai-systems" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5A7188]">AI and Automation</p>
@@ -721,6 +734,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        
+        <VisAISystems />
 
         <FadeInSection id="investor-funnel" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
@@ -749,6 +765,9 @@ export default function Home() {
         {/* ════════════════════════════════
             SOCIAL PROOF
         ════════════════════════════════ */}
+        
+        <VisInvestorFunnel />
+
         <FadeInSection id="social-proof" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Social Proof</p>
@@ -810,6 +829,9 @@ export default function Home() {
         {/* ════════════════════════════════
             WHY KCG
         ════════════════════════════════ */}
+        
+        <VisActivity />
+
         <FadeInSection id="why-kcg" className="bg-gradient-to-br from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Why Choose KCG?</p>
@@ -841,6 +863,9 @@ export default function Home() {
         </FadeInSection>
 
         {/* ════════════════════════════════
+
+        
+        <VisWhyKCG />
 
         <section id="book-a-call" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
@@ -930,6 +955,9 @@ export default function Home() {
             <p className="mt-4 text-xs text-[#5A7188]">Free to join. Updates posted directly to the group.</p>
           </div>
         </section>
+
+        
+        <VisCommunity />
 
         <FadeInSection id="contact" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-5xl rounded-[28px] border border-white/40 bg-white/70 p-8 text-center shadow-[0_20px_60px_rgba(15,26,40,0.08)] backdrop-blur-md sm:rounded-[32px] sm:p-10 md:p-16">
