@@ -64,7 +64,7 @@ function Scene({ children, glowLeft = "58%" }) {
     <div ref={ref} className="kcg-scene">
       <style>{S}</style>
       <Glow left={glowLeft} />
-      <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:72, flexWrap:"wrap", maxWidth:1120, width:"100%", opacity:inView?1:0, transform:inView?"none":"translateY(36px)", transition:"opacity 0.9s ease, transform 0.9s ease" }}>
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"center", gap:72, flexWrap:"wrap", maxWidth:1120, width:"100%", opacity:1, transform:inView?"none":"translateY(36px)", transition:"transform 0.9s ease" }}>
         {children}
       </div>
     </div>
