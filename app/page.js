@@ -26,31 +26,35 @@ function useCounter(target, duration = 2000, start = false) {
 }
 
 /* --- Fade-in Section -------------------------------------------------- */
-function FadeInSection({ children, className = "", id = "" }) {
+function FadeInSection({ children, className = "", id = "", delay = 0 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
     const node = ref.current;
     if (!node) return;
     const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.unobserve(node); } },
-      { threshold: 0.1 }
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect(); } },
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
     );
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
   return (
-    <section
-      id={id || undefined}
+    <div
       ref={ref}
-      className={`${className} transition-all duration-700 ease-out ${visible ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"}`}
+      id={id}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? "none" : "translateY(36px)",
+        transition: "opacity 0.85s cubic-bezier(0.16,1,0.3,1) " + delay + "ms, transform 0.85s cubic-bezier(0.16,1,0.3,1) " + delay + "ms",
+        willChange: "opacity, transform"
+      }}
     >
       {children}
-    </section>
+    </div>
   );
 }
-
-/* --- Floating Particle ------------------------------------------------ */
 function FloatingParticle({ x, y, size, duration, delay, opacity }) {
   return (
     <div
