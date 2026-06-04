@@ -719,7 +719,35 @@ export default function Home() {
               </div>
             </div>
             <p className="mb-12 max-w-3xl text-lg text-[#2E4358]">Explore KCG's live offerings and developing fund structures. Live funds include direct access links where available.</p>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+                          {/* Step 7: Bento grid - fund highlights */}
+              <div style={{ display:"grid", gridTemplateColumns:"repeat(3,1fr)", gap:16, marginBottom:32 }}>
+                <div style={{ gridColumn:"span 2", background:"linear-gradient(135deg,#0F1A28 0%,#1a2f45 100%)", borderRadius:20, padding:"32px 28px", position:"relative", overflow:"hidden", minHeight:180 }}>
+                  <div style={{ position:"absolute", top:-30, right:-30, width:120, height:120, borderRadius:"50%", background:"rgba(34,158,217,0.12)" }} />
+                  <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(34,158,217,0.8)", marginBottom:10 }}>Portfolio Overview</p>
+                  <p style={{ fontSize:28, fontWeight:800, color:"#fff", lineHeight:1.2, marginBottom:8 }}>12 Active Funds</p>
+                  <p style={{ fontSize:13, color:"rgba(255,255,255,0.5)", maxWidth:280 }}>Gold, indices, and multi-asset strategies running across verified brokerages.</p>
+                </div>
+                <div style={{ background:"linear-gradient(135deg,#229ED9 0%,#1a7fad 100%)", borderRadius:20, padding:"28px 24px", display:"flex", flexDirection:"column", justifyContent:"space-between", minHeight:180 }}>
+                  <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(255,255,255,0.7)", marginBottom:8 }}>Avg Monthly</p>
+                  <p style={{ fontSize:36, fontWeight:800, color:"#fff" }}>9.2%</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,0.65)" }}>return across live funds</p>
+                </div>
+                <div style={{ background:"rgba(15,26,40,0.06)", border:"1px solid rgba(15,26,40,0.1)", borderRadius:20, padding:"24px", minHeight:140 }}>
+                  <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:"#5A7188", marginBottom:10 }}>Structure</p>
+                  <p style={{ fontSize:15, fontWeight:600, color:"#0F1A28", lineHeight:1.5 }}>Signal-based copy trading via verified fund managers</p>
+                </div>
+                <div style={{ background:"rgba(15,26,40,0.06)", border:"1px solid rgba(15,26,40,0.1)", borderRadius:20, padding:"24px", minHeight:140 }}>
+                  <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:"#5A7188", marginBottom:10 }}>Access</p>
+                  <p style={{ fontSize:15, fontWeight:600, color:"#0F1A28", lineHeight:1.5 }}>Subscribe directly through broker portals — no lock-in</p>
+                </div>
+                <div style={{ background:"linear-gradient(135deg,#0F1A28 0%,#2E4358 100%)", borderRadius:20, padding:"24px", minHeight:140, display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
+                  <p style={{ fontSize:11, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(34,158,217,0.8)", marginBottom:8 }}>Volume</p>
+                  <p style={{ fontSize:26, fontWeight:800, color:"#fff" }}>$847M+</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,0.5)" }}>tracked across all funds</p>
+                </div>
+              </div>
+
+<div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               <FundCard label="Fund 1" name="KaizenCapitalGroup.Xau-TMGM" focus="Gold trading" strategy="Gold Scalping & Intra-day" managers="1" brokerage="TMGM" status="Live" primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM" secondaryLinks={[{ label: "Ratings", url: "https://ratings.tmgmplatform.com/widgets/shared/5173e304d7494051b27287f70426a327?lang=en%3Fpreview%3DP3U9ODIxMzA2JmE9MTM0NjMmcD0xMzgzNCZ3PTEmcz01MTczZTMwNGQ3NDk0MDUxYjI3Mjg3ZjcwNDI2YTMyNw%3D%3D" }]} />
               <FundCard label="Fund 1a" name="KaizenCapitalGroup.Xau-MB" focus="Gold trading" strategy="Gold Scalping & Intra-day" managers="1" brokerage="MultiBank" status="Live" primaryLink="https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30" />
               <FundCard label="Fund 2" name="TradeXMarkets Fund" focus="Gold & potentially Oil" strategy="Gold Trading & automated trading mix" managers="1" brokerage="MultiBank" status="N/A" />
