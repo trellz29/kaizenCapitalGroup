@@ -2,7 +2,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const WORDS = ["Design", "Create", "Inspire", "Execute", "Deliver"];
+const WORDS = ["Analyse", "Execute", "Compound", "Protect", "Deliver"];
 
 export default function LoadingScreen({ onComplete }) {
   const [count, setCount] = useState(0);
