@@ -3,129 +3,137 @@ import { useEffect, useRef, useState } from "react";
 
 export default function MagneticCursor() {
   const cursorRef = useRef(null);
-  const dotRef = useRef(null);
-  const posRef = useRef({ x: -100, y: -100 });
-  const dotPos = useRef({ x: -100, y: -100 });
-  const [hovered, setHovered] = useState(false);
-  const [clicked, setClicked] = useState(false);
-  const [hidden, setHidden] = useState(false);
+  const trailsRef = useRef([]);
+  const posRef = useRef({ x: -200, y: -200 });
+  const [label, setLabel] = useState("");
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Only on desktop
+    if (typeof window === "undefined") return;
     if (window.matchMedia("(max-width: 768px)").matches) return;
 
-    const cursor = cursorRef.current;
-    const dot = dotRef.current;
-    if (!cursor || !dot) return;
+    setVisible(true);
+
+    const TRAIL_COUNT = 8;
+    const trail = trailsRef.current;
+
+    const positions = Array(TRAIL_COUNT).fill(null).map(() => ({ x: -200, y: -200 }));
 
     let raf;
-
-    const move = (e) => {
-      posRef.current = { x: e.clientX, y: e.clientY };
-    };
-
     const tick = () => {
-      // Dot follows instantly
-      dotPos.current.x += (posRef.current.x - dotPos.current.x) * 0.15;
-      dotPos.current.y += (posRef.current.y - dotPos.current.y) * 0.15;
+      const mx = posRef.current.x;
+      const my = posRef.current.y;
 
-      if (cursor) {
-        cursor.style.transform = `translate(${posRef.current.x - 20}px, ${posRef.current.y - 20}px)`;
+      positions[0].x += (mx - positions[0].x) * 0.28;
+      positions[0].y += (my - positions[0].y) * 0.28;
+
+      for (let i = 1; i < TRAIL_COUNT; i++) {
+        positions[i].x += (positions[i-1].x - positions[i].x) * 0.38;
+        positions[i].y += (positions[i-1].y - positions[i].y) * 0.38;
+        if (trail[i]) {
+          const scale = 1 - i / TRAIL_COUNT;
+          trail[i].style.transform = `translate(${positions[i].x}px, ${positions[i].y}px) translate(-50%,-50%) scale(${scale})`;
+          trail[i].style.opacity = String((1 - i / TRAIL_COUNT) * 0.35);
+        }
       }
-      if (dot) {
-        dot.style.transform = `translate(${dotPos.current.x - 4}px, ${dotPos.current.y - 4}px)`;
+
+      if (cursorRef.current) {
+        cursorRef.current.style.transform = `translate(${mx}px, ${my}px) translate(-50%,-50%)`;
       }
+
       raf = requestAnimationFrame(tick);
     };
 
-    const onEnter = () => setHovered(true);
-    const onLeave = () => setHovered(false);
-    const onDown = () => setClicked(true);
-    const onUp = () => setClicked(false);
-    const onHide = () => setHidden(true);
-    const onShow = () => setHidden(false);
+    const onMove = (e) => {
+      posRef.current = { x: e.clientX, y: e.clientY };
+    };
 
-    window.addEventListener("mousemove", move, { passive: true });
-    window.addEventListener("mousedown", onDown);
-    window.addEventListener("mouseup", onUp);
-    document.addEventListener("mouseleave", onHide);
-    document.addEventListener("mouseenter", onShow);
+    const onEnterLink = (e) => {
+      const el = e.currentTarget;
+      setLabel(el.dataset.cursorLabel || "");
+      if (cursorRef.current) {
+        cursorRef.current.classList.add("kcg-cur-hover");
+      }
+    };
+    const onLeaveLink = () => {
+      setLabel("");
+      if (cursorRef.current) {
+        cursorRef.current.classList.remove("kcg-cur-hover");
+      }
+    };
 
-    const interactables = document.querySelectorAll("a, button, [data-cursor]");
-    interactables.forEach((el) => {
-      el.addEventListener("mouseenter", onEnter);
-      el.addEventListener("mouseleave", onLeave);
-    });
-
+    window.addEventListener("mousemove", onMove, { passive: true });
     raf = requestAnimationFrame(tick);
+
+    const attachLinks = () => {
+      document.querySelectorAll("a, button").forEach(el => {
+        el.addEventListener("mouseenter", onEnterLink);
+        el.addEventListener("mouseleave", onLeaveLink);
+      });
+    };
+    attachLinks();
+    const obs = new MutationObserver(attachLinks);
+    obs.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("mousemove", move);
-      window.removeEventListener("mousedown", onDown);
-      window.removeEventListener("mouseup", onUp);
-      document.removeEventListener("mouseleave", onHide);
-      document.removeEventListener("mouseenter", onShow);
-      interactables.forEach((el) => {
-        el.removeEventListener("mouseenter", onEnter);
-        el.removeEventListener("mouseleave", onLeave);
-      });
+      window.removeEventListener("mousemove", onMove);
+      obs.disconnect();
     };
   }, []);
+
+  if (!visible) return null;
 
   return (
     <>
       <style>{`
-        @media (max-width: 768px) { .kcg-cursor, .kcg-cursor-dot { display: none !important; } }
         * { cursor: none !important; }
-        .kcg-cursor {
-          position: fixed;
-          top: 0; left: 0;
-          width: 40px; height: 40px;
+        @media (max-width: 768px) { * { cursor: auto !important; } .kcg-cur, .kcg-cur-dot { display:none !important; } }
+        .kcg-cur {
+          position: fixed; top: 0; left: 0;
+          width: 36px; height: 36px;
           border-radius: 50%;
-          border: 1.5px solid rgba(15,26,40,0.35);
-          pointer-events: none;
-          z-index: 99999;
-          transition: width 0.25s cubic-bezier(0.16,1,0.3,1),
-                      height 0.25s cubic-bezier(0.16,1,0.3,1),
-                      opacity 0.25s ease,
-                      background 0.25s ease,
-                      border-color 0.25s ease;
-          mix-blend-mode: multiply;
+          border: 1.5px solid rgba(15,26,40,0.6);
+          pointer-events: none; z-index: 99999;
+          transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+          display: flex; align-items: center; justify-content: center;
           will-change: transform;
+          mix-blend-mode: multiply;
         }
-        .kcg-cursor.hovered {
-          width: 60px; height: 60px;
-          background: rgba(15,26,40,0.07);
-          border-color: rgba(15,26,40,0.55);
+        .kcg-cur.kcg-cur-hover {
+          width: 64px; height: 64px;
+          background: rgba(15,26,40,0.08);
+          border-color: rgba(15,26,40,0.9);
         }
-        .kcg-cursor.clicked {
-          width: 30px; height: 30px;
-          background: rgba(15,26,40,0.15);
+        .kcg-cur-label {
+          font-size: 9px; font-weight: 700; letter-spacing: 0.12em;
+          text-transform: uppercase; color: #0F1A28;
+          opacity: 0; transition: opacity 0.15s ease;
+          white-space: nowrap;
         }
-        .kcg-cursor.hidden { opacity: 0; }
-        .kcg-cursor-dot {
-          position: fixed;
-          top: 0; left: 0;
-          width: 8px; height: 8px;
+        .kcg-cur.kcg-cur-hover .kcg-cur-label { opacity: 1; }
+        .kcg-cur-trail {
+          position: fixed; top: 0; left: 0;
+          width: 10px; height: 10px;
           background: #0F1A28;
           border-radius: 50%;
-          pointer-events: none;
-          z-index: 99999;
-          transition: opacity 0.2s ease, width 0.15s ease, height 0.15s ease;
-          will-change: transform;
+          pointer-events: none; z-index: 99998;
+          will-change: transform, opacity;
         }
-        .kcg-cursor-dot.hidden { opacity: 0; }
-        .kcg-cursor-dot.hovered { width: 6px; height: 6px; opacity: 0.4; }
       `}</style>
-      <div
-        ref={cursorRef}
-        className={`kcg-cursor${hovered ? " hovered" : ""}${clicked ? " clicked" : ""}${hidden ? " hidden" : ""}`}
-      />
-      <div
-        ref={dotRef}
-        className={`kcg-cursor-dot${hidden ? " hidden" : ""}${hovered ? " hovered" : ""}`}
-      />
+
+      {Array(8).fill(null).map((_, i) => (
+        <div
+          key={i}
+          ref={el => { trailsRef.current[i] = el; }}
+          className="kcg-cur-trail"
+          style={{ width: 10 - i, height: 10 - i }}
+        />
+      ))}
+
+      <div ref={cursorRef} className="kcg-cur">
+        <span className="kcg-cur-label">{label}</span>
+      </div>
     </>
   );
 }

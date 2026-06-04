@@ -15,6 +15,29 @@ import FloatingOrbs from "./components/FloatingOrbs";
 import SmoothScroll from "./components/SmoothScroll";
 import AnimatedBackground from "./components/AnimatedBackground";
 
+/* --- Scroll Progress Bar --------------------------------------------- */
+function ScrollProgress() {
+  const barRef = useRef(null);
+  useEffect(() => {
+    const onScroll = () => {
+      const bar = barRef.current;
+      if (!bar) return;
+      const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+      bar.style.transform = `scaleX(${Math.min(pct, 1)})`;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <div style={{ position:"fixed", top:0, left:0, right:0, height:"2px", zIndex:99997, background:"rgba(15,26,40,0.08)" }}>
+      <div ref={barRef} style={{
+        height:"100%", background:"linear-gradient(90deg,#0F1A28,#5A7188,#9FB4C1)",
+        transformOrigin:"left", transform:"scaleX(0)", transition:"transform 0.1s linear"
+      }} />
+    </div>
+  );
+}
+
 /* --- Animated Counter Hook ------------------------------------------- */
 function useCounter(target, duration = 2000, start = false) {
   const [value, setValue] = useState(0);
@@ -414,6 +437,7 @@ export default function Home() {
         {showLoading && <LoadingScreen onComplete={() => setShowLoading(false)} />}
       </AnimatePresence>
       <MagneticCursor />
+      <ScrollProgress />
       <GrainOverlay />
       <FloatingOrbs />
       <SmoothScroll />
@@ -504,6 +528,15 @@ export default function Home() {
           transform: scale(1.05);
         }
         html { scroll-behavior: smooth; }
+        .kcg-section-divider {
+          height: 1px;
+          background: linear-gradient(90deg, transparent, rgba(15,26,40,0.12), transparent);
+          margin: 0;
+        }
+        @keyframes kcgRevealUp {
+          from { opacity:0; transform:translateY(50px); }
+          to { opacity:1; transform:translateY(0); }
+        }
       `}</style>
 
       <main className="min-h-screen bg-[#E6EEF2] text-[#0F1A28] overflow-x-hidden">
@@ -578,35 +611,9 @@ export default function Home() {
         {/* ================================
             HERO — Phase 2 Upgraded
         ================================ */}
-        <section id="home" className="relative min-h-screen overflow-hidden px-4 pb-16 pt-24 sm:px-6 sm:pt-28">
+        <section id="home" className="relative min-h-screen overflow-hidden" style={{ minHeight: "100vh" }}>
 
-          {/* Animated gradient background */}
-          <div className="absolute inset-0 hero-gradient" />
-
-          {/* Floating particles */}
-          <div className="absolute inset-0 overflow-hidden">
-            {particles.map((p) => (
-              <FloatingParticle key={p.id} {...p} />
-            ))}
-          </div>
-
-          {/* Subtle grid overlay */}
-          <div
-            className="absolute inset-0 opacity-[0.035]"
-            style={{
-              backgroundImage: `linear-gradient(#0F1A28 1px, transparent 1px), linear-gradient(90deg, #0F1A28 1px, transparent 1px)`,
-              backgroundSize: "60px 60px",
-            }}
-          />
-
-          {/* Glowing orbs */}
-          <div className="absolute top-1/4 left-1/4 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#9FB4C1]/20 blur-[100px] pointer-events-none" style={{ animation: "pulseGlow 6s ease-in-out infinite" }} />
-          <div className="absolute top-2/3 right-1/4 h-64 w-64 rounded-full bg-[#C9D8E2]/25 blur-[80px] pointer-events-none" style={{ animation: "pulseGlow 8s ease-in-out 2s infinite" }} />
-
-          {/* Particle network */}
-          <AnimatedBackground />
-
-          {/* Content */}
+          {/* Content - HeroGSAP handles its own bg, canvas, particles */}
           <HeroGSAP />
           <div style={{display:"none"}} className="relative z-10 mx-auto max-w-6xl">
 
@@ -1008,14 +1015,14 @@ export default function Home() {
                 <div className="mb-4 rounded-xl bg-[#F3F7FA] px-3 py-1.5 text-xs font-semibold text-[#2E4358]">Referral: IB1750127193A</div>
                 <span className="mt-auto inline-flex items-center gap-2 rounded-full bg-[#0F1A28] px-5 py-2.5 text-sm font-semibold text-white transition group-hover:bg-[#1A2A3D]">Open Account →</span>
               </a>
-              <a href="https://tradfi.multibankgroup.com/en/account/live-account?ibNum=8836606" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
+              <a href="https://tradfi.multibankgroup.com/en/account/live-account?ibNum=8836606" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md kcg-glow-border kcg-hover-lift">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl font-black text-white">MB</div>
                 <h3 className="mb-1 text-xl font-bold text-[#0F1A28]">MultiBank</h3>
                 <p className="mb-4 text-center text-sm text-[#5A7188]">One of the world's largest financial derivatives providers, regulated globally. Used for Fund 1a.</p>
                 <div className="mb-4 rounded-xl bg-[#F3F7FA] px-3 py-1.5 text-xs font-semibold text-[#2E4358]">IB: 8836606</div>
                 <span className="mt-auto inline-flex items-center gap-2 rounded-full bg-[#0F1A28] px-5 py-2.5 text-sm font-semibold text-white transition group-hover:bg-[#1A2A3D]">Open Account →</span>
               </a>
-              <a href="https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md transition hover:-translate-y-1 hover:shadow-md">
+              <a href="https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B" target="_blank" rel="noopener noreferrer" className="group flex flex-col items-center rounded-3xl border border-white/60 bg-white/75 p-8 shadow-sm backdrop-blur-md kcg-glow-border kcg-hover-lift">
                 <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#0F1A28] text-2xl font-black text-white">GX</div>
                 <h3 className="mb-1 text-xl font-bold text-[#0F1A28]">GenesisFX</h3>
                 <p className="mb-4 text-center text-sm text-[#5A7188]">Specialist forex broker with competitive spreads and dedicated support.</p>
@@ -1027,8 +1034,9 @@ export default function Home() {
         </section>
 
 
-        <section id="community" className="bg-[#0F1A28] px-4 py-20 sm:px-6 sm:py-24">
-          <div className="mx-auto max-w-6xl text-center">
+        <section id="community" className="relative px-4 py-20 sm:px-6 sm:py-24 overflow-hidden" style={{ background:"linear-gradient(135deg,#050d18 0%,#0a1628 50%,#050d18 100%)" }}>
+          <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:"60vw", height:"60vw", maxWidth:700, maxHeight:700, borderRadius:"50%", background:"radial-gradient(circle, rgba(100,140,180,0.07) 0%, transparent 65%)", pointerEvents:"none" }} />
+          <div className="mx-auto max-w-6xl text-center" style={{ position:"relative", zIndex:1 }}>
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#9FB4C1]">Join the Community</p>
             <h2 className="mb-4 text-4xl font-bold text-white md:text-5xl">Don't invest alone.</h2>
             <p className="mx-auto mb-12 max-w-2xl text-lg text-[#9FB4C1]">Join thousands of traders and investors in the KCG community. Get live signals, market updates, fund news, and direct access to the KCG team — completely free.</p>
