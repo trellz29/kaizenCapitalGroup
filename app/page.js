@@ -1052,22 +1052,15 @@ export default function Home() {
         ================================ */}
         
         {/* Step 5: Marquee strip */}
-        <div style={{ background:"#0a1628", overflow:"hidden", padding:"18px 0", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
-          <style>{`
-            @keyframes kcgMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-            .kcg-marquee-track { display: flex; width: max-content; animation: kcgMarquee 22s linear infinite; }
-            .kcg-marquee-track:hover { animation-play-state: paused; }
-            .kcg-marquee-item { display: flex; align-items: center; gap: 20px; padding: 0 28px; white-space: nowrap; }
-            .kcg-marquee-word { font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); font-family: sans-serif; }
-            .kcg-marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(34,158,217,0.6); flex-shrink: 0; }
-          `}</style>
-          <div className="kcg-marquee-track">
+        <div style={{ background:"#07111f", overflow:"hidden", padding:"16px 0", borderTop:"1px solid rgba(255,255,255,0.07)" }}>
+          <style>{`@keyframes kcgMq{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}`}</style>
+          <div style={{ display:"flex", width:"max-content", animation:"kcgMq 24s linear infinite" }}>
             {[...Array(2)].map((_,rep) => (
               <div key={rep} style={{ display:"flex" }}>
                 {["BUILDING THE FUTURE","DISCIPLINED EXECUTION","KAIZEN CAPITAL GROUP","12 ACTIVE FUNDS","INSTITUTIONAL GRADE","LONG-TERM GROWTH","CAPITAL STRATEGY","VERIFIED RESULTS","BUILDING THE FUTURE","DISCIPLINED EXECUTION","KAIZEN CAPITAL GROUP","12 ACTIVE FUNDS"].map((w,i) => (
-                  <div key={i} className="kcg-marquee-item">
-                    <span className="kcg-marquee-word">{w}</span>
-                    <span className="kcg-marquee-dot" />
+                  <div key={i} style={{ display:"flex", alignItems:"center", gap:18, padding:"0 24px", whiteSpace:"nowrap" }}>
+                    <span style={{ fontSize:11, fontWeight:700, letterSpacing:"0.22em", textTransform:"uppercase", color:"rgba(255,255,255,0.35)", fontFamily:"sans-serif" }}>{w}</span>
+                    <span style={{ width:4, height:4, borderRadius:"50%", background:"rgba(34,158,217,0.55)", flexShrink:0, display:"block" }} />
                   </div>
                 ))}
               </div>
