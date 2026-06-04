@@ -647,6 +647,17 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Step 6: Animated stats bar */}
+        <div id="stats-bar" style={{ background:"#E6EEF2", padding:"48px 24px", borderBottom:"1px solid rgba(15,26,40,0.08)" }}>
+          <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:24 }}>
+            <AnimatedStatCard label="Funds Active" value="12" started={true} />
+            <AnimatedStatCard label="Active Users" value="4" started={true} />
+            <AnimatedStatCard label="Avg Monthly Return" value="9.2" suffix="%" decimals={1} started={true} />
+            <AnimatedStatCard label="Total Volume" value="847200000" prefix="$" started={true} />
+          </div>
+        </div>
+
+
         {/* ================================
             OVERVIEW
         ================================ */}
