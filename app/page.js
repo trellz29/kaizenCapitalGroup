@@ -551,7 +551,7 @@ export default function Home() {
 
           {/* Content */}
           <HeroGSAP />
-          <div className="relative z-10 mx-auto max-w-6xl">
+          <div style={{display:"none"}} className="relative z-10 mx-auto max-w-6xl">
 
             {/* Eyebrow badge */}
             <div
