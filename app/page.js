@@ -14,6 +14,10 @@ import TextReveal from "./components/TextReveal";
 import FloatingOrbs from "./components/FloatingOrbs";
 import SmoothScroll from "./components/SmoothScroll";
 import AnimatedBackground from "./components/AnimatedBackground";
+import KineticText from "./components/KineticText";
+import MagneticButton from "./components/MagneticButton";
+import CounterFlip from "./components/CounterFlip";
+import NeonCard from "./components/NeonCard";
 
 /* --- Scroll Progress Bar --------------------------------------------- */
 function ScrollProgress() {
@@ -143,33 +147,33 @@ function FundCard({ label, name, focus, strategy, managers, brokerage, status, e
     ? "from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]"
     : "from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4]";
   return (
-    <TiltCard className="group relative overflow-hidden rounded-3xl border border-white/60 bg-white/75 p-5 shadow-[0_12px_40px_rgba(15,26,40,0.06)] backdrop-blur-md kcg-glow-border sm:p-6 lg:p-8">
+    <NeonCard className="group relative overflow-hidden rounded-3xl p-5 sm:p-6 lg:p-8" style={{ background: statusLower === "live" ? "linear-gradient(135deg,#0d1e34,#0f2040)" : "rgba(255,255,255,0.75)", backdropFilter:"blur(12px)" }} color={statusLower === "live" ? "100,180,140" : "159,180,193"}>
       <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentClass}`} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] text-[#5A7188] sm:text-xs">{label}</p>
-          <h3 className="break-words text-xl font-bold leading-tight text-[#0F1A28] sm:text-2xl">{name}</h3>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] sm:text-xs" style={{ color: statusLower === "live" ? "rgba(159,180,193,0.7)" : "#5A7188" }}>{label}</p>
+          <h3 className="break-words text-xl font-bold leading-tight sm:text-2xl" style={{ color: statusLower === "live" ? "#fff" : "#0F1A28" }}>{name}</h3>
         </div>
         <span className={`w-fit shrink-0 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] sm:text-xs ${statusClass}`}>{status}</span>
       </div>
-      <div className="mt-5 grid gap-3 text-sm leading-6 text-[#2E4358]">
-        <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><span className="font-semibold text-[#0F1A28]">Focus:</span> {focus}</div>
-        <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><span className="font-semibold text-[#0F1A28]">Strategy:</span> {strategy}</div>
+      <div className="mt-5 grid gap-3 text-sm leading-6" style={{ color: statusLower === "live" ? "rgba(200,220,235,0.8)" : "#2E4358" }}>
+        <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Focus:</span> {focus}</div>
+        <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Strategy:</span> {strategy}</div>
         <div className="grid gap-3 sm:grid-cols-2">
-          <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><span className="font-semibold text-[#0F1A28]">Managers:</span> {managers}</div>
-          <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><span className="font-semibold text-[#0F1A28]">Brokerage:</span> {brokerage}</div>
+          <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Managers:</span> {managers}</div>
+          <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Brokerage:</span> {brokerage}</div>
         </div>
-        {extra && <div className="rounded-2xl bg-[#F7FAFC]/80 px-4 py-3"><span className="font-semibold text-[#0F1A28]">Notes:</span> {extra}</div>}
+        {extra && <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Notes:</span> {extra}</div>}
       </div>
       {(primaryLink || secondaryLinks.length > 0) && (
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {primaryLink && <a href={primaryLink} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[#0F1A28] px-5 py-2 text-center text-sm font-semibold text-white transition hover:scale-105 hover:bg-[#1A2A3D]">Get Started</a>}
+          {primaryLink && <MagneticButton href={primaryLink} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2 text-center text-sm font-semibold text-white transition" style={{ background: statusLower === "live" ? "linear-gradient(135deg,#1a6b45,#0f4a30)" : "#0F1A28" }}>Get Started</MagneticButton>}
           {secondaryLinks.map((link, i) => (
-            <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="rounded-full border border-[#2E4358] bg-white/60 px-5 py-2 text-center text-sm font-semibold text-[#0F1A28] transition hover:scale-105 hover:bg-[#EDF4F8]">{link.label}</a>
+            <MagneticButton key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="rounded-full border px-5 py-2 text-center text-sm font-semibold transition" style={{ borderColor: statusLower === "live" ? "rgba(159,180,193,0.3)" : "#2E4358", background: statusLower === "live" ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)", color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>{link.label}</MagneticButton>
           ))}
         </div>
       )}
-    </TiltCard>
+    </NeonCard>
   );
 }
 
@@ -528,6 +532,8 @@ export default function Home() {
           transform: scale(1.05);
         }
         html { scroll-behavior: smooth; }
+        @keyframes kcgTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-33.333%); } }
+        @keyframes kcgFadeInChar { from { transform: translateY(100%) rotateX(-90deg); opacity: 0; } to { transform: translateY(0) rotateX(0deg); opacity: 1; } }
         .kcg-section-divider {
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(15,26,40,0.12), transparent);
@@ -708,12 +714,23 @@ export default function Home() {
         </section>
 
         {/* Step 6: Animated stats bar */}
-        <div id="stats-bar" style={{ background:"#E6EEF2", padding:"48px 24px", borderBottom:"1px solid rgba(15,26,40,0.08)" }}>
+        <div id="stats-bar" style={{ background:"linear-gradient(135deg,#0a1628 0%,#0d1e34 50%,#091422 100%)", padding:"56px 24px", borderBottom:"1px solid rgba(255,255,255,0.06)", position:"relative", overflow:"hidden" }}>
+          <div style={{ position:"absolute", top:"50%", left:"50%", transform:"translate(-50%,-50%)", width:"80%", height:"2px", background:"linear-gradient(90deg,transparent,rgba(159,180,193,0.15),transparent)", pointerEvents:"none" }} />
           <div style={{ maxWidth:1100, margin:"0 auto", display:"grid", gridTemplateColumns:"repeat(4,1fr)", gap:24 }}>
-            <AnimatedStatCard label="Funds Active" value="12" started={true} />
-            <AnimatedStatCard label="Active Users" value="4" started={true} />
-            <AnimatedStatCard label="Avg Monthly Return" value="9.2" suffix="%" decimals={1} started={true} />
-            <AnimatedStatCard label="Total Volume" value="847200000" prefix="$" started={true} />
+            {[
+              { label:"Active Funds", value:12, suffix:"", prefix:"" },
+              { label:"Active Users", value:4, suffix:"+", prefix:"" },
+              { label:"Avg Monthly Return", value:9.2, suffix:"%", prefix:"", decimals:1 },
+              { label:"Total Volume", value:847, suffix:"M+", prefix:"$" },
+            ].map((stat, i) => (
+              <div key={i} style={{ textAlign:"center", padding:"16px 0" }}>
+                <div style={{ fontSize:"clamp(2rem,4vw,3.2rem)", fontWeight:800, color:"#fff", letterSpacing:"-0.03em", lineHeight:1, fontFamily:"sans-serif" }}>
+                  <CounterFlip value={stat.value} prefix={stat.prefix} suffix={stat.suffix} decimals={stat.decimals || 0} duration={2200} />
+                </div>
+                <div style={{ marginTop:8, fontSize:11, fontWeight:700, letterSpacing:"0.2em", textTransform:"uppercase", color:"rgba(159,180,193,0.6)", fontFamily:"sans-serif" }}>{stat.label}</div>
+                <div style={{ marginTop:12, height:1, background:"linear-gradient(90deg,transparent,rgba(159,180,193,0.2),transparent)" }} />
+              </div>
+            ))}
           </div>
         </div>
 
@@ -723,6 +740,22 @@ export default function Home() {
         ================================ */}
         
         <VisHome />
+
+        {/* Kinetic marquee strip */}
+        <div style={{ background:"#0a1628", overflow:"hidden", padding:"18px 0", borderTop:"1px solid rgba(255,255,255,0.05)", borderBottom:"1px solid rgba(255,255,255,0.05)" }}>
+          <div style={{ display:"flex", animation:"kcgTicker 25s linear infinite", whiteSpace:"nowrap" }}>
+            {[...Array(3)].map((_, si) => (
+              <div key={si} style={{ display:"flex", alignItems:"center", gap:0, flexShrink:0 }}>
+                {["INSTITUTIONAL EXECUTION", "DISCIPLINED CAPITAL", "12 ACTIVE FUNDS", "VERIFIED STRATEGIES", "LONG-TERM GROWTH", "KAIZEN CAPITAL GROUP", "COPY TRADING LIVE", "RISK MANAGED RETURNS"].map((item, i) => (
+                  <span key={i} style={{ display:"inline-flex", alignItems:"center", gap:24, paddingRight:48 }}>
+                    <span style={{ fontSize:11, fontWeight:700, letterSpacing:"0.25em", color:"rgba(159,180,193,0.5)", fontFamily:"sans-serif", textTransform:"uppercase" }}>{item}</span>
+                    <span style={{ width:4, height:4, borderRadius:"50%", background:"rgba(159,180,193,0.25)", flexShrink:0 }} />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
 
         <FadeInSection id="overview" className="px-4 pb-20 sm:px-6 sm:pb-24">
           <div className="mx-auto grid max-w-6xl gap-6 md:grid-cols-2 md:gap-8">
@@ -766,12 +799,12 @@ export default function Home() {
         
         <VisMarketData />
 
-        <FadeInSection id="funds" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
+        <FadeInSection id="funds" className="px-4 py-20 sm:px-6 sm:py-24" style={{ background:"linear-gradient(180deg,#0a1628 0%,#0d1e34 100%)" }}>
           <div className="mx-auto max-w-6xl">
             <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
               <div>
-                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">KCG Multiplied Funds</p>
-                <h2 className="text-4xl font-bold text-[#0F1A28] md:text-5xl">Live funds, developing systems, and structured strategies across KCG.</h2>
+                <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em]" style={{ color:"rgba(159,180,193,0.7)" }}>KCG Multiplied Funds</p>
+                <KineticText as="h2" className="text-4xl font-bold md:text-5xl" style={{ color:"#fff" }}>Live funds, developing systems, and structured strategies across KCG.</KineticText>
               </div>
               <div className="rounded-2xl border border-white/50 bg-white/70 px-5 py-4 shadow-sm backdrop-blur-md">
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-[#5A7188]">Premium Section</p>
@@ -887,7 +920,7 @@ export default function Home() {
         <FadeInSection id="social-proof" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Social Proof</p>
-            <TextReveal as="h2" className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">Built for credibility, reinforced by presentation, consistency, and long-term brand trust.</TextReveal>
+            <KineticText as="h2" className="max-w-4xl text-4xl font-bold leading-tight text-[#0F1A28] md:text-5xl">Built for credibility, reinforced by presentation, consistency, and long-term brand trust.</KineticText>
             <p className="mt-6 max-w-3xl text-lg text-[#2E4358]">This section creates the structure for investor confidence by showcasing testimonials, future proof points, and trusted partner visibility in one place.</p>
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               {[{ label: "Reputation", title: "Premium Brand Positioning", body: "KCG is presented as a structured, disciplined, investor-facing brand built for long-term credibility." }, { label: "Access", title: "Live + Developing Strategies", body: "The site is structured to present live funds, future strategies, and multiple entry paths for capital conversations." }, { label: "Trust", title: "Investor Inquiry Flow", body: "Serious inquiries are guided into a more qualified, structured, and institutionally aligned contact experience." }].map((c) => (
@@ -918,7 +951,7 @@ export default function Home() {
         <FadeInSection id="activity" className="px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Live Trading Activity</p>
-            <TextReveal as="h2" className="mb-10 text-4xl font-bold text-[#0F1A28] md:text-5xl">Live-style activity feed for your future execution flow.</TextReveal>
+            <KineticText as="h2" className="mb-10 text-4xl font-bold text-[#0F1A28] md:text-5xl">Live-style activity feed for your future execution flow.</KineticText>
             <div className="grid gap-4">
               {[
                 { action: "BUY XAUUSD", fund: "KaizenCapitalGroup.Xau-TMGM", lots: "0.10 lots", result: "+12.4 pips" },
@@ -973,7 +1006,7 @@ export default function Home() {
         <FadeInSection className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl text-center">
             <p className="mb-4 text-sm font-semibold uppercase tracking-[0.2em] text-[#5A7188]">Trusted by Traders Worldwide</p>
-            <TextReveal as="h2" className="mx-auto max-w-4xl text-4xl font-bold text-[#0F1A28] md:text-5xl">Built to support a growing global KCG presence across traders, clients, and capital partners.</TextReveal>
+            <KineticText as="h2" className="mx-auto max-w-4xl text-4xl font-bold text-[#0F1A28] md:text-5xl">Built to support a growing global KCG presence across traders, clients, and capital partners.</KineticText>
             <p className="mx-auto mt-6 max-w-3xl text-lg text-[#2E4358]">This section is now reinforced by your social proof block, testimonial structure, and partner logo framework as the platform continues to grow.</p>
           </div>
         </FadeInSection>
@@ -986,7 +1019,7 @@ export default function Home() {
         <section id="book-a-call" className="bg-[#F3F7FA] px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5A7188]">Start a Conversation</p>
-            <TextReveal as="h2" className="mb-8 text-4xl font-bold text-[#0F1A28] md:text-5xl">Book a call or message directly.</TextReveal>
+            <KineticText as="h2" className="mb-8 text-4xl font-bold text-[#0F1A28] md:text-5xl">Book a call or message directly.</KineticText>
             <div className="grid gap-8 lg:grid-cols-3">
               <div className="lg:col-span-2">
                 <p className="mb-4 text-sm font-bold uppercase tracking-widest text-[#5A7188]">Schedule a 30-Minute Call</p>
@@ -1003,7 +1036,7 @@ export default function Home() {
         <section id="brokerages" className="bg-white/50 px-4 py-20 sm:px-6 sm:py-24">
           <div className="mx-auto max-w-6xl">
             <p className="mb-3 text-sm font-bold uppercase tracking-[0.2em] text-[#5A7188]">Required Partners</p>
-            <TextReveal as="h2" className="mb-4 text-4xl font-bold text-[#0F1A28] md:text-5xl">Approved Brokerages</TextReveal>
+            <KineticText as="h2" className="mb-4 text-4xl font-bold text-[#0F1A28] md:text-5xl">Approved Brokerages</KineticText>
             <div className="mb-10 rounded-2xl border border-[#C9D8E2] bg-[#F3F7FA] px-6 py-5">
               <p className="text-[#0F1A28] font-semibold text-lg">⚠️ Important: To invest with KCG, you must hold a live account with one of our approved brokerage partners below. All KCG funds are deployed exclusively through these platforms.</p>
             </div>
