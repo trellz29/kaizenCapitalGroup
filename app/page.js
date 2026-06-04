@@ -1050,6 +1050,31 @@ export default function Home() {
         {/* ================================
             FOOTER
         ================================ */}
+        
+        {/* Step 5: Marquee strip */}
+        <div style={{ background:"#0a1628", overflow:"hidden", padding:"18px 0", borderTop:"1px solid rgba(255,255,255,0.06)" }}>
+          <style>{`
+            @keyframes kcgMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+            .kcg-marquee-track { display: flex; width: max-content; animation: kcgMarquee 22s linear infinite; }
+            .kcg-marquee-track:hover { animation-play-state: paused; }
+            .kcg-marquee-item { display: flex; align-items: center; gap: 20px; padding: 0 28px; white-space: nowrap; }
+            .kcg-marquee-word { font-size: 12px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.38); font-family: sans-serif; }
+            .kcg-marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(34,158,217,0.6); flex-shrink: 0; }
+          `}</style>
+          <div className="kcg-marquee-track">
+            {[...Array(2)].map((_,rep) => (
+              <div key={rep} style={{ display:"flex" }}>
+                {["BUILDING THE FUTURE","DISCIPLINED EXECUTION","KAIZEN CAPITAL GROUP","12 ACTIVE FUNDS","INSTITUTIONAL GRADE","LONG-TERM GROWTH","CAPITAL STRATEGY","VERIFIED RESULTS","BUILDING THE FUTURE","DISCIPLINED EXECUTION","KAIZEN CAPITAL GROUP","12 ACTIVE FUNDS"].map((w,i) => (
+                  <div key={i} className="kcg-marquee-item">
+                    <span className="kcg-marquee-word">{w}</span>
+                    <span className="kcg-marquee-dot" />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+
         <footer className="border-t border-black/5 bg-[#DCE7EE] px-4 py-10 sm:px-6">
           <div className="mx-auto flex max-w-6xl flex-col gap-6 md:flex-row md:items-center md:justify-between">
             <div>
