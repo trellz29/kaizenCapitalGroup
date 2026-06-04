@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { AnimatePresence } from "framer-motion";
 import LoadingScreen from "./components/LoadingScreen";
 import PillNav from "./components/PillNav";
+import HeroGSAP from "./components/HeroGSAP";
 import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
 
 /* --- Animated Counter Hook ------------------------------------------- */
@@ -549,6 +550,7 @@ export default function Home() {
           <div className="absolute top-2/3 right-1/4 h-64 w-64 rounded-full bg-[#C9D8E2]/25 blur-[80px] pointer-events-none" style={{ animation: "pulseGlow 8s ease-in-out 2s infinite" }} />
 
           {/* Content */}
+          <HeroGSAP />
           <div className="relative z-10 mx-auto max-w-6xl">
 
             {/* Eyebrow badge */}
