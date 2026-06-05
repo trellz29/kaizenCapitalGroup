@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-/* ─── Animated line chart ─────────────────────────────────────────── */
+/* ??? Animated line chart ??????????????????????????????????????????? */
 function MiniChart({ data, color = "#00E87A", height = 60, animated = false }) {
   const canvasRef = useRef(null);
   const [progress, setProgress] = useState(animated ? 0 : 1);
@@ -71,7 +71,7 @@ function MiniChart({ data, color = "#00E87A", height = 60, animated = false }) {
   return <canvas ref={canvasRef} width={300} height={height} style={{ width: "100%", height }} />;
 }
 
-/* ─── Counter that counts up ──────────────────────────────────────── */
+/* ??? Counter that counts up ???????????????????????????????????????? */
 function LiveCounter({ value, prefix = "", suffix = "", decimals = 0, duration = 2000, started }) {
   const [display, setDisplay] = useState(prefix + "0" + suffix);
   useEffect(() => {
@@ -94,7 +94,7 @@ function LiveCounter({ value, prefix = "", suffix = "", decimals = 0, duration =
   return <span style={{ fontVariantNumeric: "tabular-nums" }}>{display}</span>;
 }
 
-/* ─── Blinking terminal cursor ────────────────────────────────────── */
+/* ??? Blinking terminal cursor ?????????????????????????????????????? */
 function TerminalCursor() {
   const [on, setOn] = useState(true);
   useEffect(() => {
@@ -104,7 +104,7 @@ function TerminalCursor() {
   return <span style={{ opacity: on ? 1 : 0, color: "#00E87A" }}>█</span>;
 }
 
-/* ─── Main component ──────────────────────────────────────────────── */
+/* ??? Main component ???????????????????????????????????????????????? */
 const FUND_DATA = [
   { name: "KaizenCapitalGroup.Xau-TMGM", ticker: "XAUT1", ret: "+9.4%", aum: "$124K", status: "LIVE", data: [1,1.2,1.1,1.4,1.3,1.6,1.5,1.8,1.7,2.1,2.0,2.3,2.2,2.6,2.5,2.9,2.8,3.1,3.0,3.4] },
   { name: "KaizenCapitalGroup.Xau-MB", ticker: "XAUMB", ret: "+11.2%", aum: "$87K", status: "LIVE", data: [1,1.1,1.3,1.2,1.5,1.4,1.7,1.6,2.0,1.9,2.2,2.1,2.5,2.4,2.8,2.7,3.0,3.2,3.1,3.5] },
@@ -233,7 +233,7 @@ export default function BloombergDashboard() {
             ))}
           </div>
 
-          {/* Right panel — selected fund detail */}
+          {/* Right panel ? selected fund detail */}
           <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: 16 }}>
             <div>
               <div style={{ ...styles.label, marginBottom: 4 }}>SELECTED FUND</div>

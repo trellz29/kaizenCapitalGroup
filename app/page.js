@@ -11,13 +11,14 @@ import HeroGlobe from "./components/HeroGlobe";
 import EcosystemViz from "./components/EcosystemViz";
 import BloombergDashboard from "./components/BloombergDashboard";
 import GlobalCapitalMap from "./components/GlobalCapitalMap";
+import HorizontalFundScroll from "./components/HorizontalFundScroll";
 import MagneticCursor from "./components/MagneticCursor";
 import KineticText from "./components/KineticText";
 import CounterFlip from "./components/CounterFlip";
 import SlideReveal from "./components/SlideReveal";
 import StaggerGrid from "./components/StaggerGrid";
 
-/* ─── TradingView widget ─────────────────────────────────────────── */
+/* --- TradingView widget ------------------------------------------- */
 function TradingViewWidget({ widgetType, config, minHeight }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -33,7 +34,7 @@ function TradingViewWidget({ widgetType, config, minHeight }) {
   return <div ref={ref} style={{ minHeight }} />;
 }
 
-/* ─── Calendly widget ────────────────────────────────────────────── */
+/* --- Calendly widget ---------------------------------------------- */
 function CalendlyWidget() {
   const [loaded, setLoaded] = useState(false);
   useEffect(() => {
@@ -49,7 +50,7 @@ function CalendlyWidget() {
   );
 }
 
-/* ─── Section wrapper ────────────────────────────────────────────── */
+/* --- Section wrapper ---------------------------------------------- */
 function Scene({ id, children, className = "", style = {} }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
@@ -72,7 +73,7 @@ function Scene({ id, children, className = "", style = {} }) {
   );
 }
 
-/* ─── Scroll progress bar ────────────────────────────────────────── */
+/* --- Scroll progress bar ------------------------------------------ */
 function ScrollProgress() {
   const barRef = useRef(null);
   useEffect(() => {
@@ -90,7 +91,7 @@ function ScrollProgress() {
   );
 }
 
-/* ─── Bento stats card ───────────────────────────────────────────── */
+/* --- Bento stats card --------------------------------------------- */
 function BentoStat({ num, label, prefix = "", suffix = "", accent }) {
   return (
     <div style={{
@@ -107,7 +108,7 @@ function BentoStat({ num, label, prefix = "", suffix = "", accent }) {
   );
 }
 
-/* ─── GLOBAL CSS ─────────────────────────────────────────────────── */
+/* --- GLOBAL CSS --------------------------------------------------- */
 const GLOBAL_CSS = `
   *, *::before, *::after { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -133,7 +134,7 @@ const GLOBAL_CSS = `
   .marquee-track { display:flex; animation:kcgTicker 30s linear infinite; white-space:nowrap; }
 `;
 
-/* ─── MAIN PAGE ──────────────────────────────────────────────────── */
+/* --- MAIN PAGE ---------------------------------------------------- */
 export default function Home() {
   const [showLoader, setShowLoader] = useState(true);
 
@@ -155,17 +156,17 @@ export default function Home() {
         <ScrollProgress />
         <CinematicNav />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 1 — HERO
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <section id="home" style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
           <CinematicHero />
           <HeroGlobe />
         </section>
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             TICKER STRIP
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <div style={{ background: "#070F1E", borderTop: "1px solid rgba(255,255,255,0.05)", borderBottom: "1px solid rgba(255,255,255,0.05)", padding: "16px 0", overflow: "hidden" }}>
           <div className="marquee-track">
             {[...Array(3)].map((_, si) => (
@@ -181,9 +182,9 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 2 — STATS BENTO
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene id="overview" style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <SlideReveal direction="up">
@@ -221,9 +222,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 3 — LIVE MARKET DATA
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene id="market-data" style={{ background: "#050810", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <SlideReveal direction="left">
@@ -256,9 +257,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 3b — INSTITUTIONAL DASHBOARD
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <SlideReveal direction="up">
@@ -274,60 +275,18 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
-            SCENE 4 — FUND SHOWCASE
-        ══════════════════════════════════════ */}
-        <Scene id="funds" style={{ background: "#070F1E", padding: "80px 0" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
-            <SlideReveal direction="up">
-              <p className="scene-label">KCG Multiplied Funds</p>
-              <KineticText as="h2" className="scene-h2" style={{ maxWidth: 700, marginBottom: "1rem" }}>
-                Live funds, developing systems, and structured strategies across KCG.
-              </KineticText>
-              <p className="scene-p" style={{ maxWidth: 520, marginBottom: "3rem" }}>Explore KCG's live offerings and developing fund structures. Live funds include direct access links.</p>
-            </SlideReveal>
-
-            {/* Bento overview */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 12, marginBottom: 40 }}>
-              {[
-                { label: "Portfolio Overview", value: "12 Active Funds", sub: "Gold, Forex, Crypto & multi-asset", accent: "rgba(0,232,120,0.5)" },
-                { label: "Avg Monthly Return", value: "9.2%", sub: "Across live funds", accent: "rgba(159,180,193,0.5)" },
-                { label: "Total Volume", value: "$847M+", sub: "Tracked across all funds", accent: "rgba(100,150,255,0.5)" },
-                { label: "Access", value: "Copy Trading", sub: "Live signal subscriptions", accent: "rgba(200,180,100,0.5)" },
-              ].map((b, i) => (
-                <div key={b.label} className="glass-card" style={{ padding: "20px", position: "relative", overflow: "hidden" }}>
-                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,transparent,${b.accent},transparent)` }} />
-                  <p style={{ fontFamily: "sans-serif", fontSize: 9, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(159,180,193,0.45)", margin: "0 0 8px" }}>{b.label}</p>
-                  <p style={{ fontFamily: "sans-serif", fontSize: "1.2rem", fontWeight: 900, color: "#fff", margin: "0 0 4px", letterSpacing: "-0.02em" }}>{b.value}</p>
-                  <p style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)", margin: 0 }}>{b.sub}</p>
-                </div>
-              ))}
-            </div>
-
-            {/* Fund cards */}
-            <StaggerGrid className="grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 16 }} staggerMs={80}>
-              <CinematicFundCard label="Fund 1" name="KaizenCapitalGroup.Xau-TMGM" focus="Gold trading" strategy="Gold Scalping & Intra-day" managers="1" brokerage="TMGM" status="Live" primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM" secondaryLinks={[{ label: "Ratings", url: "https://ratings.tmgmplatform.com/widgets/shared/5173e304d7494051b27287f70426a327?lang=en%3Fpreview%3DP3U9ODIxMzA2JmE9MTM0NjMmcD0xMzgzNCZ3PTEmcz01MTczZTMwNGQ3NDk0MDUxYjI3Mjg3ZjcwNDI2YTMyNw%3D%3D" }]} />
-              <CinematicFundCard label="Fund 1a" name="KaizenCapitalGroup.Xau-MB" focus="Gold trading" strategy="Gold Scalping & Intra-day" managers="1" brokerage="MultiBank" status="Live" primaryLink="https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30" />
-              <CinematicFundCard label="Fund 2" name="TradeXMarkets Fund" focus="Gold & potentially Oil" strategy="Gold Trading & automated trading mix" managers="1" brokerage="MultiBank" status="N/A" />
-              <CinematicFundCard label="Fund 3" name="VaultKano Fund" focus="Crypto" strategy="Manual & automated trading mix" managers="1" brokerage="MultiBank" status="Re-Launching" />
-              <CinematicFundCard label="Fund 4" name="Exodus Investments" focus="Crypto & Gold" strategy="Scalping + Macro / Swing Trading" managers="2" brokerage="TradeSmart" status="N/A" extra="United States Included" />
-              <CinematicFundCard label="Fund 5" name="KCG + Phoenix" focus="Gold & FX currencies" strategy="To be defined" managers="1" brokerage="MultiBank" status="N/A" extra="Speculative" />
-              <CinematicFundCard label="Fund 6" name="Phoenix" focus="Forex mixed assets" strategy="Automated trading mix of all instruments" managers="Potential fully automated (1)" brokerage="MultiBank" status="N/A" />
-              <CinematicFundCard label="Fund 7" name="Forex Fortune AI" focus="EURUSD" strategy="Automated trading mix of EUR instruments" managers="1" brokerage="MultiBank" status="N/A" />
-              <CinematicFundCard label="Fund 8" name="The Alpha Fund" focus="Gold trading" strategy="Manual trading" managers="2 traders" brokerage="TMGM" status="Live" primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha" secondaryLinks={[{ label: "Ratings", url: "https://ratings.tmgmplatform.com/widgets/shared/05a7391d205e4c82982ea3141e98aee5?lang=en?preview=P3U9N2M1Y2IwJmE9MTg5ODgmcD0xOTUwMCZ3PTEmcz0wNWE3MzkxZDIwNWU0YzgyOTgyZWEzMTQxZTk4YWVlNQ==" }]} />
-              <CinematicFundCard label="Fund 9" name="Algo Amalgamation Fund" focus="Multi-asset (Gold, Forex, Crypto)" strategy="Fully algorithmic — amalgamation of Funds 1–8" managers="Algorithmic bots only" brokerage="MultiBank / TradeSmart / TMGM" status="N/A" />
-              <CinematicFundCard label="Fund 10" name="PfaneTXau Fund" focus="All CFD indices and commodities" strategy="Swarm" managers="1 (potentially 2)" brokerage="To be confirmed" status="Discontinuation" />
-              <CinematicFundCard label="Fund 11" name="MAMALYN Fund" focus="EUR/USD" strategy="Fully algorithmic trading" managers="1" brokerage="MultiBank" status="Live" primaryLink="https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars" secondaryLinks={[{ label: "FX Blue", url: "https://www.fxblue.com/users/mamalyn" }, { label: "Myfxbook", url: "https://www.myfxbook.com/members/Panevino83/mamalyn-mt4-31229860/11078849" }]} />
-              <CinematicFundCard label="Fund 12" name="CXFund" focus="Gold trading" strategy="Manual trading" managers="2 traders" brokerage="TMGM" status="Disconnected" primaryLink="https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026" secondaryLinks={[{ label: "Ratings", url: "https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb?lang=en?preview=P3U9NjJiODU0JmE9MTg3MzkmcD0xOTI0NyZ3PTEmcz1jYzMwNmFkOTdlZjI0M2E1YWEwOTJjZDRkMGQyMjZiYg==" }]} />
-            </StaggerGrid>
-          </div>
-        </Scene>
+        {/* ??????????????????????????????????????
+            SCENE 4 — HORIZONTAL FUND SHOWCASE
+        ?????????????????????????????????????? */}
+        <div id="funds" style={{ background: "#070F1E" }}>
+          <HorizontalFundScroll />
+        </div>
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 5 — INVESTOR FUNNEL
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene id="investor-funnel" style={{ background: "#050810", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <SlideReveal direction="up">
@@ -370,9 +329,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 5b — GLOBAL CAPITAL NETWORK
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene style={{ position: "relative", background: "#050810", padding: "80px 0", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 100% 60% at 50% 50%, rgba(8,20,50,0.5) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)", position: "relative", zIndex: 1 }}>
@@ -397,9 +356,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 6 — BROKERAGES
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene id="brokerages" style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <SlideReveal direction="up">
@@ -435,9 +394,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 6b — WHY KCG + ACTIVITY
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(340px,1fr))", gap: 48, alignItems: "start" }}>
@@ -495,9 +454,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 7 — COMMUNITY
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene id="community" style={{ position: "relative", background: "#050810", padding: "80px 0", overflow: "hidden" }}>
           <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "60vw", height: "60vw", maxWidth: 600, maxHeight: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(50,100,180,0.07) 0%, transparent 65%)", pointerEvents: "none" }} />
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)", position: "relative", zIndex: 1 }}>
@@ -535,9 +494,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 8 — CONTACT / CTA
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene id="contact" style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
@@ -581,9 +540,9 @@ export default function Home() {
 
         <div className="divider" />
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             SCENE 9 — FINAL CTA
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <Scene style={{ position: "relative", background: "#050810", padding: "120px 0", overflow: "hidden" }}>
           <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(30,60,120,0.15) 0%, transparent 70%)", pointerEvents: "none" }} />
           <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)", textAlign: "center", position: "relative", zIndex: 1 }}>
@@ -610,9 +569,9 @@ export default function Home() {
           </div>
         </Scene>
 
-        {/* ══════════════════════════════════════
+        {/* ??????????????????????????????????????
             FOOTER
-        ══════════════════════════════════════ */}
+        ?????????????????????????????????????? */}
         <footer style={{ background: "#050810", borderTop: "1px solid rgba(255,255,255,0.05)", padding: "40px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 20 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>

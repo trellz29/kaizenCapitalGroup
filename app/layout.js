@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ThemeToggle from "./components/ThemeToggle";
+import PageTransition from "./components/PageTransition";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +38,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full flex flex-col">
         <script dangerouslySetInnerHTML={{ __html: "(function(){try{var t=localStorage.getItem('kcg-theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(t==='dark'||(t===null&&d)){document.documentElement.classList.add('dark');}}catch(e){}})();" }} />
-        {children}
+        <PageTransition>{children}</PageTransition>
         <ThemeToggle />      <script id="tawk" src="https://embed.tawk.to/6a18f4c2c95c7a1c33ced5d5/1jpono5pb" crossOrigin="*" async></script>
       </body>
     </html>
