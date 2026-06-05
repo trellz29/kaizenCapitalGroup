@@ -232,9 +232,9 @@ export default function CinematicHero() {
       <div style={{
         position: "absolute", inset: 0, zIndex: 6,
         display: "flex", flexDirection: "column", justifyContent: "center",
-        padding: "100px clamp(1.5rem, 8vw, 100px) 5rem",
-        maxWidth: 1200, margin: "0 auto", width: "100%",
-        left: "50%", transform: "translateX(-50%)",
+        padding: "100px clamp(1.5rem, 8vw, 80px) 5rem",
+        maxWidth: "min(600px, 55vw)", margin: "0",
+        left: "clamp(1.5rem, 8vw, 80px)",
       }}>
         <p className="hero-eyebrow" style={{ opacity: 0 }} ref={el => { if (titleRef.current === null) titleRef.current = el; }}>
           Institutional Capital Strategy

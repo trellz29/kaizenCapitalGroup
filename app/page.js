@@ -6,6 +6,9 @@ import CinematicLoader from "./components/CinematicLoader";
 import CinematicNav from "./components/CinematicNav";
 import CinematicHero from "./components/CinematicHero";
 import CinematicFundCard from "./components/CinematicFundCard";
+import LenisProvider from "./components/LenisProvider";
+import HeroGlobe from "./components/HeroGlobe";
+import EcosystemViz from "./components/EcosystemViz";
 import MagneticCursor from "./components/MagneticCursor";
 import KineticText from "./components/KineticText";
 import CounterFlip from "./components/CounterFlip";
@@ -145,6 +148,7 @@ export default function Home() {
       </AnimatePresence>
 
       <div style={{ opacity: showLoader ? 0 : 1, transition: "opacity 0.8s ease 0.2s" }}>
+        <LenisProvider />
         <MagneticCursor />
         <ScrollProgress />
         <CinematicNav />
@@ -154,6 +158,7 @@ export default function Home() {
         ══════════════════════════════════════ */}
         <section id="home" style={{ position: "relative", minHeight: "100vh", overflow: "hidden" }}>
           <CinematicHero />
+          <HeroGlobe />
         </section>
 
         {/* ══════════════════════════════════════
