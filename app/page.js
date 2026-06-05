@@ -389,7 +389,7 @@ export default function Home() {
                       <div style={{ fontFamily: "sans-serif", fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 8 }}>{b.name}</div>
                       <div style={{ fontFamily: "sans-serif", fontSize: "0.8rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.65 }}>{b.desc}</div>
                     </div>
-                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "9px 24px", borderRadius: 100, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "#fff", letterSpacing: "0.04em", width: "100%", transition: "all 0.2s ease" }}>Sign Up →</div>
+                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: 6, padding: "11px 24px", borderRadius: 100, background: "linear-gradient(135deg,#00a855,#006b35)", border: "1px solid rgba(0,232,120,0.3)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "#fff", letterSpacing: "0.04em", width: "100%", transition: "all 0.2s ease", boxShadow: "0 4px 16px rgba(0,168,85,0.25)" }}>Open Account →</div>
                   </a>
                 </SlideReveal>
               ))}
