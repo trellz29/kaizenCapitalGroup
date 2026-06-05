@@ -9,6 +9,8 @@ import CinematicFundCard from "./components/CinematicFundCard";
 import LenisProvider from "./components/LenisProvider";
 import HeroGlobe from "./components/HeroGlobe";
 import EcosystemViz from "./components/EcosystemViz";
+import BloombergDashboard from "./components/BloombergDashboard";
+import GlobalCapitalMap from "./components/GlobalCapitalMap";
 import MagneticCursor from "./components/MagneticCursor";
 import KineticText from "./components/KineticText";
 import CounterFlip from "./components/CounterFlip";
@@ -255,6 +257,24 @@ export default function Home() {
         <div className="divider" />
 
         {/* ══════════════════════════════════════
+            SCENE 3b — INSTITUTIONAL DASHBOARD
+        ══════════════════════════════════════ */}
+        <Scene style={{ background: "#070F1E", padding: "80px 0" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
+            <SlideReveal direction="up">
+              <p className="scene-label">Institutional Dashboard</p>
+              <KineticText as="h2" className="scene-h2" style={{ maxWidth: 700, marginBottom: "1rem" }}>
+                Bloomberg-grade analytics. Built for KCG.
+              </KineticText>
+              <p className="scene-p" style={{ maxWidth: 520, marginBottom: "3rem" }}>Real-time fund performance, animated AUM counters, live strategy monitoring — every metric that matters, in one terminal.</p>
+            </SlideReveal>
+            <BloombergDashboard />
+          </div>
+        </Scene>
+
+        <div className="divider" />
+
+        {/* ══════════════════════════════════════
             SCENE 4 — FUND SHOWCASE
         ══════════════════════════════════════ */}
         <Scene id="funds" style={{ background: "#070F1E", padding: "80px 0" }}>
@@ -343,6 +363,33 @@ export default function Home() {
                     </a>
                   </div>
                 </SlideReveal>
+              ))}
+            </div>
+          </div>
+        </Scene>
+
+        <div className="divider" />
+
+        {/* ══════════════════════════════════════
+            SCENE 5b — GLOBAL CAPITAL NETWORK
+        ══════════════════════════════════════ */}
+        <Scene style={{ position: "relative", background: "#050810", padding: "80px 0", overflow: "hidden" }}>
+          <div style={{ position: "absolute", inset: 0, background: "radial-gradient(ellipse 100% 60% at 50% 50%, rgba(8,20,50,0.5) 0%, transparent 70%)", pointerEvents: "none" }} />
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)", position: "relative", zIndex: 1 }}>
+            <SlideReveal direction="up" style={{ textAlign: "center", marginBottom: "3rem" }}>
+              <p className="scene-label" style={{ justifyContent: "center" }}>Global Network</p>
+              <KineticText as="h2" className="scene-h2" style={{ textAlign: "center", maxWidth: 600, margin: "0 auto 1rem" }}>
+                Capital flows across every major market.
+              </KineticText>
+              <p className="scene-p" style={{ textAlign: "center", maxWidth: 480, margin: "0 auto" }}>KCG operates through verified brokerages with presence across Dubai, London, New York, Singapore, and beyond.</p>
+            </SlideReveal>
+            <GlobalCapitalMap />
+            <div style={{ display: "flex", justifyContent: "center", gap: 32, marginTop: 32, flexWrap: "wrap" }}>
+              {["Dubai", "London", "New York", "Singapore"].map(city => (
+                <div key={city} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(100,180,255,0.8)" }} />
+                  <span style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>{city}</span>
+                </div>
               ))}
             </div>
           </div>
