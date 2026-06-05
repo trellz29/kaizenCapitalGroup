@@ -147,29 +147,29 @@ function FundCard({ label, name, focus, strategy, managers, brokerage, status, e
     ? "from-[#A9C2D1] via-[#DCE7EE] to-[#C7D9E4]"
     : "from-[#DCE7EE] via-[#C9D8E2] to-[#B4C7D4]";
   return (
-    <NeonCard className="group relative overflow-hidden rounded-3xl p-5 sm:p-6 lg:p-8" style={{ background: statusLower === "live" ? "linear-gradient(135deg,#0d1e34,#0f2040)" : "rgba(255,255,255,0.75)", backdropFilter:"blur(12px)" }} color={statusLower === "live" ? "100,180,140" : "159,180,193"}>
+    <NeonCard className="group relative overflow-hidden rounded-3xl p-5 sm:p-6 lg:p-8" style={{ background:"linear-gradient(135deg,#0f1e34,#111e30)", backdropFilter:"blur(12px)" }} color={statusLower === "live" ? "80,200,120" : "100,140,180"}>
       <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${accentClass}`} />
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] sm:text-xs" style={{ color: statusLower === "live" ? "rgba(159,180,193,0.7)" : "#5A7188" }}>{label}</p>
-          <h3 className="break-words text-xl font-bold leading-tight sm:text-2xl" style={{ color: statusLower === "live" ? "#fff" : "#0F1A28" }}>{name}</h3>
+          <p className="mb-2 text-[11px] font-semibold uppercase tracking-[0.15em] sm:text-xs" style={{ color:"rgba(159,180,193,0.6)" }}>{label}</p>
+          <h3 className="break-words text-xl font-bold leading-tight sm:text-2xl" style={{ color:"#fff" }}>{name}</h3>
         </div>
         <span className={`w-fit shrink-0 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.12em] sm:text-xs ${statusClass}`}>{status}</span>
       </div>
-      <div className="mt-5 grid gap-3 text-sm leading-6" style={{ color: statusLower === "live" ? "rgba(200,220,235,0.8)" : "#2E4358" }}>
-        <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Focus:</span> {focus}</div>
-        <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Strategy:</span> {strategy}</div>
+      <div className="mt-5 grid gap-3 text-sm leading-6" style={{ color:"rgba(200,220,235,0.75)" }}>
+        <div className="rounded-2xl px-4 py-3" style={{ background:"rgba(255,255,255,0.05)" }}><span className="font-semibold" style={{ color:"#9FB4C1" }}>Focus:</span> {focus}</div>
+        <div className="rounded-2xl px-4 py-3" style={{ background:"rgba(255,255,255,0.05)" }}><span className="font-semibold" style={{ color:"#9FB4C1" }}>Strategy:</span> {strategy}</div>
         <div className="grid gap-3 sm:grid-cols-2">
-          <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Managers:</span> {managers}</div>
-          <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Brokerage:</span> {brokerage}</div>
+          <div className="rounded-2xl px-4 py-3" style={{ background:"rgba(255,255,255,0.05)" }}><span className="font-semibold" style={{ color:"#9FB4C1" }}>Managers:</span> {managers}</div>
+          <div className="rounded-2xl px-4 py-3" style={{ background:"rgba(255,255,255,0.05)" }}><span className="font-semibold" style={{ color:"#9FB4C1" }}>Brokerage:</span> {brokerage}</div>
         </div>
-        {extra && <div className="rounded-2xl px-4 py-3" style={{ background: statusLower === "live" ? "rgba(255,255,255,0.06)" : "rgba(247,250,252,0.8)" }}><span className="font-semibold" style={{ color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>Notes:</span> {extra}</div>}
+        {extra && <div className="rounded-2xl px-4 py-3" style={{ background:"rgba(255,255,255,0.05)" }}><span className="font-semibold" style={{ color:"#9FB4C1" }}>Notes:</span> {extra}</div>}
       </div>
       {(primaryLink || secondaryLinks.length > 0) && (
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          {primaryLink && <MagneticButton href={primaryLink} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2 text-center text-sm font-semibold text-white transition" style={{ background: statusLower === "live" ? "linear-gradient(135deg,#1a6b45,#0f4a30)" : "#0F1A28" }}>Get Started</MagneticButton>}
+          {primaryLink && <MagneticButton href={primaryLink} target="_blank" rel="noopener noreferrer" className="rounded-full px-5 py-2 text-center text-sm font-semibold text-white transition" style={{ background: statusLower === "live" ? "linear-gradient(135deg,#1a6b45,#0f4a30)" : "rgba(255,255,255,0.1)" }}>Get Started</MagneticButton>}
           {secondaryLinks.map((link, i) => (
-            <MagneticButton key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="rounded-full border px-5 py-2 text-center text-sm font-semibold transition" style={{ borderColor: statusLower === "live" ? "rgba(159,180,193,0.3)" : "#2E4358", background: statusLower === "live" ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.6)", color: statusLower === "live" ? "#9FB4C1" : "#0F1A28" }}>{link.label}</MagneticButton>
+            <MagneticButton key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="rounded-full border px-5 py-2 text-center text-sm font-semibold transition" style={{ borderColor:"rgba(255,255,255,0.15)", background:"rgba(255,255,255,0.05)", color:"rgba(200,220,235,0.8)" }}>{link.label}</MagneticButton>
           ))}
         </div>
       )}
