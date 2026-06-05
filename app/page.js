@@ -343,11 +343,16 @@ export default function Home() {
               <p className="scene-p" style={{ textAlign: "center", maxWidth: 480, margin: "0 auto" }}>KCG operates through verified brokerages with presence across Dubai, London, New York, Singapore, and beyond.</p>
             </SlideReveal>
             <GlobalCapitalMap />
-            <div style={{ display: "flex", justifyContent: "center", gap: 32, marginTop: 32, flexWrap: "wrap" }}>
-              {["Dubai", "London", "New York", "Singapore"].map(city => (
-                <div key={city} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  <div style={{ width: 6, height: 6, borderRadius: "50%", background: "rgba(100,180,255,0.8)" }} />
-                  <span style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em", color: "rgba(255,255,255,0.35)", textTransform: "uppercase" }}>{city}</span>
+            <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 28, flexWrap: "wrap" }}>
+              {[
+                { city: "London", tier: 1 }, { city: "New York", tier: 1 }, { city: "Tokyo", tier: 1 },
+                { city: "Singapore", tier: 1 }, { city: "Hong Kong", tier: 1 }, { city: "Dubai", tier: 1 },
+                { city: "Frankfurt", tier: 2 }, { city: "Sydney", tier: 2 }, { city: "Shanghai", tier: 2 },
+                { city: "Mumbai", tier: 2 }, { city: "São Paulo", tier: 2 }, { city: "Zurich", tier: 2 },
+              ].map(({ city, tier }) => (
+                <div key={city} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+                  <div style={{ width: tier === 1 ? 6 : 4, height: tier === 1 ? 6 : 4, borderRadius: "50%", background: tier === 1 ? "rgba(100,180,255,0.8)" : "rgba(159,180,193,0.4)" }} />
+                  <span style={{ fontFamily: "sans-serif", fontSize: tier === 1 ? 11 : 10, fontWeight: 700, letterSpacing: "0.08em", color: tier === 1 ? "rgba(255,255,255,0.4)" : "rgba(255,255,255,0.22)", textTransform: "uppercase" }}>{city}</span>
                 </div>
               ))}
             </div>
