@@ -1,62 +1,88 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 
-// Major global FX + financial hubs with corrected map positions
+// Full global financial network — all major hubs, FX centers, emerging markets
 const CITIES = [
-  // Tier 1 - Major FX hubs
-  { name: "London",       x: 47,  y: 27,  hub: true,  tier: 1 },
-  { name: "New York",     x: 22,  y: 30,  hub: true,  tier: 1 },
-  { name: "Tokyo",        x: 79,  y: 31,  hub: true,  tier: 1 },
-  { name: "Singapore",    x: 73,  y: 50,  hub: true,  tier: 1 },
-  { name: "Hong Kong",    x: 76,  y: 38,  hub: true,  tier: 1 },
-  { name: "Dubai",        x: 59,  y: 38,  hub: true,  tier: 1 },
-  // Tier 2 - Major financial centres
-  { name: "Frankfurt",    x: 50,  y: 26,  hub: false, tier: 2 },
-  { name: "Zurich",       x: 49,  y: 28,  hub: false, tier: 2 },
-  { name: "Paris",        x: 47,  y: 28,  hub: false, tier: 2 },
-  { name: "Toronto",      x: 21,  y: 27,  hub: false, tier: 2 },
-  { name: "Chicago",      x: 20,  y: 29,  hub: false, tier: 2 },
-  { name: "Sydney",       x: 82,  y: 68,  hub: false, tier: 2 },
-  { name: "Shanghai",     x: 77,  y: 33,  hub: false, tier: 2 },
-  { name: "Seoul",        x: 79,  y: 28,  hub: false, tier: 2 },
-  { name: "Mumbai",       x: 63,  y: 42,  hub: false, tier: 2 },
-  // Tier 3 - FX + emerging markets
-  { name: "Amsterdam",    x: 48,  y: 25,  hub: false, tier: 3 },
-  { name: "Stockholm",    x: 51,  y: 20,  hub: false, tier: 3 },
-  { name: "Johannesburg", x: 53,  y: 66,  hub: false, tier: 3 },
-  { name: "São Paulo",    x: 30,  y: 63,  hub: false, tier: 3 },
-  { name: "Mexico City",  x: 16,  y: 38,  hub: false, tier: 3 },
-  { name: "Riyadh",       x: 58,  y: 40,  hub: false, tier: 3 },
-  { name: "Nairobi",      x: 56,  y: 54,  hub: false, tier: 3 },
-  { name: "Kuala Lumpur", x: 73,  y: 50,  hub: false, tier: 3 },
-  { name: "Bangkok",      x: 72,  y: 44,  hub: false, tier: 3 },
-  { name: "Taipei",       x: 78,  y: 36,  hub: false, tier: 3 },
+  // Tier 1 — FX & Global Finance Hubs
+  { name: "London", x: 47, y: 26, tier: 1 },
+  { name: "New York", x: 22, y: 30, tier: 1 },
+  { name: "Tokyo", x: 80, y: 31, tier: 1 },
+  { name: "Singapore", x: 74, y: 50, tier: 1 },
+
+  // Tier 2 — Major Financial Centers
+  { name: "Dubai", x: 58, y: 38, tier: 2 },
+  { name: "Hong Kong", x: 77, y: 40, tier: 2 },
+  { name: "Zurich", x: 50, y: 26, tier: 2 },
+  { name: "Frankfurt", x: 50, y: 24, tier: 2 },
+  { name: "Sydney", x: 83, y: 67, tier: 2 },
+  { name: "Toronto", x: 21, y: 26, tier: 2 },
+  { name: "Chicago", x: 20, y: 28, tier: 2 },
+  { name: "Paris", x: 48, y: 25, tier: 2 },
+  { name: "Amsterdam", x: 49, y: 23, tier: 2 },
+
+  // Tier 3 — Regional Hubs
+  { name: "São Paulo", x: 30, y: 64, tier: 3 },
+  { name: "Mexico City", x: 16, y: 38, tier: 3 },
+  { name: "Mumbai", x: 64, y: 41, tier: 3 },
+  { name: "Shanghai", x: 78, y: 34, tier: 3 },
+  { name: "Seoul", x: 80, y: 29, tier: 3 },
+  { name: "Johannesburg", x: 54, y: 64, tier: 3 },
+  { name: "Cairo", x: 54, y: 37, tier: 3 },
+  { name: "Istanbul", x: 54, y: 28, tier: 3 },
+  { name: "Moscow", x: 57, y: 20, tier: 3 },
+  { name: "Stockholm", x: 51, y: 18, tier: 3 },
+
+  // Tier 4 — Emerging Markets
+  { name: "Lagos", x: 48, y: 50, tier: 4 },
+  { name: "Nairobi", x: 57, y: 53, tier: 4 },
+  { name: "Riyadh", x: 58, y: 40, tier: 4 },
+  { name: "Karachi", x: 63, y: 38, tier: 4 },
+  { name: "Bangkok", x: 74, y: 44, tier: 4 },
+  { name: "Kuala Lumpur", x: 74, y: 49, tier: 4 },
+  { name: "Jakarta", x: 76, y: 54, tier: 4 },
+  { name: "Manila", x: 79, y: 45, tier: 4 },
+  { name: "Buenos Aires", x: 28, y: 70, tier: 4 },
+  { name: "Bogotá", x: 24, y: 52, tier: 4 },
+  { name: "Lima", x: 22, y: 58, tier: 4 },
+  { name: "Santiago", x: 24, y: 68, tier: 4 },
+  { name: "Warsaw", x: 53, y: 22, tier: 4 },
+  { name: "Prague", x: 51, y: 23, tier: 4 },
+  { name: "Vienna", x: 51, y: 24, tier: 4 },
+  { name: "Tel Aviv", x: 56, y: 33, tier: 4 },
+  { name: "Taipei", x: 79, y: 37, tier: 4 },
+  { name: "Auckland", x: 88, y: 72, tier: 4 },
+  { name: "Casablanca", x: 44, y: 33, tier: 4 },
 ];
 
-// Connection arcs — hub-to-hub + hub-to-tier2
-const ARCS = [
-  // Major hub connections
-  [0,1],[0,2],[0,3],[0,4],[0,5],
-  [1,2],[1,3],[1,9],[1,10],
-  [2,3],[2,4],[2,13],
-  [3,4],[3,5],[3,22],[3,23],
-  [4,5],[4,12],
-  [0,6],[0,7],[0,8],[0,15],[0,16],
-  [5,14],[5,20],
-  [1,19],[1,18],
-  [0,17],[3,21],
-  [2,24],[4,24],
+// Connections — Tier 1 hubs connect to everything nearby
+const CONNECTIONS = [
+  // T1-T1 backbone
+  [0,1],[0,2],[0,3],[1,2],[1,3],[2,3],
+  // London spokes
+  [0,6],[0,7],[0,12],[0,11],[0,35],[0,13],[0,32],
+  // New York spokes
+  [1,9],[1,10],[1,13],[1,25],[1,32],[1,34],
+  // Tokyo spokes
+  [2,5],[2,15],[2,16],[2,36],[2,37],
+  // Singapore spokes
+  [3,5],[3,15],[3,26],[3,27],[3,28],[3,29],[3,38],
+  // Dubai spokes
+  [4,0],[4,19],[4,24],[4,23],[4,33],[4,15],[4,25],
+  // Hong Kong
+  [5,15],[5,16],[5,17],[5,36],[5,28],
+  // Regional
+  [6,7],[7,11],[11,12],[9,10],[13,25],[13,34],
+  [14,1],[19,4],[20,4],[18,4],[21,0],
+  [22,23],[23,24],[26,27],[27,28],[29,28],
+  [30,1],[31,1],[32,33],[35,36],[38,37],
 ];
 
-function lerpArc(p1, p2, t) {
-  const mx = (p1.x + p2.x) / 2;
-  const dist = Math.sqrt((p2.x-p1.x)**2 + (p2.y-p1.y)**2);
-  const lift = dist * 0.18;
-  const my = (p1.y + p2.y) / 2 - lift;
-  const x = (1-t)*(1-t)*p1.x + 2*(1-t)*t*mx + t*t*p2.x;
-  const y = (1-t)*(1-t)*p1.y + 2*(1-t)*t*my + t*t*p2.y;
-  return { x, y };
-}
+const TIER_CONFIG = {
+  1: { r: 7, color: "rgba(100,200,255,1)", ring: true, ringMax: 18, label: true },
+  2: { r: 5, color: "rgba(80,170,230,0.85)", ring: true, ringMax: 12, label: true },
+  3: { r: 3.5, color: "rgba(60,140,200,0.7)", ring: false, label: false },
+  4: { r: 2.2, color: "rgba(40,110,170,0.55)", ring: false, label: false },
+};
 
 export default function GlobalCapitalMap() {
   const canvasRef = useRef(null);
@@ -92,22 +118,33 @@ export default function GlobalCapitalMap() {
     const H = () => canvas.offsetHeight;
     const px = (city) => ({ x: (city.x / 100) * W(), y: (city.y / 100) * H() });
 
-    // Particles per arc
-    const particles = ARCS.map(arc => ({
-      arc,
+    // Particles per connection
+    const particles = CONNECTIONS.map(([a, b]) => ({
+      a, b,
       progress: Math.random(),
       speed: 0.0015 + Math.random() * 0.002,
     }));
 
+    // Bezier midpoint
+    const bezierPt = (p1, p2, t) => {
+      const lift = Math.min(0.12, 0.08 + Math.abs(p1.x - p2.x) / W() * 0.1);
+      const mx = (p1.x + p2.x) / 2;
+      const my = (p1.y + p2.y) / 2 - lift * H();
+      return {
+        x: (1-t)*(1-t)*p1.x + 2*(1-t)*t*mx + t*t*p2.x,
+        y: (1-t)*(1-t)*p1.y + 2*(1-t)*t*my + t*t*p2.y,
+      };
+    };
+
     let t = 0;
     const draw = () => {
       raf = requestAnimationFrame(draw);
-      t += 0.006;
-      const w = W(); const h = H();
+      t += 0.008;
+      const w = W(), h = H();
       ctx.clearRect(0, 0, w, h);
 
-      // Dot grid background (world map suggestion)
-      ctx.fillStyle = "rgba(159,180,193,0.035)";
+      // Dot grid background (world map silhouette feel)
+      ctx.fillStyle = "rgba(100,150,200,0.035)";
       for (let gx = 0; gx < w; gx += 20) {
         for (let gy = 0; gy < h; gy += 20) {
           ctx.beginPath();
@@ -116,93 +153,83 @@ export default function GlobalCapitalMap() {
         }
       }
 
-      // Draw static arc paths
-      ARCS.forEach(([a, b]) => {
-        if (a >= CITIES.length || b >= CITIES.length) return;
+      // Draw arc connections
+      CONNECTIONS.forEach(([a, b]) => {
         const p1 = px(CITIES[a]);
         const p2 = px(CITIES[b]);
+        const lift = Math.min(0.12, 0.08 + Math.abs(p1.x - p2.x) / w * 0.1);
         const mx = (p1.x + p2.x) / 2;
-        const dist = Math.sqrt((p2.x-p1.x)**2+(p2.y-p1.y)**2);
-        const my = (p1.y + p2.y) / 2 - dist * 0.18;
-        const isMajor = CITIES[a].tier === 1 && CITIES[b].tier === 1;
-
+        const my = (p1.y + p2.y) / 2 - lift * h;
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
         ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
-        ctx.strokeStyle = isMajor ? "rgba(100,160,255,0.1)" : "rgba(159,180,193,0.05)";
-        ctx.lineWidth = isMajor ? 1 : 0.6;
+        ctx.strokeStyle = "rgba(100,160,220,0.06)";
+        ctx.lineWidth = 0.7;
         ctx.stroke();
       });
 
       // Animated flow particles
       particles.forEach(p => {
         p.progress = (p.progress + p.speed) % 1;
-        const [a, b] = p.arc;
-        if (a >= CITIES.length || b >= CITIES.length) return;
-        const p1 = px(CITIES[a]);
-        const p2 = px(CITIES[b]);
-        const pos = lerpArc(p1, p2, p.progress);
+        const p1 = px(CITIES[p.a]);
+        const p2 = px(CITIES[p.b]);
+        const pos = bezierPt(p1, p2, p.progress);
 
-        // Trail
-        for (let i = 0; i < 5; i++) {
+        // Glowing trail
+        for (let i = 5; i >= 0; i--) {
           const tp = Math.max(0, p.progress - i * 0.015);
-          const tpos = lerpArc(p1, p2, tp);
+          const tpos = bezierPt(p1, p2, tp);
           ctx.beginPath();
-          ctx.arc(tpos.x, tpos.y, 1.4 - i * 0.22, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(80,160,255,${0.55 - i * 0.1})`;
+          ctx.arc(tpos.x, tpos.y, 1.2 - i * 0.15, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(100,200,255,${(0.7 - i * 0.1) * (0.4 + 0.6 * Math.abs(Math.sin(t + p.progress * 5)))})`;
           ctx.fill();
         }
-        ctx.beginPath();
-        ctx.arc(pos.x, pos.y, 2, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(120,190,255,0.95)";
-        ctx.fill();
       });
 
       // City nodes
       CITIES.forEach((city, i) => {
         const pos = px(city);
+        const cfg = TIER_CONFIG[city.tier];
         const isHov = hovered === i;
-        const isTier1 = city.tier === 1;
-        const isTier2 = city.tier === 2;
+        const r = isHov ? cfg.r * 1.5 : cfg.r;
 
-        // Pulse rings for tier 1
-        if (isTier1) {
-          const r1 = (10 + 4 * Math.sin(t * 1.1 + i * 0.7)) * (isHov ? 1.5 : 1);
+        // Pulse ring for tier 1 & 2
+        if (cfg.ring) {
+          const pulse = (Math.sin(t * 1.4 + i * 0.8) + 1) / 2;
+          const ringR = cfg.r + 2 + pulse * (cfg.ringMax - cfg.r - 2);
           ctx.beginPath();
-          ctx.arc(pos.x, pos.y, r1, 0, Math.PI * 2);
-          ctx.strokeStyle = `rgba(80,160,255,${0.08 + 0.04 * Math.sin(t + i)})`;
+          ctx.arc(pos.x, pos.y, ringR, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(100,180,255,${0.06 + pulse * 0.06})`;
           ctx.lineWidth = 1;
           ctx.stroke();
-          if (isHov) {
-            ctx.beginPath();
-            ctx.arc(pos.x, pos.y, r1 * 1.6, 0, Math.PI * 2);
-            ctx.strokeStyle = "rgba(80,160,255,0.05)";
-            ctx.stroke();
-          }
         }
 
-        // Dot
-        const r = isTier1 ? (isHov ? 6 : 5) : isTier2 ? (isHov ? 4 : 3) : (isHov ? 3 : 2);
+        // Glow
+        const grd = ctx.createRadialGradient(pos.x, pos.y, 0, pos.x, pos.y, r * 3);
+        grd.addColorStop(0, cfg.color.replace("1)", "0.18)").replace(/[\d.]+\)$/, "0.18)"));
+        grd.addColorStop(1, "transparent");
         ctx.beginPath();
-        ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
-        ctx.fillStyle = isTier1 
-          ? (isHov ? "rgba(120,200,255,1)" : "rgba(100,180,255,0.9)") 
-          : isTier2 
-            ? (isHov ? "rgba(159,180,193,0.9)" : "rgba(159,180,193,0.55)")
-            : "rgba(159,180,193,0.3)";
+        ctx.arc(pos.x, pos.y, r * 3, 0, Math.PI * 2);
+        ctx.fillStyle = grd;
         ctx.fill();
 
-        // Labels — tier 1 always, tier 2 on hover, tier 3 only hovered
-        if (isTier1 || isHov) {
-          ctx.font = `${isTier1 ? 600 : 500} ${isTier1 ? 11 : 10}px sans-serif`;
-          ctx.fillStyle = isHov ? "#fff" : isTier1 ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.5)";
+        // Dot
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, r, 0, Math.PI * 2);
+        ctx.fillStyle = isHov ? "rgba(150,230,255,1)" : cfg.color;
+        ctx.fill();
+
+        // Label for tier 1+2 and hovered
+        if (cfg.label || isHov) {
+          ctx.font = `${city.tier === 1 ? 600 : 500} ${city.tier === 1 ? 11 : 10}px sans-serif`;
+          ctx.fillStyle = isHov ? "#fff" : city.tier === 1 ? "rgba(200,230,255,0.85)" : "rgba(160,200,240,0.6)";
           ctx.textAlign = "center";
-          ctx.fillText(city.name, pos.x, pos.y - r - 5);
+          ctx.textBaseline = "bottom";
+          ctx.fillText(city.name, pos.x, pos.y - r - 4);
         }
       });
     };
     draw();
-
     return () => { cancelAnimationFrame(raf); window.removeEventListener("resize", resize); };
   }, [visible, hovered]);
 
@@ -214,30 +241,51 @@ export default function GlobalCapitalMap() {
     const my = ((e.clientY - rect.top) / rect.height) * 100;
     let found = null;
     CITIES.forEach((c, i) => {
-      const dx = c.x - mx; const dy = c.y - my;
-      if (Math.sqrt(dx*dx + dy*dy) < 3.5) found = i;
+      const dx = c.x - mx;
+      const dy = c.y - my;
+      const hitR = c.tier <= 2 ? 4 : 2.5;
+      if (Math.sqrt(dx * dx + dy * dy) < hitR) found = i;
     });
     setHovered(found);
   };
 
+  const hovCity = hovered !== null ? CITIES[hovered] : null;
+
   return (
     <div ref={containerRef} style={{ position: "relative" }}>
-      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1, background: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(20,40,80,0.25) 0%, transparent 70%)", borderRadius: 20 }} />
+      <div style={{ position: "absolute", inset: 0, pointerEvents: "none", zIndex: 1, background: "radial-gradient(ellipse 90% 60% at 50% 50%, rgba(10,25,60,0.3) 0%, transparent 70%)", borderRadius: 20 }} />
+
       <canvas
         ref={canvasRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHovered(null)}
         style={{ width: "100%", height: 460, borderRadius: 20, opacity: visible ? 1 : 0, transition: "opacity 1.2s ease", cursor: hovered !== null ? "pointer" : "default", display: "block" }}
       />
-      {hovered !== null && (
+
+      {hovCity && (
         <div style={{ position: "absolute", bottom: 20, left: "50%", transform: "translateX(-50%)", background: "rgba(5,8,16,0.95)", border: "1px solid rgba(100,180,255,0.2)", borderRadius: 12, padding: "10px 20px", backdropFilter: "blur(12px)", zIndex: 2, pointerEvents: "none", display: "flex", alignItems: "center", gap: 10, whiteSpace: "nowrap" }}>
-          <div style={{ width: 6, height: 6, borderRadius: "50%", background: CITIES[hovered].tier === 1 ? "rgba(100,200,255,0.9)" : "rgba(159,180,193,0.6)" }} />
-          <span style={{ fontFamily: "sans-serif", fontSize: 13, fontWeight: 700, color: "#fff" }}>{CITIES[hovered].name}</span>
-          <span style={{ fontFamily: "sans-serif", fontSize: 10, color: "rgba(255,255,255,0.35)", letterSpacing: "0.1em" }}>
-            {CITIES[hovered].tier === 1 ? "TIER 1 FX HUB" : CITIES[hovered].tier === 2 ? "FINANCIAL CENTRE" : "EMERGING MARKET"}
+          <div style={{ width: 6, height: 6, borderRadius: "50%", background: TIER_CONFIG[hovCity.tier].color }} />
+          <span style={{ fontFamily: "sans-serif", fontSize: 13, fontWeight: 700, color: "#fff" }}>{hovCity.name}</span>
+          <span style={{ fontFamily: "sans-serif", fontSize: 10, color: "rgba(100,180,255,0.6)", letterSpacing: "0.1em" }}>
+            {hovCity.tier === 1 ? "TIER 1 · FX HUB" : hovCity.tier === 2 ? "MAJOR CENTER" : hovCity.tier === 3 ? "REGIONAL HUB" : "EMERGING MARKET"}
           </span>
         </div>
       )}
+
+      {/* Legend */}
+      <div style={{ display: "flex", gap: 20, justifyContent: "center", marginTop: 20, flexWrap: "wrap" }}>
+        {[
+          { label: "FX Hub", color: "rgba(100,200,255,1)" },
+          { label: "Major Center", color: "rgba(80,170,230,0.85)" },
+          { label: "Regional", color: "rgba(60,140,200,0.7)" },
+          { label: "Emerging Market", color: "rgba(40,110,170,0.55)" },
+        ].map(l => (
+          <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <div style={{ width: 6, height: 6, borderRadius: "50%", background: l.color }} />
+            <span style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 600, letterSpacing: "0.08em", color: "rgba(255,255,255,0.3)", textTransform: "uppercase" }}>{l.label}</span>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
