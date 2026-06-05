@@ -117,7 +117,7 @@ export default function Insights() {
 
       {/* Articles grid */}
       <section style={{ padding: "40px clamp(1.5rem,5vw,3rem) 80px", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(340px,1fr))", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(min(320px,100%),1fr))", gap: 20 }}>
           {filtered.map((post, i) => (
             <article key={post.title} className="glass" style={{
               padding: 32, cursor: "pointer", position: "relative", overflow: "hidden",

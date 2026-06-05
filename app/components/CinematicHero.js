@@ -229,12 +229,12 @@ export default function CinematicHero() {
       <canvas ref={canvasRef} style={{ position: "absolute", inset: 0, width: "100%", height: "100%", pointerEvents: "none", zIndex: 2 }} />
 
       {/* Content */}
-      <div style={{
+      <div className="hero-content-wrap" style={{
         position: "absolute", inset: 0, zIndex: 6,
         display: "flex", flexDirection: "column", justifyContent: "center",
-        padding: "100px clamp(1.5rem, 8vw, 80px) 5rem",
-        maxWidth: "min(600px, 55vw)", margin: "0",
-        left: "clamp(1.5rem, 8vw, 80px)",
+        padding: "100px clamp(1.5rem, 6vw, 80px) 5rem clamp(1.5rem, 6vw, 80px)",
+        maxWidth: "min(640px, 58vw)", margin: "0",
+        left: "clamp(1.5rem, 6vw, 80px)",
       }}>
         <p className="hero-eyebrow" style={{ opacity: 0 }} ref={el => { if (titleRef.current === null) titleRef.current = el; }}>
           Institutional Capital Strategy

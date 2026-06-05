@@ -187,7 +187,7 @@ export default function BloombergDashboard() {
         <div className="bb-scanline" />
 
         {/* Top metrics strip */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
+        <div className="bb-top-metrics bb-metrics" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
           {METRICS.map((m, i) => (
             <div key={m.label} style={{ padding: "20px 24px", borderRight: i < 3 ? "1px solid rgba(255,255,255,0.05)" : "none" }}>
               <div style={{ ...styles.label, marginBottom: 6 }}>{m.label}</div>
@@ -199,7 +199,7 @@ export default function BloombergDashboard() {
         </div>
 
         {/* Two-column body */}
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 320px", minHeight: 360 }}>
+        <div className="bb-two-col" style={{ display: "grid", gridTemplateColumns: "1fr 320px", minHeight: 360 }}>
           
           {/* Fund table */}
           <div style={{ borderRight: "1px solid rgba(255,255,255,0.05)" }}>
@@ -221,12 +221,12 @@ export default function BloombergDashboard() {
                 <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: "rgba(0,232,120,0.8)" }}>{fund.ticker}</div>
                 <div style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.65)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{fund.name}</div>
                 <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: fund.ret === "—" ? "rgba(255,255,255,0.3)" : "#00E87A" }}>{fund.ret}</div>
-                <div style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{fund.aum}</div>
+                <div className="bb-aum" style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{fund.aum}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                   <span className={fund.status === "LIVE" ? "bb-live" : ""} style={{ width: 5, height: 5, borderRadius: "50%", background: fund.status === "LIVE" ? "#00E87A" : "#F59E0B", flexShrink: 0, display: "inline-block" }} />
                   <span style={{ fontFamily: "monospace", fontSize: 9, color: fund.status === "LIVE" ? "rgba(0,232,120,0.7)" : "rgba(245,158,11,0.7)", letterSpacing: "0.1em" }}>{fund.status}</span>
                 </div>
-                <div style={{ height: 32 }}>
+                <div className="bb-chart" style={{ height: 32 }}>
                   <MiniChart data={fund.data} color={fund.ret === "—" ? "#9FB4C1" : "#00E87A"} height={32} animated={visible} />
                 </div>
               </div>
@@ -234,7 +234,7 @@ export default function BloombergDashboard() {
           </div>
 
           {/* Right panel ? selected fund detail */}
-          <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: 16 }}>
+          <div className="bb-right-panel" style={{ padding: "20px", display: "flex", flexDirection: "column", gap: 16 }}>
             <div>
               <div style={{ ...styles.label, marginBottom: 4 }}>SELECTED FUND</div>
               <div style={{ fontFamily: "sans-serif", fontSize: 13, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{FUND_DATA[activeRow].name}</div>
@@ -279,7 +279,7 @@ export default function BloombergDashboard() {
         </div>
 
         {/* Bottom status bar */}
-        <div style={{ padding: "8px 20px", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,5,2,0.5)" }}>
+        <div className="bb-status-bar" style={{ padding: "8px 20px", borderTop: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "space-between", background: "rgba(0,5,2,0.5)" }}>
           <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
             {["XAUUSD 3,248.40 +0.41%", "EURUSD 1.1062 +0.02%", "BTCUSD 63,140 -1.28%"].map(t => (
               <span key={t} style={{ fontFamily: "monospace", fontSize: 10, color: "rgba(0,232,120,0.5)" }}>{t}</span>

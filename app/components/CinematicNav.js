@@ -81,7 +81,7 @@ export default function CinematicNav() {
           .cnav-hamburger { display: flex !important; }
         }
         .cnav-hamburger {
-          display: none; flex-direction: column; gap: 4px;
+          display: none; flex-direction: column; gap: 5px;
           padding: 8px; cursor: pointer; background: none; border: none;
         }
         .cnav-hamburger span {

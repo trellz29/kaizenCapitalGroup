@@ -63,7 +63,7 @@ export default function Contact() {
 
       {/* Main contact grid */}
       <section style={{ padding: "80px clamp(1.5rem,5vw,3rem)", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(340px,1fr))", gap: 48, alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: 40, alignItems: "start" }}>
 
           {/* Left — details + form */}
           <div>
@@ -101,7 +101,7 @@ export default function Contact() {
               </div>
             ) : (
               <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(140px,calc(50% - 6px)),1fr))", gap: 10 }}>
                   <div>
                     <label className="c-label">Name</label>
                     <input className="c-input" placeholder="Your name" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />

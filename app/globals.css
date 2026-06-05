@@ -141,3 +141,188 @@ html:not(.dark) .bg-\[\#E6EEF2\] {
   animation: shimmer 1.4s ease-in-out infinite;
   border-radius: 12px;
 }
+
+
+
+/* ============================================
+   GLOBAL RESPONSIVE + ALIGNMENT FIXES
+   Phase 20 - Full polish pass
+   ============================================ */
+
+html, body { overflow-x: hidden; width: 100%; }
+
+/* ---- DESKTOP SYMMETRY ---- */
+.scene-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 3rem);
+  width: 100%;
+}
+
+/* ---- NAV MOBILE ---- */
+@media (max-width: 820px) {
+  .cnav-links { display: none !important; }
+  .cnav-cta { display: none !important; }
+  .cnav-hamburger { display: flex !important; }
+  .cnav-logo-text { font-size: 10px !important; letter-spacing: 0.12em !important; }
+  .cnav-inner { 
+    margin: 8px 12px 0 !important; 
+    padding: 0 12px !important;
+    height: 46px !important;
+  }
+}
+
+/* ---- HERO MOBILE ---- */
+@media (max-width: 900px) {
+  .hero-globe-wrap { display: none !important; }
+}
+
+@media (max-width: 768px) {
+  .hero-content-wrap {
+    max-width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+    padding: 90px 20px 50px !important;
+  }
+  .hero-title { font-size: clamp(2.2rem, 10vw, 3.5rem) !important; letter-spacing: -0.03em !important; }
+  .hero-eyebrow { font-size: 10px !important; }
+  .hero-desc { font-size: 0.9rem !important; margin-bottom: 1.5rem !important; }
+  .hero-ctas { flex-direction: column !important; gap: 10px !important; }
+  .hero-btn-primary, .hero-btn-secondary { 
+    width: 100% !important; 
+    justify-content: center !important; 
+    text-align: center !important;
+  }
+  .hero-stats { 
+    gap: 1.2rem !important; 
+    padding-top: 1.5rem !important; 
+    margin-top: 1.5rem !important; 
+    flex-wrap: wrap !important;
+  }
+  .hero-stat-num { font-size: 1.6rem !important; }
+  .hero-scroll-ind { display: none; }
+}
+
+/* ---- BLOOMBERG MOBILE ---- */
+@media (max-width: 900px) {
+  .bb-two-col { grid-template-columns: 1fr !important; }
+  .bb-right-panel { display: none !important; }
+  .bb-metrics, .bb-top-metrics { grid-template-columns: 1fr 1fr !important; }
+  .bb-fund-row { 
+    grid-template-columns: 60px 1fr 70px 60px !important; 
+    font-size: 10px !important;
+  }
+  .bb-aum { display: none !important; }
+  .bb-chart { display: none !important; }
+  .bb-status-bar { display: none !important; }
+}
+
+/* ---- HORIZONTAL FUND SCROLL MOBILE ---- */
+@media (max-width: 768px) {
+  .hfs-section { height: auto !important; }
+  .hfs-sticky { 
+    position: relative !important; 
+    height: auto !important; 
+    padding: 60px 0 20px !important;
+    overflow: visible !important;
+  }
+  .hfs-track { 
+    transform: none !important; 
+    overflow-x: auto !important; 
+    padding: 0 20px 24px !important; 
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .hfs-track::-webkit-scrollbar { display: none; }
+  .hfs-card { 
+    scroll-snap-align: start !important; 
+    width: 290px !important;
+    flex-shrink: 0 !important;
+  }
+  .hfs-progress { display: none !important; }
+  .hfs-section .scene-label,
+  .hfs-section h2 { 
+    padding: 0 20px !important; 
+  }
+}
+
+/* ---- GENERAL SCENE SECTIONS ---- */
+@media (max-width: 768px) {
+  .scene-h2 { font-size: clamp(1.7rem, 7vw, 2.4rem) !important; }
+  .glass-card { border-radius: 16px !important; }
+  .scene-label { font-size: 9px !important; }
+}
+
+/* ---- COMMUNITY CARDS MOBILE ---- */
+@media (max-width: 640px) {
+  .community-grid { 
+    grid-template-columns: 1fr !important; 
+    max-width: 100% !important; 
+  }
+}
+
+/* ---- TICKER ---- */
+@media (max-width: 480px) {
+  .marquee-track span[style] { font-size: 9px !important; }
+}
+
+/* ---- ECOSYSTEM VIZ ---- */
+@media (max-width: 768px) {
+  .ecosystem-wrap { height: 320px !important; }
+}
+
+/* ---- CINEMATIC PAGE NAV (inner pages) ---- */
+@media (max-width: 768px) {
+  nav[style*="position: fixed"] a[style*="gap: 10px"] + div,
+  nav[style*="position: fixed"] > div:last-child {
+    display: none !important;
+  }
+}
+
+/* ---- DESKTOP ALIGNMENT CHECKS ---- */
+
+/* Ensure all sections max-width containers are centered */
+section > div[style*="maxWidth: 1200px"],
+section > div[style*="max-width: 1200px"] {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Footer symmetry */
+footer { width: 100%; }
+
+/* Prevent text overflow on mobile */
+@media (max-width: 600px) {
+  h1, h2, h3 { word-break: break-word; hyphens: auto; }
+  .hfs-name { font-size: 1rem !important; }
+}
+
+/* ---- CONTACT PAGE MOBILE ---- */
+@media (max-width: 768px) {
+  .contact-two-col { grid-template-columns: 1fr !important; }
+}
+
+/* ---- ABOUT TIMELINE MOBILE ---- */
+@media (max-width: 640px) {
+  .about-timeline { padding-left: 0 !important; }
+  .about-timeline-line { left: 8px !important; }
+  .about-timeline-year { width: 60px !important; font-size: 11px !important; }
+}
+
+/* ---- PORTAL MOBILE ---- */  
+@media (max-width: 480px) {
+  .portal-card { padding: 24px 20px !important; }
+  .portal-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ---- PERFORMANCE PAGE ---- */
+@media (max-width: 768px) {
+  .perf-stats { grid-template-columns: 1fr 1fr !important; }
+}
+
+/* ---- INSIGHTS PAGE ---- */
+@media (max-width: 640px) {
+  .insights-filters { gap: 6px !important; }
+  .insights-filters button { font-size: 11px !important; padding: 6px 12px !important; }
+}

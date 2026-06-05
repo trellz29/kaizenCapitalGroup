@@ -62,7 +62,7 @@ export default function Performance() {
         </div>
 
         {/* Stats row */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16, marginBottom: 64 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,calc(50% - 8px)),1fr))", gap: 16, marginBottom: 64 }}>
           {[
             { label: "Active Funds", value: "12", accent: "rgba(0,232,120,0.5)" },
             { label: "Live Tracking", value: "3", accent: "rgba(159,180,193,0.5)" },

@@ -63,7 +63,7 @@ export default function About() {
       <section style={{ padding: "80px clamp(1.5rem,5vw,3rem)", maxWidth: 1200, margin: "0 auto" }}>
         <p className="scene-label">Core Principles</p>
         <h2 style={{ fontFamily: "sans-serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 900, letterSpacing: "-0.03em", color: "#fff", margin: "0 0 3rem", lineHeight: 1.1 }}>What drives every decision.</h2>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: 20 }}>
           {VALUES.map((v, i) => (
             <div key={v.title} className="glass" style={{ padding: 28, display: "flex", gap: 18, alignItems: "flex-start",
               opacity: 0, animation: `fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) ${i * 80}ms forwards`,
@@ -85,11 +85,11 @@ export default function About() {
         <div style={{ maxWidth: 1200, margin: "0 auto" }}>
           <p className="scene-label">KCG History</p>
           <h2 style={{ fontFamily: "sans-serif", fontSize: "clamp(2rem,4vw,3.2rem)", fontWeight: 900, letterSpacing: "-0.03em", color: "#fff", margin: "0 0 4rem", lineHeight: 1.1 }}>The KCG story.</h2>
-          <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: 0 }}>
-            <div style={{ position: "absolute", left: 68, top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.06)" }} />
+          <div className="about-timeline" style={{ position: "relative", display: "flex", flexDirection: "column", gap: 0 }}>
+            <div className="about-timeline-line" style={{ position: "absolute", left: 68, top: 0, bottom: 0, width: 1, background: "rgba(255,255,255,0.06)" }} />
             {MILESTONES.map((m, i) => (
               <div key={m.year} style={{ display: "flex", gap: 32, alignItems: "flex-start", paddingBottom: 40, position: "relative" }}>
-                <div style={{ width: 100, flexShrink: 0, textAlign: "right", paddingTop: 4 }}>
+                <div className="about-timeline-year" style={{ width: 100, flexShrink: 0, textAlign: "right", paddingTop: 4 }}>
                   <span style={{ fontFamily: "sans-serif", fontSize: 13, fontWeight: 900, color: "rgba(159,180,193,0.6)", letterSpacing: "-0.02em" }}>{m.year}</span>
                 </div>
                 <div style={{ width: 16, height: 16, borderRadius: "50%", background: i === MILESTONES.length - 1 ? "#00E87A" : "rgba(159,180,193,0.3)", border: `2px solid ${i === MILESTONES.length - 1 ? "#00E87A" : "rgba(159,180,193,0.2)"}`, flexShrink: 0, marginTop: 4, zIndex: 1, boxShadow: i === MILESTONES.length - 1 ? "0 0 12px rgba(0,232,120,0.4)" : "none" }} />
@@ -107,7 +107,7 @@ export default function About() {
 
       {/* Stats */}
       <section style={{ padding: "80px clamp(1.5rem,5vw,3rem)", maxWidth: 1200, margin: "0 auto" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(160px,calc(50% - 8px)),1fr))", gap: 16 }}>
           {[
             { num: "12", label: "Active Funds", accent: "rgba(0,232,120,0.6)" },
             { num: "9.2%", label: "Avg Monthly Return", accent: "rgba(159,180,193,0.6)" },

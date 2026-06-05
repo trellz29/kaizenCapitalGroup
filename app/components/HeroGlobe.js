@@ -139,13 +139,14 @@ export default function HeroGlobe() {
   return (
     <div
       ref={mountRef}
+      className="hero-globe-wrap"
       style={{
         position: "absolute",
         right: "5%",
         top: "50%",
         transform: "translateY(-50%)",
-        width: "min(50vw, 560px)",
-        height: "min(50vw, 560px)",
+        width: "min(46vw, 540px)",
+        height: "min(46vw, 540px)",
         zIndex: 3,
         opacity: ready ? 1 : 0,
         transition: "opacity 1s ease 0.5s",

@@ -195,7 +195,7 @@ export default function Home() {
             </SlideReveal>
 
             {/* Bento grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16, marginBottom: 48 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(180px,calc(50% - 8px)),1fr))", gap: 12, marginBottom: 40 }}>
               <SlideReveal direction="up" delay={0}><BentoStat num="12" label="Active Funds" accent="rgba(0,232,120,0.6)" /></SlideReveal>
               <SlideReveal direction="up" delay={80}><BentoStat num="9.2" label="Avg Monthly Return" suffix="%" accent="rgba(159,180,193,0.6)" /></SlideReveal>
               <SlideReveal direction="up" delay={160}><BentoStat num="847" label="Total Volume" prefix="$" suffix="M+" accent="rgba(100,150,255,0.6)" /></SlideReveal>
@@ -203,7 +203,7 @@ export default function Home() {
             </div>
 
             {/* Overview cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
               {[
                 { title: "Institutional Execution", body: "KCG deploys capital through verified brokerages with institutional-grade execution infrastructure across 12 active funds." },
                 { title: "Multi-Asset Strategies", body: "From Gold scalping and EUR/USD algos to Crypto and multi-asset amalgamation — diversified across asset classes and timeframes." },
@@ -239,7 +239,7 @@ export default function Home() {
               <TradingViewWidget widgetType="ticker-tape" minHeight="72px" config={{ symbols: [{ proName: "OANDA:XAUUSD", title: "Gold" }, { proName: "FX:EURUSD", title: "EUR/USD" }, { proName: "BITSTAMP:BTCUSD", title: "Bitcoin" }, { proName: "TVC:DXY", title: "DXY" }, { proName: "TVC:USOIL", title: "Oil" }], showSymbolLogo: true, isTransparent: true, displayMode: "adaptive", colorTheme: "dark", locale: "en" }} />
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
               {[
                 { widget: "mini-symbol-overview", config: { symbol: "OANDA:XAUUSD", width: "100%", height: 220, locale: "en", dateRange: "1D", colorTheme: "dark", isTransparent: true, autosize: false, largeChartUrl: "" }, label: "XAU/USD" },
                 { widget: "mini-symbol-overview", config: { symbol: "FX:EURUSD", width: "100%", height: 220, locale: "en", dateRange: "1D", colorTheme: "dark", isTransparent: true, autosize: false, largeChartUrl: "" }, label: "EUR/USD" },
@@ -297,7 +297,7 @@ export default function Home() {
               <p className="scene-p" style={{ maxWidth: 520, marginBottom: "3rem" }}>Whether you're allocating capital, following signals, or exploring a strategic partnership — there's a KCG path for you.</p>
             </SlideReveal>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: 16 }}>
               {[
                 { n: "01", title: "Private Investors", desc: "Built for individuals seeking structured exposure, disciplined execution, and premium communication.", points: ["Explore current live fund opportunities", "Review fit based on your goals", "Begin a direct conversation with KCG"], cta: "Investor Inquiry", href: "#contact-form" },
                 { n: "02", title: "Fund Allocation", desc: "Designed for larger capital conversations, managed allocation discussions, and formal fund placement interest.", points: ["Discuss allocation objectives", "Review strategy alignment", "Position for advanced capital conversation"], cta: "Discuss Allocation", href: "#contact-form" },
@@ -371,7 +371,7 @@ export default function Home() {
               <p style={{ fontFamily: "sans-serif", fontSize: "0.875rem", color: "rgba(255,200,100,0.8)", margin: 0 }}>⚠️ All KCG funds are deployed exclusively through these verified platforms. A live account is required before investing.</p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(220px,100%),1fr))", gap: 16 }}>
               {[
                 { name: "TMGM", abbr: "TM", desc: "Global multi-asset broker with deep liquidity and fast execution. Used for Fund 1 and Fund 1a.", href: "https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" },
                 { name: "MultiBank Group", abbr: "MB", desc: "One of the world's largest financial derivatives providers. Used across multiple KCG funds.", href: "https://tradfi.multibankgroup.com/en/account/live-account?ibNum=8836606" },
@@ -399,7 +399,7 @@ export default function Home() {
         ?????????????????????????????????????? */}
         <Scene style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(340px,1fr))", gap: 48, alignItems: "start" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: 40, alignItems: "start" }}>
               <SlideReveal direction="left">
                 <p className="scene-label">Why KCG</p>
                 <h2 className="scene-h2" style={{ marginBottom: "2rem" }}>Built for credibility. Built for results.</h2>
@@ -466,7 +466,7 @@ export default function Home() {
               <p className="scene-p" style={{ textAlign: "center", maxWidth: 480, margin: "0 auto 2rem" }}>Join the KCG community for live signals, market updates, fund news, and direct access to the team — completely free.</p>
             </SlideReveal>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(240px,1fr))", gap: 16, maxWidth: 600, margin: "0 auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: 16, maxWidth: 600, margin: "0 auto" }}>
               <SlideReveal direction="left">
                 <a href="https://t.me/KaizenCapitalGroup" target="_blank" rel="noopener noreferrer" className="glass-card" style={{ padding: 32, display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textDecoration: "none" }}>
                   <div style={{ width: 52, height: 52, borderRadius: "50%", background: "rgba(35,158,217,0.15)", border: "1px solid rgba(35,158,217,0.3)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22 }}>✈️</div>
@@ -499,7 +499,7 @@ export default function Home() {
         ?????????????????????????????????????? */}
         <Scene id="contact" style={{ background: "#070F1E", padding: "80px 0" }}>
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "start" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(320px,100%),1fr))", gap: 40, alignItems: "start" }}>
               <SlideReveal direction="left">
                 <p className="scene-label">Start a Conversation</p>
                 <KineticText as="h2" className="scene-h2" style={{ marginBottom: "1rem" }}>
@@ -553,7 +553,7 @@ export default function Home() {
                 <span style={{ color: "rgba(159,180,193,0.5)" }}>is being built.</span>
               </h2>
               <p className="scene-p" style={{ maxWidth: 480, margin: "0 auto 3rem", fontSize: "1.05rem" }}>KCG is building an institutional platform for the next generation of capital allocation. The question is whether you're part of it.</p>
-              <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+              <div style={{ display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap", padding: "0 1rem" }}>
                 <a href="https://calendly.com/trellzp12/30min" target="_blank" rel="noopener noreferrer" style={{ padding: "16px 36px", borderRadius: 100, background: "#fff", color: "#050810", fontFamily: "sans-serif", fontSize: 14, fontWeight: 700, textDecoration: "none", transition: "all 0.3s ease", display: "inline-flex", alignItems: "center", gap: 6 }}
                   onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.06) translateY(-2px)"; e.currentTarget.style.boxShadow = "0 20px 60px rgba(255,255,255,0.18)"; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = ""; }}>
