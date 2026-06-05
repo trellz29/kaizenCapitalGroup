@@ -11,7 +11,6 @@ import KineticText from "./components/KineticText";
 import CounterFlip from "./components/CounterFlip";
 import SlideReveal from "./components/SlideReveal";
 import StaggerGrid from "./components/StaggerGrid";
-import { VisHome, VisOverview, VisMarketData, VisFunds, VisAISystems, VisInvestorFunnel, VisActivity, VisWhyKCG, VisCommunity } from "./components/VisualInterstitials";
 
 /* ─── TradingView widget ─────────────────────────────────────────── */
 function TradingViewWidget({ widgetType, config, minHeight }) {
@@ -214,7 +213,6 @@ export default function Home() {
         </Scene>
 
         <div className="divider" />
-        <VisOverview />
 
         {/* ══════════════════════════════════════
             SCENE 3 — LIVE MARKET DATA
@@ -250,7 +248,6 @@ export default function Home() {
         </Scene>
 
         <div className="divider" />
-        <VisMarketData />
 
         {/* ══════════════════════════════════════
             SCENE 4 — FUND SHOWCASE
@@ -302,7 +299,6 @@ export default function Home() {
         </Scene>
 
         <div className="divider" />
-        <VisFunds />
 
         {/* ══════════════════════════════════════
             SCENE 5 — INVESTOR FUNNEL
@@ -348,7 +344,6 @@ export default function Home() {
         </Scene>
 
         <div className="divider" />
-        <VisInvestorFunnel />
 
         {/* ══════════════════════════════════════
             SCENE 6 — BROKERAGES
@@ -387,7 +382,66 @@ export default function Home() {
         </Scene>
 
         <div className="divider" />
-        <VisWhyKCG />
+
+        {/* ══════════════════════════════════════
+            SCENE 6b — WHY KCG + ACTIVITY
+        ══════════════════════════════════════ */}
+        <Scene style={{ background: "#070F1E", padding: "80px 0" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(340px,1fr))", gap: 48, alignItems: "start" }}>
+              <SlideReveal direction="left">
+                <p className="scene-label">Why KCG</p>
+                <h2 className="scene-h2" style={{ marginBottom: "2rem" }}>Built for credibility. Built for results.</h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                  {[
+                    { icon: "🏛️", title: "Institutional Structure", desc: "Every fund has defined strategy, verified brokerage, and transparent reporting." },
+                    { icon: "⚡", title: "Disciplined Execution", desc: "Algorithmic and manual strategies with strict risk management protocols." },
+                    { icon: "🌐", title: "Global Brokerage Access", desc: "TMGM, MultiBank, TradeSmart — regulated partners with deep liquidity." },
+                    { icon: "📊", title: "Verified Performance", desc: "Third-party tracking through Myfxbook, FX Blue, and brokerage ratings." },
+                  ].map((item) => (
+                    <div key={item.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
+                      <div style={{ width: 40, height: 40, borderRadius: 12, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, flexShrink: 0 }}>{item.icon}</div>
+                      <div>
+                        <div style={{ fontFamily: "sans-serif", fontSize: "0.9rem", fontWeight: 700, color: "#fff", marginBottom: 4 }}>{item.title}</div>
+                        <div style={{ fontFamily: "sans-serif", fontSize: "0.8rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.65 }}>{item.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </SlideReveal>
+              <SlideReveal direction="right">
+                <p className="scene-label">Live Trading Activity</p>
+                <h2 className="scene-h2" style={{ marginBottom: "2rem" }}>Recent executions.</h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {[
+                    { action: "BUY", pair: "XAUUSD", fund: "Fund 1 · TMGM", lots: "0.10 lots", result: "+12.4 pips", time: "2m ago", win: true },
+                    { action: "SELL", pair: "EURUSD", fund: "MAMALYN · MultiBank", lots: "0.05 lots", result: "+8.1 pips", time: "18m ago", win: true },
+                    { action: "BUY", pair: "BTCUSD", fund: "VaultKano · MultiBank", lots: "0.01 lots", result: "+2.7%", time: "1h ago", win: true },
+                    { action: "SELL", pair: "XAUUSD", fund: "Alpha Fund · TMGM", lots: "0.08 lots", result: "-3.2 pips", time: "3h ago", win: false },
+                    { action: "BUY", pair: "EURUSD", fund: "MAMALYN · MultiBank", lots: "0.05 lots", result: "+11.0 pips", time: "5h ago", win: true },
+                  ].map((t, i) => (
+                    <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                        <div style={{ width: 36, height: 36, borderRadius: 10, background: t.win ? "rgba(0,232,120,0.1)" : "rgba(248,113,113,0.1)", border: `1px solid ${t.win ? "rgba(0,232,120,0.2)" : "rgba(248,113,113,0.2)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif", fontSize: 9, fontWeight: 800, color: t.win ? "#00E87A" : "#F87171", letterSpacing: "0.05em" }}>{t.action}</div>
+                        <div>
+                          <div style={{ fontFamily: "sans-serif", fontSize: "0.875rem", fontWeight: 700, color: "#fff" }}>{t.pair} · {t.lots}</div>
+                          <div style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{t.fund}</div>
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <div style={{ fontFamily: "sans-serif", fontSize: "0.875rem", fontWeight: 700, color: t.win ? "#00E87A" : "#F87171" }}>{t.result}</div>
+                        <div style={{ fontFamily: "sans-serif", fontSize: 10, color: "rgba(255,255,255,0.2)" }}>{t.time}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                <a href="/performance" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "rgba(159,180,193,0.6)", textDecoration: "none" }}>View full performance dashboard →</a>
+              </SlideReveal>
+            </div>
+          </div>
+        </Scene>
+
+        <div className="divider" />
 
         {/* ══════════════════════════════════════
             SCENE 7 — COMMUNITY
@@ -428,7 +482,6 @@ export default function Home() {
         </Scene>
 
         <div className="divider" />
-        <VisCommunity />
 
         {/* ══════════════════════════════════════
             SCENE 8 — CONTACT / CTA
