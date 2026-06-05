@@ -371,20 +371,20 @@ export default function Home() {
               <p style={{ fontFamily: "sans-serif", fontSize: "0.875rem", color: "rgba(255,200,100,0.8)", margin: 0 }}>⚠️ All KCG funds are deployed exclusively through these verified platforms. A live account is required before investing.</p>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(220px,100%),1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: 16 }}>
               {[
                 { name: "TMGM", abbr: "TM", desc: "Global multi-asset broker with deep liquidity and fast execution. Used for Fund 1 and Fund 1a.", href: "https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" },
                 { name: "MultiBank Group", abbr: "MB", desc: "One of the world's largest financial derivatives providers. Used across multiple KCG funds.", href: "https://tradfi.multibankgroup.com/en/account/live-account?ibNum=8836606" },
                 { name: "Genesis FX", abbr: "GF", desc: "Emerging brokerage with competitive spreads and institutional infrastructure.", href: "https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B" },
               ].map((b, i) => (
                 <SlideReveal key={b.name} direction="up" delay={i * 100}>
-                  <a href={b.href} target="_blank" rel="noopener noreferrer" className="glass-card" style={{ padding: 28, display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", textDecoration: "none", gap: 12 }}>
-                    <div style={{ width: 56, height: 56, borderRadius: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif", fontSize: 14, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em" }}>{b.abbr}</div>
-                    <div>
-                      <div style={{ fontFamily: "sans-serif", fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 6 }}>{b.name}</div>
-                      <div style={{ fontFamily: "sans-serif", fontSize: "0.8rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.6 }}>{b.desc}</div>
+                  <a href={b.href} target="_blank" rel="noopener noreferrer" className="glass-card" style={{ padding: "24px 20px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", textDecoration: "none", gap: 14, height: "100%" }}>
+                    <div style={{ width: 52, height: 52, borderRadius: 14, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif", fontSize: 13, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", flexShrink: 0 }}>{b.abbr}</div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontFamily: "sans-serif", fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 8 }}>{b.name}</div>
+                      <div style={{ fontFamily: "sans-serif", fontSize: "0.8rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.65 }}>{b.desc}</div>
                     </div>
-                    <div style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, color: "rgba(159,180,193,0.5)", letterSpacing: "0.1em" }}>Open Account →</div>
+                    <div style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "9px 24px", borderRadius: 100, background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "#fff", letterSpacing: "0.04em", width: "100%", transition: "all 0.2s ease" }}>Sign Up →</div>
                   </a>
                 </SlideReveal>
               ))}
