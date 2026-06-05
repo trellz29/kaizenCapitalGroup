@@ -207,7 +207,7 @@ export default function CinematicHero() {
           backdrop-filter: blur(8px);
         }
         .hero-btn-secondary:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.08); transform: scale(1.04) translateY(-2px); }
-        .hero-stats { display: flex; gap: 3rem; flex-wrap: wrap; padding-top: 3rem; margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.06); }
+        .hero-stats { display: grid; grid-template-columns: repeat(4, auto); gap: 0; padding-top: 2.5rem; margin-top: 2.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
         .hero-stat-num { font-family: sans-serif; font-size: clamp(1.8rem,3.5vw,2.8rem); font-weight: 900; color: #fff; letter-spacing: -0.04em; line-height: 1; }
         .hero-stat-lbl { font-family: sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-top: 6px; }
         .hero-scroll-ind {

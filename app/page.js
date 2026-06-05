@@ -57,7 +57,7 @@ function Scene({ id, children, className = "", style = {} }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.05 });
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.01, rootMargin: '200px 0px' });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
