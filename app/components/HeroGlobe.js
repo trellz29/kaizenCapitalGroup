@@ -172,10 +172,34 @@ export default function HeroGlobe() {
 
       // Hub cities
       const CITIES = [
-        [40.71,-74.01],[51.51,-0.13],[35.69,139.69],[1.35,103.82],
-        [22.32,114.17],[48.85,2.35],[25.20,55.27],[-33.87,151.21],
-        [19.08,72.88],[55.75,37.62],[31.23,121.47],[-23.55,-46.63],
-        [-1.29,36.82],[43.65,-79.38],[47.38,8.54],[37.57,126.98],
+        // --- Global hubs (0-15) ---
+        [40.71,-74.01],   // 0  NYC
+        [51.51,-0.13],    // 1  London
+        [35.69,139.69],   // 2  Tokyo
+        [1.35,103.82],    // 3  Singapore
+        [22.32,114.17],   // 4  Hong Kong
+        [48.85,2.35],     // 5  Paris
+        [25.20,55.27],    // 6  Dubai
+        [-33.87,151.21],  // 7  Sydney
+        [19.08,72.88],    // 8  Mumbai
+        [55.75,37.62],    // 9  Moscow
+        [31.23,121.47],   // 10 Shanghai
+        [-23.55,-46.63],  // 11 Sao Paulo
+        [-1.29,36.82],    // 12 Nairobi
+        [43.65,-79.38],   // 13 Toronto
+        [47.38,8.54],     // 14 Zurich
+        [37.57,126.98],   // 15 Seoul
+        // --- North America extra (16-25) ---
+        [34.05,-118.24],  // 16 Los Angeles
+        [41.85,-87.65],   // 17 Chicago
+        [29.76,-95.37],   // 18 Houston
+        [25.77,-80.19],   // 19 Miami
+        [37.77,-122.42],  // 20 San Francisco
+        [32.78,-96.80],   // 21 Dallas
+        [42.36,-71.06],   // 22 Boston
+        [45.50,-73.57],   // 23 Montreal
+        [49.28,-123.12],  // 24 Vancouver
+        [33.45,-112.07],  // 25 Phoenix
       ];
 
       const ll2v = (lat, lon, r) => {
@@ -200,12 +224,42 @@ export default function HeroGlobe() {
 
       // Arc definitions with transaction types
       const ARC_DEFS = [
+        // --- Global arcs ---
         [0,1,"BTC",0.0035],[1,2,"ETH",0.003],[0,11,"BTC",0.004],
         [3,4,"WIRE",0.0045],[6,3,"USDT",0.003],[2,7,"ETH",0.0035],
         [0,10,"CASH",0.003],[1,6,"WIRE",0.004],[8,3,"USDT",0.0035],
         [15,2,"BTC",0.003],[12,1,"CASH",0.004],[9,0,"WIRE",0.003],
         [4,7,"ETH",0.0045],[13,0,"BTC",0.004],[14,1,"USDT",0.003],
         [11,12,"CASH",0.003],[5,14,"WIRE",0.004],[0,5,"ETH",0.003],
+        // --- North America dense transactions ---
+        [0,17,"BTC",0.005],   // NYC -> Chicago
+        [0,22,"ETH",0.006],   // NYC -> Boston
+        [0,19,"WIRE",0.005],  // NYC -> Miami
+        [0,23,"USDT",0.005],  // NYC -> Montreal
+        [0,16,"BTC",0.004],   // NYC -> LA
+        [0,20,"ETH",0.004],   // NYC -> SF
+        [0,13,"CASH",0.006],  // NYC -> Toronto
+        [16,20,"BTC",0.007],  // LA -> SF
+        [16,25,"ETH",0.006],  // LA -> Phoenix
+        [16,18,"WIRE",0.005], // LA -> Houston
+        [20,24,"USDT",0.007], // SF -> Vancouver
+        [20,17,"BTC",0.005],  // SF -> Chicago
+        [17,18,"CASH",0.006], // Chicago -> Houston
+        [17,21,"ETH",0.006],  // Chicago -> Dallas
+        [17,22,"WIRE",0.005], // Chicago -> Boston
+        [17,13,"BTC",0.006],  // Chicago -> Toronto
+        [18,21,"USDT",0.007], // Houston -> Dallas
+        [18,19,"ETH",0.006],  // Houston -> Miami
+        [19,11,"BTC",0.004],  // Miami -> Sao Paulo
+        [19,22,"WIRE",0.005], // Miami -> Boston
+        [21,16,"CASH",0.005], // Dallas -> LA
+        [22,23,"ETH",0.007],  // Boston -> Montreal
+        [23,24,"BTC",0.006],  // Montreal -> Vancouver
+        [24,13,"USDT",0.006], // Vancouver -> Toronto
+        [13,23,"WIRE",0.007], // Toronto -> Montreal
+        [0,1,"ETH",0.003],    // NYC -> London (transatlantic)
+        [20,2,"BTC",0.003],   // SF -> Tokyo (transpacific)
+        [16,6,"WIRE",0.003],  // LA -> Dubai
       ];
 
       // Pre-build icon textures
