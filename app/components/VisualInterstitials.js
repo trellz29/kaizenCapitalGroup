@@ -118,7 +118,7 @@ export function VisHome() {
           {ticker(["XAU/USD 3,248 +0.41%","BTC 63,140 -1.28%","EUR/USD 1.1062"])}
         </div>
       </Phone>
-      <Copy label="KCG Fund Dashboard" title="13 active funds. One disciplined platform." body="Every KCG fund is tracked, reported, and managed with institutional precision — visible at a glance." />
+      <Copy label="KCG Fund Dashboard" title="multiple active funds. One disciplined platform." body="Every KCG fund is tracked, reported, and managed with institutional precision — visible at a glance." />
     </Scene>
   );
 }

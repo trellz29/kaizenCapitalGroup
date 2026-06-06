@@ -115,7 +115,7 @@ const FUND_DATA = [
 
 const METRICS = [
   { label: "TOTAL AUM", value: "847", prefix: "$", suffix: "M+", decimals: 0 },
-  { label: "ACTIVE FUNDS", value: "13", prefix: "", suffix: "", decimals: 0 },
+  { label: "ACTIVE FUNDS", value: "13+", prefix: "", suffix: "", decimals: 0 },
   { label: "AVG MONTHLY RETURN", value: "9.2", prefix: "", suffix: "%", decimals: 1 },
   { label: "LIVE STRATEGIES", value: "4", prefix: "", suffix: "", decimals: 0 },
 ];
