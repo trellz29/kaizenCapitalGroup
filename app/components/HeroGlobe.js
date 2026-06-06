@@ -172,34 +172,55 @@ export default function HeroGlobe() {
 
       // Hub cities
       const CITIES = [
-        // --- Global hubs (0-15) ---
+        // --- Americas (0-25) ---
         [40.71,-74.01],   // 0  NYC
-        [51.51,-0.13],    // 1  London
-        [35.69,139.69],   // 2  Tokyo
-        [1.35,103.82],    // 3  Singapore
-        [22.32,114.17],   // 4  Hong Kong
-        [48.85,2.35],     // 5  Paris
-        [25.20,55.27],    // 6  Dubai
-        [-33.87,151.21],  // 7  Sydney
-        [19.08,72.88],    // 8  Mumbai
-        [55.75,37.62],    // 9  Moscow
-        [31.23,121.47],   // 10 Shanghai
+        [43.65,-79.38],   // 1  Toronto
+        [34.05,-118.24],  // 2  Los Angeles
+        [41.85,-87.65],   // 3  Chicago
+        [29.76,-95.37],   // 4  Houston
+        [25.77,-80.19],   // 5  Miami
+        [37.77,-122.42],  // 6  San Francisco
+        [32.78,-96.80],   // 7  Dallas
+        [42.36,-71.06],   // 8  Boston
+        [45.50,-73.57],   // 9  Montreal
+        [49.28,-123.12],  // 10 Vancouver
         [-23.55,-46.63],  // 11 Sao Paulo
-        [-1.29,36.82],    // 12 Nairobi
-        [43.65,-79.38],   // 13 Toronto
-        [47.38,8.54],     // 14 Zurich
-        [37.57,126.98],   // 15 Seoul
-        // --- North America extra (16-25) ---
-        [34.05,-118.24],  // 16 Los Angeles
-        [41.85,-87.65],   // 17 Chicago
-        [29.76,-95.37],   // 18 Houston
-        [25.77,-80.19],   // 19 Miami
-        [37.77,-122.42],  // 20 San Francisco
-        [32.78,-96.80],   // 21 Dallas
-        [42.36,-71.06],   // 22 Boston
-        [45.50,-73.57],   // 23 Montreal
-        [49.28,-123.12],  // 24 Vancouver
-        [33.45,-112.07],  // 25 Phoenix
+        [-34.60,-58.38],  // 12 Buenos Aires
+        [4.71,-74.07],    // 13 Bogota
+        [19.43,-99.13],   // 14 Mexico City
+        [-12.04,-77.03],  // 15 Lima
+        // --- Europe (16-24) ---
+        [51.51,-0.13],    // 16 London
+        [48.85,2.35],     // 17 Paris
+        [52.52,13.40],    // 18 Berlin
+        [47.38,8.54],     // 19 Zurich
+        [41.90,12.49],    // 20 Rome
+        [40.42,-3.70],    // 21 Madrid
+        [59.33,18.07],    // 22 Stockholm
+        [50.08,14.44],    // 23 Prague
+        [48.21,16.37],    // 24 Vienna
+        // --- Middle East / Africa (25-31) ---
+        [25.20,55.27],    // 25 Dubai
+        [24.69,46.72],    // 26 Riyadh
+        [30.04,31.24],    // 27 Cairo
+        [-1.29,36.82],    // 28 Nairobi
+        [6.52,3.38],      // 29 Lagos
+        [-26.20,28.04],   // 30 Johannesburg
+        [33.89,35.50],    // 31 Beirut
+        // --- Asia / Pacific (32-44) ---
+        [55.75,37.62],    // 32 Moscow
+        [19.08,72.88],    // 33 Mumbai
+        [28.61,77.21],    // 34 New Delhi
+        [31.23,121.47],   // 35 Shanghai
+        [22.32,114.17],   // 36 Hong Kong
+        [1.35,103.82],    // 37 Singapore
+        [35.69,139.69],   // 38 Tokyo
+        [37.57,126.98],   // 39 Seoul
+        [13.75,100.52],   // 40 Bangkok
+        [3.14,101.69],    // 41 Kuala Lumpur
+        [-6.21,106.85],   // 42 Jakarta
+        [-33.87,151.21],  // 43 Sydney
+        [-37.81,144.96],  // 44 Melbourne
       ];
 
       const ll2v = (lat, lon, r) => {
@@ -224,42 +245,112 @@ export default function HeroGlobe() {
 
       // Arc definitions with transaction types
       const ARC_DEFS = [
-        // --- Global arcs ---
-        [0,1,"BTC",0.0035],[1,2,"ETH",0.003],[0,11,"BTC",0.004],
-        [3,4,"WIRE",0.0045],[6,3,"USDT",0.003],[2,7,"ETH",0.0035],
-        [0,10,"CASH",0.003],[1,6,"WIRE",0.004],[8,3,"USDT",0.0035],
-        [15,2,"BTC",0.003],[12,1,"CASH",0.004],[9,0,"WIRE",0.003],
-        [4,7,"ETH",0.0045],[13,0,"BTC",0.004],[14,1,"USDT",0.003],
-        [11,12,"CASH",0.003],[5,14,"WIRE",0.004],[0,5,"ETH",0.003],
-        // --- North America dense transactions ---
-        [0,17,"BTC",0.005],   // NYC -> Chicago
-        [0,22,"ETH",0.006],   // NYC -> Boston
-        [0,19,"WIRE",0.005],  // NYC -> Miami
-        [0,23,"USDT",0.005],  // NYC -> Montreal
-        [0,16,"BTC",0.004],   // NYC -> LA
-        [0,20,"ETH",0.004],   // NYC -> SF
-        [0,13,"CASH",0.006],  // NYC -> Toronto
-        [16,20,"BTC",0.007],  // LA -> SF
-        [16,25,"ETH",0.006],  // LA -> Phoenix
-        [16,18,"WIRE",0.005], // LA -> Houston
-        [20,24,"USDT",0.007], // SF -> Vancouver
-        [20,17,"BTC",0.005],  // SF -> Chicago
-        [17,18,"CASH",0.006], // Chicago -> Houston
-        [17,21,"ETH",0.006],  // Chicago -> Dallas
-        [17,22,"WIRE",0.005], // Chicago -> Boston
-        [17,13,"BTC",0.006],  // Chicago -> Toronto
-        [18,21,"USDT",0.007], // Houston -> Dallas
-        [18,19,"ETH",0.006],  // Houston -> Miami
-        [19,11,"BTC",0.004],  // Miami -> Sao Paulo
-        [19,22,"WIRE",0.005], // Miami -> Boston
-        [21,16,"CASH",0.005], // Dallas -> LA
-        [22,23,"ETH",0.007],  // Boston -> Montreal
-        [23,24,"BTC",0.006],  // Montreal -> Vancouver
-        [24,13,"USDT",0.006], // Vancouver -> Toronto
-        [13,23,"WIRE",0.007], // Toronto -> Montreal
-        [0,1,"ETH",0.003],    // NYC -> London (transatlantic)
-        [20,2,"BTC",0.003],   // SF -> Tokyo (transpacific)
-        [16,6,"WIRE",0.003],  // LA -> Dubai
+        // ── NORTH AMERICA INTRA ─────────────────────────────────────
+        [0,8,"BTC",0.006],   // NYC-Boston
+        [0,3,"ETH",0.006],   // NYC-Chicago
+        [0,5,"WIRE",0.005],  // NYC-Miami
+        [0,9,"USDT",0.006],  // NYC-Montreal
+        [0,1,"CASH",0.006],  // NYC-Toronto
+        [0,2,"BTC",0.004],   // NYC-LA
+        [0,6,"ETH",0.004],   // NYC-SF
+        [2,6,"BTC",0.007],   // LA-SF
+        [2,4,"WIRE",0.005],  // LA-Houston
+        [2,7,"USDT",0.006],  // LA-Dallas
+        [6,10,"ETH",0.007],  // SF-Vancouver
+        [6,3,"BTC",0.005],   // SF-Chicago
+        [3,4,"CASH",0.006],  // Chicago-Houston
+        [3,7,"ETH",0.006],   // Chicago-Dallas
+        [3,1,"WIRE",0.006],  // Chicago-Toronto
+        [4,5,"USDT",0.007],  // Houston-Miami
+        [4,7,"BTC",0.007],   // Houston-Dallas
+        [8,9,"ETH",0.007],   // Boston-Montreal
+        [9,10,"WIRE",0.006], // Montreal-Vancouver
+        [10,1,"BTC",0.006],  // Vancouver-Toronto
+        [1,9,"USDT",0.007],  // Toronto-Montreal
+        [14,2,"CASH",0.005], // MexCity-LA
+        [14,4,"BTC",0.005],  // MexCity-Houston
+        // ── SOUTH AMERICA INTRA ────────────────────────────────────
+        [11,12,"BTC",0.005], // SP-BuenosAires
+        [11,13,"ETH",0.005], // SP-Bogota
+        [11,15,"WIRE",0.005],// SP-Lima
+        [13,14,"USDT",0.005],// Bogota-MexCity
+        // ── EUROPE INTRA ───────────────────────────────────────────
+        [16,17,"BTC",0.007], // London-Paris
+        [16,18,"ETH",0.006], // London-Berlin
+        [16,19,"WIRE",0.006],// London-Zurich
+        [16,21,"USDT",0.006],// London-Madrid
+        [17,18,"CASH",0.007],// Paris-Berlin
+        [17,19,"BTC",0.007], // Paris-Zurich
+        [17,20,"ETH",0.006], // Paris-Rome
+        [18,22,"WIRE",0.006],// Berlin-Stockholm
+        [18,23,"USDT",0.007],// Berlin-Prague
+        [19,24,"BTC",0.007], // Zurich-Vienna
+        [20,21,"ETH",0.006], // Rome-Madrid
+        [22,23,"CASH",0.006],// Stockholm-Prague
+        // ── MIDDLE EAST / AFRICA INTRA ─────────────────────────────
+        [25,26,"BTC",0.006], // Dubai-Riyadh
+        [25,27,"ETH",0.006], // Dubai-Cairo
+        [25,31,"WIRE",0.006],// Dubai-Beirut
+        [27,28,"USDT",0.005],// Cairo-Nairobi
+        [28,29,"BTC",0.005], // Nairobi-Lagos
+        [28,30,"ETH",0.005], // Nairobi-Johannesburg
+        [29,30,"WIRE",0.005],// Lagos-Johannesburg
+        // ── ASIA INTRA ─────────────────────────────────────────────
+        [32,35,"BTC",0.005], // Moscow-Shanghai
+        [33,34,"ETH",0.006], // Mumbai-Delhi
+        [33,37,"WIRE",0.005],// Mumbai-Singapore
+        [34,35,"USDT",0.005],// Delhi-Shanghai
+        [35,36,"BTC",0.007], // Shanghai-HongKong
+        [35,38,"ETH",0.006], // Shanghai-Tokyo
+        [35,39,"WIRE",0.006],// Shanghai-Seoul
+        [36,37,"CASH",0.007],// HK-Singapore
+        [36,38,"BTC",0.006], // HK-Tokyo
+        [37,40,"ETH",0.007], // Singapore-Bangkok
+        [37,41,"WIRE",0.007],// Singapore-KL
+        [37,42,"USDT",0.006],// Singapore-Jakarta
+        [38,39,"BTC",0.007], // Tokyo-Seoul
+        [40,41,"ETH",0.007], // Bangkok-KL
+        [43,44,"WIRE",0.007],// Sydney-Melbourne
+        [43,37,"BTC",0.004], // Sydney-Singapore
+        // ── TRANSATLANTIC ──────────────────────────────────────────
+        [0,16,"BTC",0.003],  // NYC-London
+        [0,17,"ETH",0.003],  // NYC-Paris
+        [8,16,"WIRE",0.003], // Boston-London
+        [5,16,"USDT",0.003], // Miami-London
+        [11,16,"BTC",0.003], // SP-London
+        [11,17,"ETH",0.003], // SP-Paris
+        [12,19,"WIRE",0.003],// BuenosAires-Zurich
+        [13,17,"CASH",0.003],// Bogota-Paris
+        [1,16,"USDT",0.003], // Toronto-London
+        // ── TRANS-PACIFIC ──────────────────────────────────────────
+        [6,38,"BTC",0.003],  // SF-Tokyo
+        [6,39,"ETH",0.003],  // SF-Seoul
+        [6,35,"WIRE",0.003], // SF-Shanghai
+        [2,38,"USDT",0.003], // LA-Tokyo
+        [2,36,"BTC",0.003],  // LA-HongKong
+        [10,38,"ETH",0.003], // Vancouver-Tokyo
+        [43,6,"WIRE",0.003], // Sydney-SF
+        [43,2,"BTC",0.003],  // Sydney-LA
+        // ── NA TO MIDDLE EAST / ASIA ───────────────────────────────
+        [0,25,"BTC",0.003],  // NYC-Dubai
+        [0,33,"ETH",0.003],  // NYC-Mumbai
+        [2,25,"WIRE",0.003], // LA-Dubai
+        [16,25,"USDT",0.003],// London-Dubai
+        [16,33,"BTC",0.003], // London-Mumbai
+        [16,32,"ETH",0.003], // London-Moscow
+        [19,25,"WIRE",0.003],// Zurich-Dubai
+        // ── AFRICA TO WORLD ────────────────────────────────────────
+        [28,16,"BTC",0.003], // Nairobi-London
+        [29,16,"ETH",0.003], // Lagos-London
+        [30,25,"WIRE",0.003],// Johannesburg-Dubai
+        [27,25,"BTC",0.004], // Cairo-Dubai
+        // ── EUROPE TO ASIA ─────────────────────────────────────────
+        [16,35,"BTC",0.003], // London-Shanghai
+        [16,37,"ETH",0.003], // London-Singapore
+        [17,33,"WIRE",0.003],// Paris-Mumbai
+        [19,25,"USDT",0.003],// Zurich-Dubai
+        [32,35,"CASH",0.003],// Moscow-Shanghai
+        [32,38,"BTC",0.003], // Moscow-Tokyo
       ];
 
       // Pre-build icon textures
