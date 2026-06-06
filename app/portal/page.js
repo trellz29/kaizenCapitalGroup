@@ -36,6 +36,7 @@ const TELEGRAM_CHANNELS = [
 // ── NAV ──────────────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
   { id:"overview",     label:"Overview",     icon:"⬡" },
+  { id:"trading",      label:"Trading",      icon:"📊" },
   { id:"performance",  label:"Performance",  icon:"📈" },
   { id:"transactions", label:"Transactions", icon:"⇄" },
   { id:"withdraw",     label:"Withdraw",     icon:"↑" },
@@ -318,6 +319,164 @@ function TxRow({ tx }) {
   );
 }
 
+function Trading() {
+  const [tradingOn, setTradingOn] = useState(true);
+  const [mode, setMode] = useState("conservative");
+  const [duration, setDuration] = useState("1M");
+  const [search, setSearch] = useState("");
+
+  const STATS = {
+    "1M":  { profitPct:"9.40%", aggressive:"0.00%", conservative:"9.40%", trades:14, winRate:"92.86%" },
+    "3M":  { profitPct:"28.60%", aggressive:"0.00%", conservative:"28.60%", trades:41, winRate:"90.24%" },
+    "6M":  { profitPct:"54.20%", aggressive:"0.00%", conservative:"54.20%", trades:88, winRate:"89.77%" },
+    "ALL": { profitPct:"54.20%", aggressive:"0.00%", conservative:"54.20%", trades:88, winRate:"89.77%" },
+  };
+
+  const LIVE_TRADES = [
+    { asset:"XAU/USD", openPrice:"3,312.40", investment:"4%", side:"BUY",  pnl:"+$142.20" },
+    { asset:"XAU/USD", openPrice:"3,298.10", investment:"4%", side:"BUY",  pnl:"+$88.50"  },
+  ];
+
+  const ALL_TRADES = [
+    { asset:"XAU/USD",   openPrice:"3,285.00", investment:"4%", side:"BUY",  result:"WIN",  pnl:"+$124.00" },
+    { asset:"EUR/USD",   openPrice:"1.0821",   investment:"4%", side:"SELL", result:"WIN",  pnl:"+$67.30"  },
+    { asset:"XAU/USD",   openPrice:"3,310.50", investment:"4%", side:"BUY",  result:"WIN",  pnl:"+$98.80"  },
+    { asset:"BTC/USD",   openPrice:"92,400",   investment:"4%", side:"BUY",  result:"LOSS", pnl:"-$44.10"  },
+    { asset:"XAU/USD",   openPrice:"3,290.00", investment:"4%", side:"BUY",  result:"WIN",  pnl:"+$112.60" },
+    { asset:"EUR/USD",   openPrice:"1.0798",   investment:"4%", side:"BUY",  result:"WIN",  pnl:"+$55.20"  },
+    { asset:"XAU/USD",   openPrice:"3,275.80", investment:"4%", side:"SELL", result:"WIN",  pnl:"+$78.40"  },
+  ];
+
+  const st = STATS[duration];
+  const filtered = ALL_TRADES.filter(t => t.asset.toLowerCase().includes(search.toLowerCase()));
+
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Live Activity</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Trading</h2>
+      </div>
+
+      {/* Status + Mode */}
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:16, marginBottom:16 }}>
+        <div className="section-card" style={{ padding:18 }}>
+          <div className="stat-label" style={{ marginBottom:12 }}>Trading Status</div>
+          <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+            <div onClick={() => setTradingOn(o=>!o)} style={{ width:44, height:24, borderRadius:100, background: tradingOn ? "#00E87A" : "rgba(255,255,255,0.1)", cursor:"pointer", position:"relative", transition:"background 0.3s" }}>
+              <div style={{ position:"absolute", top:3, left: tradingOn ? 23 : 3, width:18, height:18, borderRadius:"50%", background:"#fff", transition:"left 0.3s", boxShadow:"0 1px 4px rgba(0,0,0,0.3)" }}/>
+            </div>
+            <span style={{ fontSize:13, fontWeight:700, color: tradingOn ? "#00E87A" : "rgba(255,255,255,0.4)" }}>{tradingOn ? "Active" : "Paused"}</span>
+          </div>
+        </div>
+        <div className="section-card" style={{ padding:18 }}>
+          <div className="stat-label" style={{ marginBottom:12 }}>Trading Mode</div>
+          <div style={{ display:"flex", gap:6 }}>
+            {["conservative","aggressive"].map(m => (
+              <button key={m} onClick={() => setMode(m)} style={{ flex:1, padding:"6px 4px", borderRadius:8, border:"none", cursor:"pointer", fontSize:10, fontWeight:800, textTransform:"capitalize", transition:"all 0.2s", background: mode===m ? (m==="aggressive" ? "#00E87A" : "#6496C8") : "rgba(255,255,255,0.06)", color: mode===m ? "#050810" : "rgba(255,255,255,0.4)" }}>
+                {m}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Stats */}
+      <div className="section-card" style={{ marginBottom:16 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
+          <div className="section-title" style={{ marginBottom:0 }}>General Stats</div>
+          <div style={{ display:"flex", gap:4 }}>
+            {["1M","3M","6M","ALL"].map(d => (
+              <button key={d} onClick={() => setDuration(d)} style={{ padding:"4px 10px", borderRadius:100, border:"none", cursor:"pointer", fontSize:10, fontWeight:700, background: duration===d ? "rgba(100,150,200,0.2)" : "rgba(255,255,255,0.05)", color: duration===d ? "#6496C8" : "rgba(255,255,255,0.3)", transition:"all 0.2s" }}>{d}</button>
+            ))}
+          </div>
+        </div>
+        <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:12 }}>
+          {[
+            { label:"📈 Profit %",        val:st.profitPct,    green:true },
+            { label:"🚀 Aggressive Mode", val:st.aggressive,   green:false },
+            { label:"🏷 Conservative",    val:st.conservative, green:true },
+            { label:"🔢 Total Trades",    val:st.trades,       green:false },
+            { label:"🎯 Win Rate",        val:st.winRate,      green:true },
+          ].map(s => (
+            <div key={s.label} style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.05)", borderRadius:10, padding:"12px 14px" }}>
+              <div style={{ fontSize:10, color:"rgba(255,255,255,0.3)", marginBottom:6 }}>{s.label}</div>
+              <div style={{ fontSize:18, fontWeight:800, color: s.green ? "#00E87A" : "#fff" }}>{s.val}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Live Trades */}
+      <div className="section-card" style={{ marginBottom:16 }}>
+        <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:14 }}>
+          <span className="live-dot"/>
+          <div className="section-title" style={{ marginBottom:0 }}>Live Trades</div>
+          <span className="badge badge-green">{LIVE_TRADES.length} open</span>
+        </div>
+        <div style={{ overflowX:"auto" }}>
+          <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
+            <thead>
+              <tr style={{ color:"rgba(255,255,255,0.3)", fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+                <th style={{ textAlign:"left", paddingBottom:10, fontWeight:700 }}>Asset</th>
+                <th style={{ textAlign:"left", paddingBottom:10, fontWeight:700 }}>Open</th>
+                <th style={{ textAlign:"left", paddingBottom:10, fontWeight:700 }}>Invest %</th>
+                <th style={{ textAlign:"right", paddingBottom:10, fontWeight:700 }}>P&L</th>
+              </tr>
+            </thead>
+            <tbody>
+              {LIVE_TRADES.map((t,i) => (
+                <tr key={i} style={{ borderTop:"1px solid rgba(255,255,255,0.04)" }}>
+                  <td style={{ padding:"10px 0", fontWeight:700 }}>
+                    <span style={{ background:"rgba(0,232,122,0.1)", color:"#00E87A", fontSize:9, fontWeight:800, padding:"2px 6px", borderRadius:4, marginRight:6 }}>{t.side}</span>
+                    {t.asset}
+                  </td>
+                  <td style={{ padding:"10px 0", color:"rgba(255,255,255,0.6)" }}>{t.openPrice}</td>
+                  <td style={{ padding:"10px 0", color:"rgba(255,255,255,0.4)" }}>{t.investment}</td>
+                  <td style={{ padding:"10px 0", textAlign:"right", fontWeight:800, color:"#00E87A" }}>{t.pnl}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      {/* All Trades */}
+      <div className="section-card">
+        <div className="section-title">All Trades</div>
+        <input type="text" className="portal-input" placeholder="Search by asset name..." value={search} onChange={e => setSearch(e.target.value)} style={{ marginBottom:14 }}/>
+        <div style={{ overflowX:"auto" }}>
+          <table style={{ width:"100%", borderCollapse:"collapse", fontSize:12 }}>
+            <thead>
+              <tr style={{ color:"rgba(255,255,255,0.3)", fontSize:10, letterSpacing:"0.1em", textTransform:"uppercase" }}>
+                <th style={{ textAlign:"left", paddingBottom:10, fontWeight:700 }}>Asset</th>
+                <th style={{ textAlign:"left", paddingBottom:10, fontWeight:700 }}>Open</th>
+                <th style={{ textAlign:"left", paddingBottom:10, fontWeight:700 }}>%</th>
+                <th style={{ textAlign:"right", paddingBottom:10, fontWeight:700 }}>Result</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtered.map((t,i) => (
+                <tr key={i} style={{ borderTop:"1px solid rgba(255,255,255,0.04)" }}>
+                  <td style={{ padding:"10px 0", fontWeight:700 }}>
+                    <span style={{ background: t.side==="BUY" ? "rgba(0,232,122,0.1)" : "rgba(248,79,79,0.1)", color: t.side==="BUY" ? "#00E87A" : "#F84F4F", fontSize:9, fontWeight:800, padding:"2px 6px", borderRadius:4, marginRight:6 }}>{t.side}</span>
+                    {t.asset}
+                  </td>
+                  <td style={{ padding:"10px 0", color:"rgba(255,255,255,0.5)", fontSize:11 }}>{t.openPrice}</td>
+                  <td style={{ padding:"10px 0", color:"rgba(255,255,255,0.4)" }}>{t.investment}</td>
+                  <td style={{ padding:"10px 0", textAlign:"right" }}>
+                    <span style={{ fontWeight:800, color: t.result==="WIN" ? "#00E87A" : "#F84F4F", fontSize:11 }}>{t.pnl}</span>
+                    <span className={`badge ${t.result==="WIN"?"badge-green":"badge"}`} style={{ marginLeft:6, background: t.result==="WIN" ? "rgba(0,232,122,0.1)" : "rgba(248,79,79,0.1)", color: t.result==="WIN" ? "#00E87A" : "#F84F4F" }}>{t.result}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Performance() {
   const d = DEMO_DATA;
   const max = Math.max(...d.returns);
@@ -513,7 +672,7 @@ export default function Portal() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [active, setActive] = useState("overview");
 
-  const SECTIONS = { overview:<Overview/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
+  const SECTIONS = { overview:<Overview/>, trading:<Trading/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
 
   if (!loggedIn) return (
     <>
