@@ -8,7 +8,7 @@ const FUNDS = [
   { id:"3",  name:"VaultKano Fund",              focus:"Crypto",          broker:"MultiBank", status:"relaunching",  ret:"—",      tag:"RE-LAUNCHING", color:"#F59E0B", link:null },
   { id:"4",  name:"Exodus Investments",          focus:"Crypto + Gold",   broker:"—",         status:"coming",       ret:"—",      tag:"US INCLUDED",  color:"#9FB4C1", link:null },
   { id:"5",  name:"KCG + Phoenix",               focus:"Gold + FX",       broker:"—",         status:"coming",       ret:"—",      tag:"SPECULATIVE",  color:"#6496C8", link:null },
-  { id:"6",  name:"Phoenix",                     focus:"Forex",           broker:"—",         status:"coming",       ret:"—",      tag:"COMING SOON",  color:"#6496C8", link:null },
+  { id:"6",  name:"Phoenix",                     focus:"Forex",           broker:"—",         status:"coming",       ret:"—",      tag:"AI · COMING SOON",  color:"#a78bfa", link:null },
   { id:"7",  name:"Forex Fortune AI",            focus:"EUR/USD",         broker:"—",         status:"coming",       ret:"—",      tag:"AI POWERED",   color:"#a78bfa", link:null },
   { id:"8",  name:"The Alpha Fund",              focus:"Gold Manual",     broker:"TMGM",      status:"live",         ret:"+7.8%",  tag:"LIVE",         color:"#00E87A", link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha" },
   { id:"9",  name:"Algo Amalgamation Fund",      focus:"Multi-asset",     broker:"MultiBank", status:"coming",       ret:"—",      tag:"ALGORITHMIC",  color:"#6496C8", link:null },

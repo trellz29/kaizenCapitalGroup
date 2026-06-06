@@ -310,7 +310,7 @@ export default function Home() {
           <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
             <SlideReveal direction="up">
               <p className="scene-label">Who KCG Serves</p>
-              <KineticText as="h2" className="scene-h2" style={{ maxWidth: 700, marginBottom: "1rem" }}>
+              <KineticText as="h2" className="scene-h2" style={{ maxWidth: 700, marginBottom: "1rem", textAlign: "left" }}>
                 Built for investors who demand precision, structure, and results.
               </KineticText>
               <p className="scene-p" style={{ maxWidth: 520, marginBottom: "3rem" }}>Whether you're allocating capital, following signals, or exploring a strategic partnership — there's a KCG path for you.</p>
