@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // ── DEMO DATA ────────────────────────────────────────────────────────────────
-const DEMO_USER = { email: "cottrell@kaizencapitalgrp.com", password: "kcg2024", name: "Cottrell" };
+const DEMO_USER = { email: "cottrell@kaizencapitalgrp.com", password: "KCG2026", name: "Cottrell" };
 
 const DEMO_DATA = {
   balance: 24850.00,
