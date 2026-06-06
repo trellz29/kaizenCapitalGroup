@@ -37,6 +37,7 @@ const TELEGRAM_CHANNELS = [
 const NAV_ITEMS = [
   { id:"overview",     label:"Overview",     icon:"⬡" },
   { id:"trading",      label:"Trading",      icon:"📊" },
+  { id:"wallet",       label:"Wallet",       icon:"💳" },
   { id:"performance",  label:"Performance",  icon:"📈" },
   { id:"transactions", label:"Transactions", icon:"⇄" },
   { id:"withdraw",     label:"Withdraw",     icon:"↑" },
@@ -477,6 +478,166 @@ function Trading() {
   );
 }
 
+function Wallet() {
+  const [flipped, setFlipped] = useState(false);
+  const [tab, setTab] = useState("deposit");
+  const [amount, setAmount] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  const WALLET_TXS = [
+    { type:"deposit",    asset:"USDT",    amount:"+$10,000",  date:"2024-11-01", status:"completed", hash:"0x7f3a...d91c" },
+    { type:"deposit",    asset:"USDT",    amount:"+$15,000",  date:"2024-11-15", status:"completed", hash:"0x2b8e...a44f" },
+    { type:"profit",     asset:"USD",     amount:"+$1,102",   date:"2024-12-01", status:"completed", hash:"Internal"     },
+    { type:"withdrawal", asset:"USDT",    amount:"-$2,500",   date:"2025-01-10", status:"pending",   hash:"Pending"      },
+    { type:"profit",     asset:"USD",     amount:"+$1,082",   date:"2025-01-01", status:"completed", hash:"Internal"     },
+  ];
+
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Capital Account</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Wallet</h2>
+      </div>
+
+      {/* Virtual Card */}
+      <div style={{ perspective:1000, marginBottom:20, cursor:"pointer" }} onClick={() => setFlipped(f=>!f)}>
+        <div style={{ position:"relative", height:190, transition:"transform 0.6s", transformStyle:"preserve-3d", transform: flipped ? "rotateY(180deg)" : "rotateY(0deg)" }}>
+
+          {/* Front */}
+          <div style={{ position:"absolute", inset:0, borderRadius:20, background:"linear-gradient(135deg, #0a1628 0%, #0d2240 40%, #0a1a35 70%, #061020 100%)", border:"1px solid rgba(100,150,200,0.2)", overflow:"hidden", backfaceVisibility:"hidden", padding:"24px 28px", display:"flex", flexDirection:"column", justifyContent:"space-between" }}>
+            {/* Card glow */}
+            <div style={{ position:"absolute", top:-40, right:-40, width:200, height:200, borderRadius:"50%", background:"radial-gradient(circle, rgba(100,150,200,0.12) 0%, transparent 70%)" }}/>
+            <div style={{ position:"absolute", bottom:-60, left:20, width:180, height:180, borderRadius:"50%", background:"radial-gradient(circle, rgba(0,232,122,0.06) 0%, transparent 70%)" }}/>
+
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", position:"relative" }}>
+              <div>
+                <div style={{ fontSize:9, fontWeight:700, letterSpacing:"0.2em", color:"rgba(255,255,255,0.4)", textTransform:"uppercase", marginBottom:4 }}>KCG Investor Card</div>
+                <div style={{ fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-0.02em" }}>$24,850<span style={{ fontSize:13, color:"rgba(255,255,255,0.5)" }}>.00</span></div>
+              </div>
+              <div style={{ width:36, height:36, borderRadius:"50%", background:"linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:9, fontWeight:900, color:"#fff" }}>KCG</div>
+            </div>
+
+            <div style={{ position:"relative" }}>
+              <div style={{ fontFamily:"monospace", fontSize:16, letterSpacing:"0.2em", color:"rgba(255,255,255,0.7)", marginBottom:14 }}>•••• &nbsp;•••• &nbsp;•••• &nbsp;7291</div>
+              <div style={{ display:"flex", gap:32 }}>
+                <div>
+                  <div style={{ fontSize:8, color:"rgba(255,255,255,0.3)", letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:3 }}>Card Holder</div>
+                  <div style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,0.8)", letterSpacing:"0.06em" }}>KCG INVESTOR</div>
+                </div>
+                <div>
+                  <div style={{ fontSize:8, color:"rgba(255,255,255,0.3)", letterSpacing:"0.12em", textTransform:"uppercase", marginBottom:3 }}>Valid Thru</div>
+                  <div style={{ fontSize:12, fontWeight:700, color:"rgba(255,255,255,0.8)" }}>12/27</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Chip */}
+            <div style={{ position:"absolute", top:60, left:28, width:36, height:28, borderRadius:5, background:"linear-gradient(135deg,#c9b060,#e8d080)", opacity:0.8 }}/>
+          </div>
+
+          {/* Back */}
+          <div style={{ position:"absolute", inset:0, borderRadius:20, background:"linear-gradient(135deg, #061020 0%, #0a1628 100%)", border:"1px solid rgba(100,150,200,0.2)", backfaceVisibility:"hidden", transform:"rotateY(180deg)", overflow:"hidden" }}>
+            <div style={{ height:40, background:"rgba(255,255,255,0.08)", margin:"28px 0 20px" }}/>
+            <div style={{ padding:"0 28px" }}>
+              <div style={{ fontSize:9, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:8 }}>Network</div>
+              <div style={{ display:"flex", gap:12 }}>
+                {["USDT TRC20","BTC","ETH"].map(n => (
+                  <span key={n} style={{ fontSize:10, fontWeight:700, color:"rgba(100,150,200,0.8)", background:"rgba(100,150,200,0.1)", padding:"4px 10px", borderRadius:100 }}>{n}</span>
+                ))}
+              </div>
+              <div style={{ marginTop:20, fontSize:10, color:"rgba(255,255,255,0.2)", lineHeight:1.6 }}>
+                This card represents your KCG investment account. Tap to flip. All transactions are processed through verified brokerage networks.
+              </div>
+            </div>
+          </div>
+        </div>
+        <p style={{ fontSize:10, color:"rgba(255,255,255,0.2)", textAlign:"center", marginTop:8 }}>Tap card to flip</p>
+      </div>
+
+      {/* Quick stats */}
+      <div className="stat-grid" style={{ marginBottom:20 }}>
+        {[
+          { label:"Total Deposited", val:"$25,000", col:"" },
+          { label:"Total Profit",    val:"+$2,184", col:"green" },
+          { label:"Withdrawn",       val:"$0",      col:"" },
+          { label:"Net Balance",     val:"$27,184", col:"green" },
+        ].map(s => (
+          <div className="stat-card" key={s.label} style={{ padding:"16px 18px" }}>
+            <div className="stat-label">{s.label}</div>
+            <div className={`stat-val ${s.col}`} style={{ fontSize:18 }}>{s.val}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Deposit / Withdraw tabs */}
+      <div className="section-card" style={{ marginBottom:20 }}>
+        <div style={{ display:"flex", gap:4, background:"rgba(255,255,255,0.04)", borderRadius:100, padding:4, marginBottom:20 }}>
+          {["deposit","withdraw"].map(t => (
+            <button key={t} onClick={() => { setTab(t); setSubmitted(false); }} style={{ flex:1, padding:"8px 0", borderRadius:100, border:"none", cursor:"pointer", fontFamily:"sans-serif", fontSize:12, fontWeight:700, textTransform:"capitalize", background: tab===t ? "rgba(255,255,255,0.1)" : "transparent", color: tab===t ? "#fff" : "rgba(255,255,255,0.35)", transition:"all 0.2s" }}>{t}</button>
+          ))}
+        </div>
+
+        {submitted ? (
+          <div style={{ textAlign:"center", padding:"20px 0" }}>
+            <div style={{ fontSize:36, marginBottom:12 }}>✓</div>
+            <h3 style={{ color:"#00E87A", fontWeight:800, marginBottom:8 }}>Request Submitted</h3>
+            <p style={{ color:"rgba(255,255,255,0.4)", fontSize:13 }}>You will receive confirmation via email and Telegram within 24 hours.</p>
+            <button className="portal-btn-secondary" style={{ marginTop:16, width:"auto", padding:"10px 24px" }} onClick={() => setSubmitted(false)}>New Request</button>
+          </div>
+        ) : tab === "deposit" ? (
+          <div>
+            <div style={{ background:"rgba(0,232,122,0.06)", border:"1px solid rgba(0,232,122,0.15)", borderRadius:10, padding:"12px 14px", marginBottom:16 }}>
+              <p style={{ fontSize:12, color:"rgba(0,232,122,0.8)", lineHeight:1.6, margin:0 }}>Send USDT (TRC20) to the wallet address below. Minimum deposit: $500. Funds are credited within 1–3 hours after confirmation.</p>
+            </div>
+            <div style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", marginBottom:8 }}>USDT TRC20 Deposit Address</div>
+            <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.08)", borderRadius:10, padding:"12px 14px", fontFamily:"monospace", fontSize:12, color:"rgba(255,255,255,0.6)", marginBottom:12, wordBreak:"break-all" }}>
+              TRcKaizenCapitalGroupXXXXXXXXXXXXXX
+            </div>
+            <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Amount (USD)</label>
+            <input type="number" className="portal-input" placeholder="500.00" value={amount} onChange={e => setAmount(e.target.value)} />
+            <button className="portal-btn-primary" onClick={() => setSubmitted(true)}>Confirm Deposit →</button>
+          </div>
+        ) : (
+          <div>
+            <div style={{ background:"rgba(245,158,11,0.06)", border:"1px solid rgba(245,158,11,0.15)", borderRadius:10, padding:"12px 14px", marginBottom:16 }}>
+              <p style={{ fontSize:12, color:"rgba(245,158,11,0.8)", lineHeight:1.6, margin:0 }}>⚠ Minimum withdrawal: $500. Processing: 2–5 business days. Funds sent via USDT TRC20.</p>
+            </div>
+            <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Amount (USD)</label>
+            <input type="number" className="portal-input" placeholder="500.00" value={amount} onChange={e => setAmount(e.target.value)} />
+            <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Your USDT Wallet (TRC20)</label>
+            <input type="text" className="portal-input" placeholder="T..." />
+            <button className="portal-btn-primary" onClick={() => setSubmitted(true)}>Request Withdrawal →</button>
+          </div>
+        )}
+      </div>
+
+      {/* Transaction history */}
+      <div className="section-card">
+        <div className="section-title">Transaction History</div>
+        {WALLET_TXS.map((tx, i) => {
+          const isIn = tx.type !== "withdrawal";
+          return (
+            <div key={i} className="tx-row">
+              <div className="tx-icon" style={{ background: isIn ? "rgba(0,232,122,0.1)" : "rgba(248,79,79,0.1)", color: isIn ? "#00E87A" : "#F84F4F" }}>
+                {tx.type === "profit" ? "%" : isIn ? "↓" : "↑"}
+              </div>
+              <div className="tx-info">
+                <div className="tx-type" style={{ textTransform:"capitalize" }}>{tx.type} · <span style={{ color:"rgba(100,150,200,0.7)" }}>{tx.asset}</span></div>
+                <div className="tx-date">{tx.date}</div>
+                <div style={{ fontSize:9, color:"rgba(255,255,255,0.2)", fontFamily:"monospace", marginTop:1 }}>{tx.hash}</div>
+              </div>
+              <div style={{ textAlign:"right" }}>
+                <div className="tx-amount" style={{ color: isIn ? "#00E87A" : "#F84F4F", marginBottom:4 }}>{tx.amount}</div>
+                <span className={`badge ${tx.status==="completed"?"badge-green":tx.status==="pending"?"badge-yellow":"badge-blue"}`}>{tx.status}</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Performance() {
   const d = DEMO_DATA;
   const max = Math.max(...d.returns);
@@ -672,7 +833,7 @@ export default function Portal() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [active, setActive] = useState("overview");
 
-  const SECTIONS = { overview:<Overview/>, trading:<Trading/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
+  const SECTIONS = { overview:<Overview/>, trading:<Trading/>, wallet:<Wallet/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
 
   if (!loggedIn) return (
     <>
