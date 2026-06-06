@@ -206,7 +206,7 @@ function LoginPage({ onLogin }) {
                 <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Password</label>
                 <input type="password" className="portal-input" style={{ marginBottom:0 }} placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => e.key==="Enter" && handleLogin()} />
               </div>
-              {error && <p style={{ fontSize:11, color:"#F84F4F", textAlign:"center" }}>{error}</p>}
+              {error && <p style={{ fontSize:11, color:"#F84F4F", textAlign:"center" }}>Invalid email or password. Please try again.</p>}
               <button className="portal-btn-primary" style={{ marginTop:4 }} onClick={handleLogin}>Access Portal →</button>
               <p style={{ fontSize:11, color:"rgba(255,255,255,0.2)", textAlign:"center" }}>
                 Contact support if you need access
