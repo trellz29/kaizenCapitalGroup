@@ -260,7 +260,7 @@ export default function GlobalCapitalMap() {
         ref={canvasRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHovered(null)}
-        style={{ width: "100%", height: 460, borderRadius: 20, opacity: visible ? 1 : 0, transition: "opacity 1.2s ease", cursor: hovered !== null ? "pointer" : "default", display: "block" }}
+        style={{ width: "100%", height: typeof window !== "undefined" && window.innerWidth < 768 ? 300 : 460, borderRadius: 20, opacity: visible ? 1 : 0, transition: "opacity 1.2s ease", cursor: hovered !== null ? "pointer" : "default", display: "block" }}
       />
 
       {hovCity && (

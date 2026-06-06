@@ -42,7 +42,10 @@ function FundCard({ fund, active }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x:0, y:0, glow:false });
 
+  const isTouch = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
+
   const onMouseMove = useCallback((e) => {
+    if (isTouch) return;
     const el = cardRef.current;
     if (!el) return;
     const r = el.getBoundingClientRect();
@@ -51,7 +54,7 @@ function FundCard({ fund, active }) {
     setTilt({ x, y, glow:true });
   }, []);
 
-  const onMouseLeave = useCallback(() => setTilt({ x:0, y:0, glow:false }), []);
+  const onMouseLeave = useCallback(() => { if (!isTouch) setTilt({ x:0, y:0, glow:false }); }, [isTouch]);
 
   const isLive = fund.status === "live";
   const tagBg = isLive ? "rgba(0,232,122,0.12)"

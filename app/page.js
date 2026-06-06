@@ -253,7 +253,7 @@ export default function Home() {
                       config={{
                         symbol: item.symbol,
                         width: "100%",
-                        height: 280,
+                        height: typeof window !== "undefined" && window.innerWidth < 768 ? 240 : 280,
                         locale: "en",
                         interval: "60",
                         timezone: "Etc/UTC",
