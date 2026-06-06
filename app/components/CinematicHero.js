@@ -232,7 +232,7 @@ export default function CinematicHero() {
       <div className="hero-content-wrap" style={{
         position: "absolute", inset: 0, zIndex: 6,
         display: "flex", flexDirection: "column", justifyContent: "center",
-        padding: "clamp(100px,14vh,160px) clamp(1.5rem, 6vw, 80px) 5rem clamp(1.5rem, 6vw, 80px)",
+        padding: "clamp(120px,16vh,180px) clamp(1.5rem, 6vw, 80px) 5rem clamp(1.5rem, 6vw, 80px)",
         maxWidth: "min(640px, 58vw)", margin: "0",
         left: "clamp(1.5rem, 6vw, 80px)",
       }}>

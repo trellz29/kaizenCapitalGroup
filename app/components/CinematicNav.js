@@ -28,22 +28,23 @@ export default function CinematicNav() {
         .cnav {
           position: fixed; top: 0; left: 0; right: 0; z-index: 9000;
           pointer-events: none;
+          padding-top: 16px;
         }
         .cnav-inner {
           pointer-events: all;
-          margin: 20px auto 0;
+          margin: 0 auto;
           max-width: 1320px;
-          padding: 0 20px;
+          padding: 0 28px;
           display: flex; align-items: center; gap: 0;
-          height: 50px;
-          border-radius: 100px;
+          height: 64px;
+          border-radius: 16px;
           background: rgba(5,8,16,0.0);
           border: 1px solid rgba(255,255,255,0);
           backdrop-filter: blur(0px);
           transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .cnav-inner.scrolled {
-          background: rgba(5,8,16,0.88);
+          background: rgba(5,8,16,0.92);
           border-color: rgba(255,255,255,0.08);
           backdrop-filter: blur(28px);
           box-shadow: 0 8px 32px rgba(0,0,0,0.4);
