@@ -121,9 +121,9 @@ function makeIconTexture(THREE, type) {
   const cx = s/2, cy = s/2;
 
   if (type === "BTC") {
-    ctx.font = `bold ${s*0.48}px Arial`;
+    ctx.font = `bold ${s*0.48}px serif`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("B", cx, cy);
+    ctx.fillText("₿", cx, cy);
   } else if (type === "ETH") {
     // Ethereum diamond — two triangles
     ctx.lineWidth = 1.5;
