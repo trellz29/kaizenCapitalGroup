@@ -1,22 +1,32 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
 
 export default function PageTransition({ children }) {
   const pathname = usePathname();
+  const [prevPath, setPrevPath] = useState(pathname);
+  const [transitioning, setTransitioning] = useState(false);
 
+  useEffect(() => {
+    if (pathname !== prevPath) {
+      setTransitioning(true);
+      const t = setTimeout(() => {
+        setPrevPath(pathname);
+        setTransitioning(false);
+      }, 400);
+      return () => clearTimeout(t);
+    }
+  }, [pathname, prevPath]);
+
+  // On initial load — render children immediately with NO opacity/blur
+  // Only apply transition on route CHANGES, not on first load
   return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, filter: "blur(8px)" }}
-        animate={{ opacity: 1, filter: "blur(0px)" }}
-        exit={{ opacity: 0, filter: "blur(8px)" }}
-        transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div style={{
+      opacity: transitioning ? 0 : 1,
+      filter: transitioning ? "blur(8px)" : "blur(0px)",
+      transition: transitioning ? "none" : "opacity 0.4s ease, filter 0.4s ease",
+    }}>
+      {children}
+    </div>
   );
 }
