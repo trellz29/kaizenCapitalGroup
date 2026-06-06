@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
 
-const ROLES = ["Capital Allocation", "Asset Management", "Alternative Investments", "Digital Assets", "Venture Capital"];
+const ROLES = ["Allocation", "Asset Management", "Alternative Investments", "Digital Assets", "Wealth Creation"];
 
 export default function CinematicHero() {
   const canvasRef = useRef(null);
