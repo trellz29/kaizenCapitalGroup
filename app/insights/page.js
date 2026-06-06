@@ -52,7 +52,7 @@ const INSIGHTS = [
     category: "Risk Management",
     tag: "RISK",
     title: "KCG's approach to drawdown management across 12 funds",
-    excerpt: "With 12 active strategies, how do you manage drawdown correlation? KCG's framework for position sizing, exposure limits, and recovery protocols.",
+    excerpt: "With 13 active strategies, how do you manage drawdown correlation? KCG's framework for position sizing, exposure limits, and recovery protocols.",
     date: "Jul 2025",
     readTime: "6 min read",
     accent: "#F87171",

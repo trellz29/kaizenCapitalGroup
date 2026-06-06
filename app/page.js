@@ -171,7 +171,7 @@ export default function Home() {
           <div className="marquee-track">
             {[...Array(3)].map((_, si) => (
               <div key={si} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-                {["INSTITUTIONAL EXECUTION", "12 ACTIVE FUNDS", "DISCIPLINED CAPITAL", "$847M+ VOLUME", "9.2% AVG MONTHLY RETURN", "COPY TRADING LIVE", "KAIZEN CAPITAL GROUP", "VERIFIED STRATEGIES"].map((item, i) => (
+                {["INSTITUTIONAL EXECUTION", "13 ACTIVE FUNDS", "DISCIPLINED CAPITAL", "$847M+ VOLUME", "9.2% AVG MONTHLY RETURN", "COPY TRADING LIVE", "KAIZEN CAPITAL GROUP", "VERIFIED STRATEGIES"].map((item, i) => (
                   <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 24, paddingRight: 48 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.28em", color: "rgba(159,180,193,0.4)", fontFamily: "sans-serif", textTransform: "uppercase" }}>{item}</span>
                     <span style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(159,180,193,0.2)", flexShrink: 0, display: "inline-block" }} />
@@ -196,16 +196,16 @@ export default function Home() {
 
             {/* Bento grid */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(180px,calc(50% - 8px)),1fr))", gap: 12, marginBottom: 40 }}>
-              <SlideReveal direction="up" delay={0}><BentoStat num="12" label="Active Funds" accent="rgba(0,232,120,0.6)" /></SlideReveal>
+              <SlideReveal direction="up" delay={0}><BentoStat num="13" label="Active Funds" accent="rgba(0,232,120,0.6)" /></SlideReveal>
               <SlideReveal direction="up" delay={80}><BentoStat num="9.2" label="Avg Monthly Return" suffix="%" accent="rgba(159,180,193,0.6)" /></SlideReveal>
               <SlideReveal direction="up" delay={160}><BentoStat num="847" label="Total Volume" prefix="$" suffix="M+" accent="rgba(100,150,255,0.6)" /></SlideReveal>
-              <SlideReveal direction="up" delay={240}><BentoStat num="4" label="Active Users" suffix="+" accent="rgba(200,180,100,0.6)" /></SlideReveal>
+              <SlideReveal direction="up" delay={240}><BentoStat num="100" label="Active Users" suffix="+" accent="rgba(200,180,100,0.6)" /></SlideReveal>
             </div>
 
             {/* Overview cards */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
               {[
-                { title: "Institutional Execution", body: "KCG deploys capital through verified brokerages with institutional-grade execution infrastructure across 12 active funds." },
+                { title: "Institutional Execution", body: "KCG deploys capital through verified brokerages with institutional-grade execution infrastructure across 13 active funds." },
                 { title: "Multi-Asset Strategies", body: "From Gold scalping and EUR/USD algos to Crypto and multi-asset amalgamation — diversified across asset classes and timeframes." },
                 { title: "Transparent Structure", body: "Every fund has defined strategy, manager allocation, brokerage partner, and status — built for serious capital relationships." },
               ].map((c, i) => (

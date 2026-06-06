@@ -260,7 +260,7 @@ export default function CinematicHero() {
         </h1>
 
         <p className="hero-desc" ref={subRef} style={{ opacity: 0 }}>
-          Kaizen Capital Group operates 12 active funds across Gold, Forex, Crypto, and multi-asset strategies — built for serious investors seeking disciplined, institutional-grade execution.
+          Kaizen Capital Group operates 13 active funds across Gold, Forex, Crypto, and multi-asset strategies — built for serious investors seeking disciplined, institutional-grade execution.
         </p>
 
         <div className="hero-ctas" ref={ctaRef} style={{ opacity: 0 }}>

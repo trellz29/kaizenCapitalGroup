@@ -231,7 +231,7 @@ export default function HeroGSAP() {
           <span style={{ display:"block" }}>for long-term growth.</span>
         </h1>
         <p ref={descRef} className="kcg-gsap-desc" style={{ opacity:0 }}>
-          Kaizen Capital Group is a disciplined capital strategy platform — 12 active funds, institutional execution, and premium presentation built for serious investors.
+          Kaizen Capital Group is a disciplined capital strategy platform — 13 active funds, institutional execution, and premium presentation built for serious investors.
         </p>
         <div ref={ctasRef} className="kcg-gsap-ctas" style={{ opacity:0 }}>
           <a href="https://calendly.com/trellzp12/30min" target="_blank" rel="noopener noreferrer" className="kcg-gsap-btn-solid" data-cursor-label="Book">

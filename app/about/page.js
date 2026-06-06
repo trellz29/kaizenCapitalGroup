@@ -5,7 +5,7 @@ const TEAM = [
   {
     role: "Founder & Chief Capital Strategist",
     name: "KCG Leadership",
-    bio: "Built KCG from the ground up as an institutional-grade capital platform. Oversees all fund strategy, brokerage relationships, and investor communication across 12 active funds.",
+    bio: "Built KCG from the ground up as an institutional-grade capital platform. Oversees all fund strategy, brokerage relationships, and investor communication across 13 active funds.",
     stats: [{ label: "Funds Managed", val: "12" }, { label: "Strategies", val: "8+" }, { label: "Since", val: "2022" }],
   },
 ];
