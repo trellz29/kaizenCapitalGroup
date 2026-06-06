@@ -2,19 +2,19 @@
 import { useRef, useState, useCallback, useEffect } from "react";
 
 const FUNDS = [
-  { id:"1",  name:"KaizenCapitalGroup.Xau-TMGM", focus:"Gold Scalping",   broker:"TMGM",      status:"live",         ret:"+9.4%",  tag:"FLAGSHIP",     color:"#00E87A", link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM" },
-  { id:"1a", name:"KaizenCapitalGroup.Xau-MB",   focus:"Gold Intra-day",  broker:"MultiBank", status:"live",         ret:"+11.2%", tag:"LIVE",         color:"#00E87A", link:"https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30" },
-  { id:"2",  name:"TradeXMarkets Fund",          focus:"Gold + Oil",      broker:"—",         status:"coming",       ret:"—",      tag:"COMING SOON",  color:"#6496C8", link:null },
-  { id:"3",  name:"VaultKano Fund",              focus:"Crypto",          broker:"MultiBank", status:"relaunching",  ret:"—",      tag:"RE-LAUNCHING", color:"#F59E0B", link:null },
-  { id:"4",  name:"Exodus Investments",          focus:"Crypto + Gold",   broker:"—",         status:"coming",       ret:"—",      tag:"US INCLUDED",  color:"#9FB4C1", link:null },
-  { id:"5",  name:"KCG + Phoenix",               focus:"Gold + FX",       broker:"—",         status:"coming",       ret:"—",      tag:"SPECULATIVE",  color:"#6496C8", link:null },
-  { id:"6",  name:"Phoenix",                     focus:"Forex",           broker:"—",         status:"coming",       ret:"—",      tag:"AI · COMING SOON",  color:"#a78bfa", link:null },
-  { id:"7",  name:"Forex Fortune AI",            focus:"EUR/USD",         broker:"—",         status:"coming",       ret:"—",      tag:"AI POWERED",   color:"#a78bfa", link:null },
-  { id:"8",  name:"The Alpha Fund",              focus:"Gold Manual",     broker:"TMGM",      status:"live",         ret:"+7.8%",  tag:"LIVE",         color:"#00E87A", link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha" },
-  { id:"9",  name:"Algo Amalgamation Fund",      focus:"Multi-asset",     broker:"MultiBank", status:"coming",       ret:"—",      tag:"ALGORITHMIC",  color:"#6496C8", link:null },
-  { id:"10", name:"PfaneTXau Fund",              focus:"CFDs",            broker:"—",         status:"discontinued", ret:"—",      tag:"DISCONTINUED", color:"#555",    link:null },
-  { id:"11", name:"MAMALYN Fund",                focus:"EUR/USD Algo",    broker:"MultiBank", status:"live",         ret:"+8.9%",  tag:"LIVE",         color:"#00E87A", link:"https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars" },
-  { id:"CX", name:"CXFund",                     focus:"Gold Trading",    broker:"TMGM",      status:"disconnected", ret:"—",      tag:"DISCONNECTED", color:"#888",    link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026" },
+  { id:"1",  name:"KaizenCapitalGroup.Xau-TMGM", focus:"Gold Scalping",   broker:"TMGM",      status:"live",         ret:"+9.4%",  tag:"FLAGSHIP",     color:"#00E87A", link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM",    track:"https://www.myfxbook.com/members/KaizenCapital" },
+  { id:"1a", name:"KaizenCapitalGroup.Xau-MB",   focus:"Gold Intra-day",  broker:"MultiBank", status:"live",         ret:"+11.2%", tag:"LIVE",         color:"#00E87A", link:"https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30",         track:"https://www.myfxbook.com/members/KaizenCapital" },
+  { id:"2",  name:"TradeXMarkets Fund",          focus:"Gold + Oil",      broker:"—",         status:"coming",       ret:"—",      tag:"COMING SOON",  color:"#6496C8", link:null, track:null },
+  { id:"3",  name:"VaultKano Fund",              focus:"Crypto",          broker:"MultiBank", status:"relaunching",  ret:"—",      tag:"RE-LAUNCHING", color:"#F59E0B", link:null, track:null },
+  { id:"4",  name:"Exodus Investments",          focus:"Crypto + Gold",   broker:"—",         status:"coming",       ret:"—",      tag:"US INCLUDED",  color:"#9FB4C1", link:null, track:null },
+  { id:"5",  name:"KCG + Phoenix",               focus:"Gold + FX",       broker:"—",         status:"coming",       ret:"—",      tag:"SPECULATIVE",  color:"#6496C8", link:null, track:null },
+  { id:"6",  name:"Phoenix",                     focus:"Forex",           broker:"—",         status:"coming",       ret:"—",      tag:"AI · COMING SOON", color:"#a78bfa", link:null, track:null },
+  { id:"7",  name:"Forex Fortune AI",            focus:"EUR/USD",         broker:"—",         status:"coming",       ret:"—",      tag:"AI POWERED",   color:"#a78bfa", link:null, track:null },
+  { id:"8",  name:"The Alpha Fund",              focus:"Gold Manual",     broker:"TMGM",      status:"live",         ret:"+7.8%",  tag:"LIVE",         color:"#00E87A", link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha",           track:"https://www.myfxbook.com/members/KaizenCapital" },
+  { id:"9",  name:"Algo Amalgamation Fund",      focus:"Multi-asset",     broker:"MultiBank", status:"coming",       ret:"—",      tag:"ALGORITHMIC",  color:"#6496C8", link:null, track:null },
+  { id:"10", name:"PfaneTXau Fund",              focus:"CFDs",            broker:"—",         status:"discontinued", ret:"—",      tag:"DISCONTINUED", color:"#555",    link:null, track:null },
+  { id:"11", name:"MAMALYN Fund",                focus:"EUR/USD Algo",    broker:"MultiBank", status:"live",         ret:"+8.9%",  tag:"LIVE",         color:"#00E87A", link:"https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars", track:"https://www.myfxbook.com/members/KaizenCapital" },
+  { id:"CX", name:"CXFund",                     focus:"Gold Trading",    broker:"TMGM",      status:"disconnected", ret:"—",      tag:"DISCONNECTED", color:"#888",    link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026", track:null },
 ];
 
 const CARD_W = 300;
@@ -118,6 +118,16 @@ function FundCard({ fund, active }) {
         </a>
       ) : (
         <div style={{ marginTop:16, textAlign:"center", padding:"12px", borderRadius:10, background:"rgba(255,255,255,0.04)", color:"rgba(255,255,255,0.25)", fontFamily:"sans-serif", fontSize:12, fontWeight:700 }}>{btnLabel}</div>
+      )}
+
+      {fund.track && (
+        <a href={fund.track} target="_blank" rel="noopener noreferrer"
+          style={{ marginTop:8, display:"flex", alignItems:"center", justifyContent:"center", gap:5, padding:"9px 12px", borderRadius:10, background:"rgba(0,232,122,0.05)", border:"1px solid rgba(0,232,122,0.2)", fontFamily:"sans-serif", fontSize:11, fontWeight:700, color:"rgba(0,232,122,0.7)", textDecoration:"none", letterSpacing:"0.03em", transition:"all 0.2s" }}
+          onMouseEnter={e=>{ e.currentTarget.style.background="rgba(0,232,122,0.1)"; e.currentTarget.style.color="#00E87A"; }}
+          onMouseLeave={e=>{ e.currentTarget.style.background="rgba(0,232,122,0.05)"; e.currentTarget.style.color="rgba(0,232,122,0.7)"; }}
+        >
+          <span>✓</span> Verified Track Record
+        </a>
       )}
     </div>
   );
