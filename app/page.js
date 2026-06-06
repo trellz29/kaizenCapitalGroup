@@ -142,19 +142,9 @@ export default function Home() {
     <>
       <style>{GLOBAL_CSS}</style>
 
-      <AnimatePresence>
-        {showLoader && (
-          <motion.div
-            key="loader"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.7 }}
-            style={{ position: "fixed", inset: 0, zIndex: 999999 }}
-          >
-            <CinematicLoader onComplete={() => setShowLoader(false)} />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {showLoader && (
+        <CinematicLoader onComplete={() => setShowLoader(false)} />
+      )}
 
       <div style={{ opacity: showLoader ? 0 : 1, transition: "opacity 0.8s ease 0.2s" }}>
         <LenisProvider />
