@@ -102,12 +102,14 @@ export default function CinematicNav() {
         /* Hamburger */
         .cnav-hamburger {
           display: none; flex-direction: column; gap: 5px;
-          padding: 8px; cursor: pointer; background: none; border: none;
-          margin-left: auto;
+          padding: 10px 12px; cursor: pointer; background: rgba(255,255,255,0.1);
+          border: 1px solid rgba(255,255,255,0.15); border-radius: 10px;
+          margin-left: auto; transition: background 0.2s ease;
         }
+        .cnav-hamburger:hover { background: rgba(255,255,255,0.18); }
         .cnav-hamburger span {
-          width: 20px; height: 1.5px; background: rgba(255,255,255,0.7);
-          display: block; transition: all 0.2s ease;
+          width: 22px; height: 2px; background: #fff;
+          display: block; border-radius: 2px; transition: all 0.2s ease;
         }
 
         @media (max-width: 900px) {
