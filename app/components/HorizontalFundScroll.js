@@ -156,20 +156,30 @@ export default function HorizontalFundScroll() {
     const track   = trackRef.current;
     if (!section || !track) return;
 
+    const isMobile = window.innerWidth <= 768;
+
     const calcHeight = () => {
-      // Section height = 1 viewport (for sticky) + exact track overflow
-      const trackOverflow = Math.max(0, track.scrollWidth - track.offsetWidth);
-      setSectionHeight(`${window.innerHeight + trackOverflow}px`);
+      if (window.innerWidth <= 768) {
+        // Mobile: no sticky scroll needed, natural height
+        setSectionHeight("auto");
+        return;
+      }
+      // Desktop: viewport + (total cards width - viewport width)
+      const totalTrackW = FUNDS.length * (CARD_W + CARD_GAP) - CARD_GAP + 160;
+      const overflow = Math.max(0, totalTrackW - window.innerWidth);
+      setSectionHeight(`${window.innerHeight + overflow}px`);
     };
 
-    // Measure after paint so cards are laid out
-    const raf = requestAnimationFrame(() => {
+    // Triple ensure layout is done
+    requestAnimationFrame(() => requestAnimationFrame(() => {
       calcHeight();
-    });
+      setTimeout(calcHeight, 300);
+    }));
 
     window.addEventListener("resize", calcHeight);
 
     const onScroll = () => {
+      if (window.innerWidth <= 768) return;
       const rect      = section.getBoundingClientRect();
       const sectionH  = section.offsetHeight;
       const viewH     = window.innerHeight;
@@ -189,7 +199,6 @@ export default function HorizontalFundScroll() {
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
-      cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", calcHeight);
     };
