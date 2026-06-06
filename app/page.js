@@ -103,6 +103,51 @@ function LiveTradesFeed() {
   );
 }
 
+/* --- Lead Capture Form ------------------------------------------- */
+function LeadCaptureForm() {
+  const [name, setName]       = useState("");
+  const [email, setEmail]     = useState("");
+  const [interest, setInterest] = useState("");
+  const [done, setDone]       = useState(false);
+
+  const submit = async () => {
+    if (!email) return;
+    try {
+      await fetch("/api/trello", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "Website Contact Form", name, email, interest, source: "KCG Main Site - Contact" }),
+      });
+    } catch(e) {}
+    setDone(true);
+  };
+
+  if (done) return (
+    <div style={{ background:"rgba(0,232,122,0.06)", border:"1px solid rgba(0,232,122,0.15)", borderRadius:12, padding:"14px 16px", marginBottom:20, textAlign:"center" }}>
+      <p style={{ fontFamily:"sans-serif", fontSize:13, color:"rgba(0,232,122,0.9)", fontWeight:700 }}>✓ Details received — we'll be in touch shortly.</p>
+    </div>
+  );
+
+  return (
+    <div style={{ marginBottom:24, display:"flex", flexDirection:"column", gap:10 }}>
+      <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:10 }}>
+        <input type="text" value={name} onChange={e=>setName(e.target.value)} placeholder="Your name" style={{ padding:"11px 14px", borderRadius:10, background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"#fff", fontFamily:"sans-serif", fontSize:13, outline:"none" }} />
+        <input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" style={{ padding:"11px 14px", borderRadius:10, background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color:"#fff", fontFamily:"sans-serif", fontSize:13, outline:"none" }} />
+      </div>
+      <select value={interest} onChange={e=>setInterest(e.target.value)} style={{ padding:"11px 14px", borderRadius:10, background:"rgba(255,255,255,0.04)", border:"1px solid rgba(255,255,255,0.1)", color: interest ? "#fff" : "rgba(255,255,255,0.3)", fontFamily:"sans-serif", fontSize:13, outline:"none", appearance:"none" }}>
+        <option value="">What are you interested in?</option>
+        <option>Copy Trading / Signal Subscription</option>
+        <option>Capital Allocation</option>
+        <option>Strategic Partnership</option>
+        <option>General Inquiry</option>
+      </select>
+      <button onClick={submit} style={{ padding:"12px", borderRadius:10, background:"rgba(159,180,193,0.15)", border:"1px solid rgba(159,180,193,0.2)", color:"rgba(159,180,193,0.9)", fontFamily:"sans-serif", fontSize:12, fontWeight:700, cursor:"pointer", transition:"all 0.2s" }}>
+        Submit Details →
+      </button>
+    </div>
+  );
+}
+
 function TradingViewWidget({ widgetType, config, minHeight }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -619,6 +664,7 @@ export default function Home() {
               <SlideReveal direction="right" id="contact-form">
                 <div className="glass-card" style={{ padding: 32 }}>
                   <p style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", marginBottom: 20 }}>Schedule a 30-Minute Call</p>
+                  <LeadCaptureForm />
                   <CalendlyWidget />
                 </div>
               </SlideReveal>

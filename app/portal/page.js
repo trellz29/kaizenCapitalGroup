@@ -163,16 +163,34 @@ const CSS = `
 `;
 
 // ── LOGIN PAGE ────────────────────────────────────────────────────────────────
+// Send lead to Trello
+async function sendToTrello(data) {
+  try {
+    await fetch("/api/trello", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  } catch (e) { /* silent fail */ }
+}
+
 function LoginPage({ onLogin }) {
   const [tab, setTab] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [applyName, setApplyName] = useState("");
+  const [applyEmail, setApplyEmail] = useState("");
+  const [applyTelegram, setApplyTelegram] = useState("");
+  const [applyInterest, setApplyInterest] = useState("");
+  const [applyDone, setApplyDone] = useState(false);
 
   const handleLogin = () => {
     if (email === DEMO_USER.email && password === DEMO_USER.password) {
+      sendToTrello({ type: "Portal Login", email, name: DEMO_USER.name, source: "KCG Portal" });
       onLogin();
     } else {
+      if (email) sendToTrello({ type: "Portal Login Attempt", email, name: email.split("@")[0], source: "KCG Portal" });
       setError("Invalid credentials. Use demo: investor@kcg.com / kcg2024");
     }
   };
@@ -219,17 +237,31 @@ function LoginPage({ onLogin }) {
               <div style={{ background:"rgba(0,232,120,0.06)", border:"1px solid rgba(0,232,120,0.15)", borderRadius:10, padding:"12px 14px", marginBottom:4 }}>
                 <p style={{ fontSize:12, color:"rgba(0,232,120,0.8)", lineHeight:1.6 }}>Portal access is by invitation only. Submit your details and a KCG representative will be in touch within 24–48 hours.</p>
               </div>
-              <input type="text" className="portal-input" placeholder="Full name" />
-              <input type="email" className="portal-input" placeholder="Email address" />
-              <input type="text" className="portal-input" placeholder="Telegram @handle" />
-              <select className="portal-input" style={{ appearance:"none" }}>
-                <option value="">Investment interest...</option>
-                <option>Copy Trading / Signal Subscription</option>
-                <option>Capital Allocation ($10k–$50k)</option>
-                <option>Capital Allocation ($50k+)</option>
-                <option>Strategic Partnership</option>
-              </select>
-              <a href="mailto:support@kaizencapitalgrp.com?subject=Portal Access Request" className="portal-btn-primary" style={{ textDecoration:"none", textAlign:"center", display:"block" }}>Submit Application →</a>
+              {applyDone ? (
+                <div style={{ textAlign:"center", padding:"20px 0" }}>
+                  <div style={{ fontSize:32, marginBottom:8 }}>✓</div>
+                  <p style={{ color:"#00E87A", fontWeight:700, marginBottom:4 }}>Application Received</p>
+                  <p style={{ fontSize:12, color:"rgba(255,255,255,0.4)" }}>We'll be in touch within 24–48 hours.</p>
+                </div>
+              ) : (
+                <>
+                  <input type="text" className="portal-input" placeholder="Full name" value={applyName} onChange={e=>setApplyName(e.target.value)} />
+                  <input type="email" className="portal-input" placeholder="Email address" value={applyEmail} onChange={e=>setApplyEmail(e.target.value)} />
+                  <input type="text" className="portal-input" placeholder="Telegram @handle" value={applyTelegram} onChange={e=>setApplyTelegram(e.target.value)} />
+                  <select className="portal-input" style={{ appearance:"none" }} value={applyInterest} onChange={e=>setApplyInterest(e.target.value)}>
+                    <option value="">Investment interest...</option>
+                    <option>Copy Trading / Signal Subscription</option>
+                    <option>Capital Allocation ($10k–$50k)</option>
+                    <option>Capital Allocation ($50k+)</option>
+                    <option>Strategic Partnership</option>
+                  </select>
+                  <button className="portal-btn-primary" onClick={() => {
+                    if (!applyEmail) return;
+                    sendToTrello({ type:"Apply for Access", name:applyName, email:applyEmail, telegram:applyTelegram, interest:applyInterest, source:"KCG Portal - Apply Form" });
+                    setApplyDone(true);
+                  }}>Submit Application →</button>
+                </>
+              )}
             </div>
           )}
         </div>
