@@ -149,15 +149,21 @@ export default function HorizontalFundScroll() {
   const [progress, setProgress]   = useState(0);
   const [activeIdx, setActiveIdx] = useState(0);
 
-  // Only need to scroll the amount the track overflows the viewport
-  // trackOverflow = (cardW + gap) * numCards - viewportW
-  // We add 100vh so the section pins for long enough, plus a small buffer
-  const totalScrollPx = Math.max((CARD_W + CARD_GAP) * FUNDS.length - (typeof window !== "undefined" ? window.innerWidth : 1200) + 120, 800);
+  const [sectionHeight, setSectionHeight] = useState("300vh");
 
   useEffect(() => {
     const section = sectionRef.current;
     const track   = trackRef.current;
     if (!section || !track) return;
+
+    const calcHeight = () => {
+      const overflow = track.scrollWidth - window.innerWidth;
+      const h = Math.max(overflow + window.innerHeight + 100, window.innerHeight * 1.5);
+      setSectionHeight(`${h}px`);
+    };
+
+    calcHeight();
+    window.addEventListener("resize", calcHeight);
 
     const onScroll = () => {
       const rect     = section.getBoundingClientRect();
@@ -177,7 +183,10 @@ export default function HorizontalFundScroll() {
 
     window.addEventListener("scroll", onScroll, { passive:true });
     onScroll();
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", calcHeight);
+    };
   }, []);
 
   return (
@@ -219,7 +228,7 @@ export default function HorizontalFundScroll() {
       <div
         ref={sectionRef}
         className="hfs-section"
-        style={{ height:`calc(100vh + ${totalScrollPx}px)` }}
+        style={{ height: sectionHeight }}
       >
         <div className="hfs-sticky">
           <div className="hfs-header">
