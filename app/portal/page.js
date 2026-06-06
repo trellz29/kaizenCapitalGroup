@@ -1010,12 +1010,28 @@ export default function Portal() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [active, setActive] = useState("overview");
 
+  // Persist login across refreshes
+  useEffect(() => {
+    const saved = sessionStorage.getItem("kcg_portal_auth");
+    if (saved === "true") setLoggedIn(true);
+  }, []);
+
+  const handleLogin = () => {
+    sessionStorage.setItem("kcg_portal_auth", "true");
+    setLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem("kcg_portal_auth");
+    setLoggedIn(false);
+  };
+
   const SECTIONS = { overview:<Overview/>, trading:<Trading/>, wallet:<Wallet/>, education:<Education/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
 
   if (!loggedIn) return (
     <>
       <style>{CSS}</style>
-      <LoginPage onLogin={() => setLoggedIn(true)} />
+      <LoginPage onLogin={handleLogin} />
     </>
   );
 
@@ -1039,7 +1055,7 @@ export default function Portal() {
             ))}
           </nav>
           <div className="sidebar-footer">
-            <button className="sidebar-link" onClick={() => setLoggedIn(false)} style={{ color:"rgba(248,113,113,0.6)", width:"100%" }}>
+            <button className="sidebar-link" onClick={handleLogout} style={{ color:"rgba(248,113,113,0.6)", width:"100%" }}>
               <span className="icon">⊗</span> Sign Out
             </button>
             <Link href="/" style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", fontSize:12, color:"rgba(255,255,255,0.25)", textDecoration:"none", marginTop:4 }}>
@@ -1054,7 +1070,7 @@ export default function Portal() {
             <div style={{ width:28, height:28, borderRadius:"50%", background:"linear-gradient(135deg,#9FB4C1,#0C1A30)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, fontWeight:900, color:"#fff" }}>KCG</div>
             <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.1em", color:"rgba(255,255,255,0.6)", textTransform:"uppercase" }}>Portal</span>
           </div>
-          <button onClick={() => setLoggedIn(false)} style={{ fontSize:11, color:"rgba(248,113,113,0.6)", background:"none", border:"none", cursor:"pointer" }}>Sign Out</button>
+          <button onClick={handleLogout} style={{ fontSize:11, color:"rgba(248,113,113,0.6)", background:"none", border:"none", cursor:"pointer" }}>Sign Out</button>
         </div>
 
         {/* Main content */}
