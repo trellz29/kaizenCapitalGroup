@@ -27,7 +27,7 @@ export default function CinematicNav() {
           transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
         }
         .cnav-inner {
-          margin: 16px auto 0;
+          margin: 24px auto 0;
           max-width: 1200px;
           padding: 0 24px;
           display: flex; align-items: center; justify-content: space-between;
