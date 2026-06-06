@@ -241,13 +241,35 @@ export default function Home() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
               {[
-                { widget: "mini-symbol-overview", config: { symbol: "OANDA:XAUUSD", width: "100%", height: 220, locale: "en", dateRange: "1D", colorTheme: "dark", isTransparent: true, autosize: false, largeChartUrl: "" }, label: "XAU/USD" },
-                { widget: "mini-symbol-overview", config: { symbol: "FX:EURUSD", width: "100%", height: 220, locale: "en", dateRange: "1D", colorTheme: "dark", isTransparent: true, autosize: false, largeChartUrl: "" }, label: "EUR/USD" },
-                { widget: "mini-symbol-overview", config: { symbol: "BITSTAMP:BTCUSD", width: "100%", height: 220, locale: "en", dateRange: "1D", colorTheme: "dark", isTransparent: true, autosize: false, largeChartUrl: "" }, label: "BTC/USD" },
+                { symbol: "OANDA:XAUUSD", label: "XAU/USD", chartUrl: "https://www.tradingview.com/chart/?symbol=OANDA:XAUUSD" },
+                { symbol: "FX:EURUSD",    label: "EUR/USD", chartUrl: "https://www.tradingview.com/chart/?symbol=FX:EURUSD" },
+                { symbol: "BITSTAMP:BTCUSD", label: "BTC/USD", chartUrl: "https://www.tradingview.com/chart/?symbol=BITSTAMP:BTCUSD" },
               ].map((item, i) => (
                 <SlideReveal key={item.label} direction="up" delay={i * 100}>
-                  <div className="glass-card" style={{ overflow: "hidden" }}>
-                    <TradingViewWidget widgetType={item.widget} minHeight="220px" config={item.config} />
+                  <div style={{ borderRadius: 16, overflow: "hidden", border: "1px solid rgba(255,255,255,0.07)", background: "#0b1221", position: "relative" }}>
+                    <TradingViewWidget
+                      widgetType="advanced-chart"
+                      minHeight="280px"
+                      config={{
+                        symbol: item.symbol,
+                        width: "100%",
+                        height: 280,
+                        locale: "en",
+                        interval: "60",
+                        timezone: "Etc/UTC",
+                        theme: "dark",
+                        style: "1",
+                        backgroundColor: "rgba(11,18,33,1)",
+                        gridColor: "rgba(255,255,255,0.04)",
+                        hide_top_toolbar: false,
+                        hide_legend: false,
+                        allow_symbol_change: true,
+                        save_image: false,
+                        calendar: false,
+                        hide_volume: true,
+                        support_host: "https://www.tradingview.com",
+                      }}
+                    />
                   </div>
                 </SlideReveal>
               ))}
