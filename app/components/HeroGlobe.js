@@ -157,12 +157,9 @@ function makeIconTexture(THREE, type) {
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("$", cx, cy);
   } else if (type === "USDT") {
-    ctx.font = `bold ${s*0.38}px Arial`;
+    ctx.font = `bold ${s*0.48}px serif`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("T", cx, cy);
-    // Underline
-    ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(cx-10, cy+14); ctx.lineTo(cx+10, cy+14); ctx.stroke();
+    ctx.fillText("₮", cx, cy);
   }
 
   return new THREE.CanvasTexture(c);
