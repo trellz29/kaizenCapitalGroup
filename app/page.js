@@ -19,6 +19,90 @@ import SlideReveal from "./components/SlideReveal";
 import StaggerGrid from "./components/StaggerGrid";
 
 /* --- TradingView widget ------------------------------------------- */
+/* --- Live Trades Feed -------------------------------------------- */
+const ALL_TRADES = [
+  { action:"BUY",  pair:"XAUUSD", fund:"Fund 1 · TMGM",        lots:"0.10", result:"+12.4 pips", win:true  },
+  { action:"SELL", pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.05", result:"+8.1 pips",  win:true  },
+  { action:"BUY",  pair:"BTCUSD", fund:"VaultKano · MultiBank", lots:"0.01", result:"+2.7%",      win:true  },
+  { action:"SELL", pair:"XAUUSD", fund:"Alpha Fund · TMGM",     lots:"0.08", result:"-3.2 pips",  win:false },
+  { action:"BUY",  pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.05", result:"+11.0 pips", win:true  },
+  { action:"BUY",  pair:"XAUUSD", fund:"Fund 1a · MultiBank",   lots:"0.12", result:"+9.8 pips",  win:true  },
+  { action:"SELL", pair:"XAUUSD", fund:"Alpha Fund · TMGM",     lots:"0.06", result:"+14.2 pips", win:true  },
+  { action:"BUY",  pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.08", result:"+6.5 pips",  win:true  },
+  { action:"SELL", pair:"XAUUSD", fund:"CXFund · TMGM",         lots:"0.10", result:"+18.3 pips", win:true  },
+  { action:"BUY",  pair:"XAUUSD", fund:"Fund 1 · TMGM",         lots:"0.15", result:"-4.1 pips",  win:false },
+  { action:"BUY",  pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.05", result:"+7.2 pips",  win:true  },
+  { action:"SELL", pair:"XAUUSD", fund:"Fund 1a · MultiBank",   lots:"0.10", result:"+11.6 pips", win:true  },
+  { action:"BUY",  pair:"BTCUSD", fund:"VaultKano · MultiBank", lots:"0.02", result:"+3.4%",      win:true  },
+  { action:"SELL", pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.08", result:"+5.9 pips",  win:true  },
+  { action:"BUY",  pair:"XAUUSD", fund:"CXFund · TMGM",         lots:"0.08", result:"+22.1 pips", win:true  },
+];
+
+function LiveTradesFeed() {
+  const [trades, setTrades] = useState(ALL_TRADES.slice(0, 5));
+  const [newIdx, setNewIdx] = useState(null);
+  const poolRef = useRef(ALL_TRADES.slice(5));
+
+  useEffect(() => {
+    // Add a new trade every 3.5 seconds
+    const interval = setInterval(() => {
+      setTrades(prev => {
+        const pool = poolRef.current;
+        if (pool.length === 0) {
+          poolRef.current = ALL_TRADES;
+          return prev;
+        }
+        const next = pool[Math.floor(Math.random() * pool.length)];
+        const newTrade = {
+          ...next,
+          lots: `${(Math.random() * 0.15 + 0.01).toFixed(2)}`,
+          result: next.win
+            ? `+${(Math.random() * 20 + 2).toFixed(1)} pips`
+            : `-${(Math.random() * 8 + 1).toFixed(1)} pips`,
+          isNew: true,
+        };
+        setNewIdx(0);
+        setTimeout(() => setNewIdx(null), 600);
+        return [newTrade, ...prev.slice(0, 4)];
+      });
+    }, 3500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div style={{ display:"flex", flexDirection:"column", gap:8, overflow:"hidden" }}>
+      {trades.map((t, i) => (
+        <div key={`${t.pair}-${t.result}-${i}`} style={{
+          background: "rgba(255,255,255,0.02)",
+          border: `1px solid ${i === newIdx ? (t.win ? "rgba(0,232,120,0.3)" : "rgba(248,113,113,0.3)") : "rgba(255,255,255,0.06)"}`,
+          borderRadius: 12, padding: "14px 16px",
+          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+          transform: i === newIdx ? "translateX(0)" : "translateX(0)",
+          opacity: 1,
+          transition: "border-color 0.4s ease, background 0.4s ease",
+          background: i === newIdx ? (t.win ? "rgba(0,232,122,0.04)" : "rgba(248,113,113,0.04)") : "rgba(255,255,255,0.02)",
+          animation: i === 0 && newIdx === 0 ? "slideInTrade 0.4s cubic-bezier(0.16,1,0.3,1)" : "none",
+        }}>
+          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+            <div style={{ width:36, height:36, borderRadius:10, background: t.win ? "rgba(0,232,120,0.1)" : "rgba(248,113,113,0.1)", border:`1px solid ${t.win ? "rgba(0,232,120,0.2)" : "rgba(248,113,113,0.2)"}`, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"sans-serif", fontSize:9, fontWeight:800, color: t.win ? "#00E87A" : "#F87171", letterSpacing:"0.05em", flexShrink:0 }}>
+              {t.action}
+            </div>
+            <div>
+              <div style={{ fontFamily:"sans-serif", fontSize:"0.875rem", fontWeight:700, color:"#fff" }}>{t.pair} · {t.lots} lots</div>
+              <div style={{ fontFamily:"sans-serif", fontSize:11, color:"rgba(255,255,255,0.3)" }}>{t.fund}</div>
+            </div>
+          </div>
+          <div style={{ textAlign:"right", flexShrink:0 }}>
+            <div style={{ fontFamily:"sans-serif", fontSize:"0.875rem", fontWeight:700, color: t.win ? "#00E87A" : "#F87171" }}>{t.result}</div>
+            <div style={{ fontFamily:"sans-serif", fontSize:10, color:"rgba(255,255,255,0.2)" }}>{i === 0 ? "just now" : i === 1 ? "1m ago" : `${i * 3}m ago`}</div>
+          </div>
+        </div>
+      ))}
+      <style>{`@keyframes slideInTrade { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }`}</style>
+    </div>
+  );
+}
+
 function TradingViewWidget({ widgetType, config, minHeight }) {
   const ref = useRef(null);
   useEffect(() => {
@@ -449,29 +533,7 @@ export default function Home() {
               <SlideReveal direction="right">
                 <p className="scene-label">Live Trading Activity</p>
                 <h2 className="scene-h2" style={{ marginBottom: "2rem" }}>Recent executions.</h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                  {[
-                    { action: "BUY", pair: "XAUUSD", fund: "Fund 1 · TMGM", lots: "0.10 lots", result: "+12.4 pips", time: "2m ago", win: true },
-                    { action: "SELL", pair: "EURUSD", fund: "MAMALYN · MultiBank", lots: "0.05 lots", result: "+8.1 pips", time: "18m ago", win: true },
-                    { action: "BUY", pair: "BTCUSD", fund: "VaultKano · MultiBank", lots: "0.01 lots", result: "+2.7%", time: "1h ago", win: true },
-                    { action: "SELL", pair: "XAUUSD", fund: "Alpha Fund · TMGM", lots: "0.08 lots", result: "-3.2 pips", time: "3h ago", win: false },
-                    { action: "BUY", pair: "EURUSD", fund: "MAMALYN · MultiBank", lots: "0.05 lots", result: "+11.0 pips", time: "5h ago", win: true },
-                  ].map((t, i) => (
-                    <div key={i} style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 12, padding: "14px 16px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                        <div style={{ width: 36, height: 36, borderRadius: 10, background: t.win ? "rgba(0,232,120,0.1)" : "rgba(248,113,113,0.1)", border: `1px solid ${t.win ? "rgba(0,232,120,0.2)" : "rgba(248,113,113,0.2)"}`, display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif", fontSize: 9, fontWeight: 800, color: t.win ? "#00E87A" : "#F87171", letterSpacing: "0.05em" }}>{t.action}</div>
-                        <div>
-                          <div style={{ fontFamily: "sans-serif", fontSize: "0.875rem", fontWeight: 700, color: "#fff" }}>{t.pair} · {t.lots}</div>
-                          <div style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.3)" }}>{t.fund}</div>
-                        </div>
-                      </div>
-                      <div style={{ textAlign: "right" }}>
-                        <div style={{ fontFamily: "sans-serif", fontSize: "0.875rem", fontWeight: 700, color: t.win ? "#00E87A" : "#F87171" }}>{t.result}</div>
-                        <div style={{ fontFamily: "sans-serif", fontSize: 10, color: "rgba(255,255,255,0.2)" }}>{t.time}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
+                <LiveTradesFeed />
                 <a href="/performance" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "rgba(159,180,193,0.6)", textDecoration: "none" }}>View full performance dashboard →</a>
               </SlideReveal>
             </div>
