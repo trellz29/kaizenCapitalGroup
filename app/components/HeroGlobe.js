@@ -157,9 +157,19 @@ function makeIconTexture(THREE, type) {
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("$", cx, cy);
   } else if (type === "USDT") {
-    ctx.font = `bold ${s*0.48}px serif`;
+    // Green filled circle
+    ctx.beginPath();
+    ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+    ctx.fillStyle = "#26a17b";
+    ctx.fill();
+    // White T letter
+    ctx.fillStyle = "#fff";
+    ctx.font = `bold ${s*0.42}px Arial`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("₮", cx, cy);
+    ctx.fillText("T", cx, cy + 2);
+    // White horizontal bar across top of T
+    ctx.fillStyle = "#fff";
+    ctx.fillRect(cx - 14, cy - 12, 28, 4);
   }
 
   return new THREE.CanvasTexture(c);
