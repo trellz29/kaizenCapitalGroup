@@ -147,8 +147,8 @@ export default function HeroGlobe() {
       el.appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(40, W/H, 0.1, 100);
-      camera.position.set(0, 0, 4.0);
+      const camera = new THREE.PerspectiveCamera(38, W/H, 0.1, 100);
+      camera.position.set(0, 0, 4.4);
       const R = 1.5;
 
       // Earth
@@ -524,8 +524,9 @@ export default function HeroGlobe() {
 
   return (
     <div ref={mountRef} className="hero-globe-wrap" style={{
-      position:"absolute", right:"2%", top:"50%", transform:"translateY(-50%)",
-      width:"min(44vw, 560px)", height:"min(44vw, 560px)", zIndex:3,
+      position:"absolute", right:"1%", top:"50%", transform:"translateY(-50%)",
+      width:"min(42vw, 540px)", height:"min(42vw, 540px)", zIndex:3,
+      overflow:"visible",
       opacity: ready?1:0, transition:"opacity 1.2s ease 0.5s",
     }}/>
   );
