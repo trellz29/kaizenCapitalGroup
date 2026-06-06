@@ -48,7 +48,10 @@ export default function CinematicLoader({ onComplete }) {
   return (
     <div style={{
       position: "fixed",
-      top: 0, left: 0, right: 0, bottom: 0,
+      top: 0, left: 0,
+      width: "100%",
+      height: "100%",
+      minHeight: "100dvh",
       zIndex: 999999,
       background: "#050810",
       display: "flex",
@@ -59,8 +62,6 @@ export default function CinematicLoader({ onComplete }) {
       transform: opacity < 1 ? "scale(1.03)" : "scale(1)",
       transition: opacity < 1 ? "opacity 0.75s ease, transform 0.75s ease" : "none",
       pointerEvents: opacity < 1 ? "none" : "all",
-      // Ensure it's always on top of everything
-      isolation: "isolate",
     }}>
 
       {/* Progress bar at bottom */}
