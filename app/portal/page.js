@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 // ── DEMO DATA ────────────────────────────────────────────────────────────────
-const DEMO_USER = { email: "investor@kcg.com", password: "kcg2024", name: "Investor" };
+const DEMO_USER = { email: "cottrell@kaizencapitalgrp.com", password: "kcg2024", name: "Cottrell" };
 
 const DEMO_DATA = {
   balance: 24850.00,
@@ -209,7 +209,7 @@ function LoginPage({ onLogin }) {
               {error && <p style={{ fontSize:11, color:"#F84F4F", textAlign:"center" }}>{error}</p>}
               <button className="portal-btn-primary" style={{ marginTop:4 }} onClick={handleLogin}>Access Portal →</button>
               <p style={{ fontSize:11, color:"rgba(255,255,255,0.2)", textAlign:"center" }}>
-                Demo: investor@kcg.com / kcg2024
+                Contact support if you need access
               </p>
             </div>
           )}
