@@ -7,12 +7,14 @@ export default function CinematicLoader({ onComplete }) {
   const [wordIdx, setWordIdx] = useState(0);
   const [count, setCount]     = useState(0);
   const [opacity, setOpacity] = useState(1);
-  const [mounted, setMounted] = useState(false);
+
+  // Force a repaint on mount so the loader is guaranteed visible
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => { document.body.style.overflow = ""; };
+  }, []);
 
   useEffect(() => {
-    // Force visible immediately on mount
-    setMounted(true);
-
     // Count 0 → 100 over ~2.2s
     let frame = 0;
     const total = 130;

@@ -136,7 +136,8 @@ const GLOBAL_CSS = `
 
 /* --- MAIN PAGE ---------------------------------------------------- */
 export default function Home() {
-  const [showLoader, setShowLoader] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
+  useEffect(() => { setShowLoader(true); }, []);
 
   return (
     <>
@@ -146,7 +147,7 @@ export default function Home() {
         <CinematicLoader onComplete={() => setShowLoader(false)} />
       )}
 
-      <div style={{ opacity: showLoader ? 0 : 1, transition: "opacity 0.8s ease 0.2s" }}>
+      <div style={{ opacity: showLoader ? 0 : 1, transition: "opacity 0.8s ease 0.2s", visibility: showLoader ? "hidden" : "visible" }}>
         <LenisProvider />
         <MagneticCursor />
         <ScrollProgress />
