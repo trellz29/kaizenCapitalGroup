@@ -38,6 +38,7 @@ const NAV_ITEMS = [
   { id:"overview",     label:"Overview",     icon:"⬡" },
   { id:"trading",      label:"Trading",      icon:"📊" },
   { id:"wallet",       label:"Wallet",       icon:"💳" },
+  { id:"education",    label:"Education",    icon:"🎓" },
   { id:"performance",  label:"Performance",  icon:"📈" },
   { id:"transactions", label:"Transactions", icon:"⇄" },
   { id:"withdraw",     label:"Withdraw",     icon:"↑" },
@@ -638,6 +639,182 @@ function Wallet() {
   );
 }
 
+function Education() {
+  const [filter, setFilter] = useState("all");
+  const [unlocking, setUnlocking] = useState(null);
+  const [unlocked, setUnlocked] = useState(new Set(["intro-1"]));
+
+  const COURSES = [
+    {
+      id:"intro-1", category:"free", instructor:"KCG Team", level:"Beginner",
+      title:"Introduction to Copy Trading", lessons:6, duration:"1h 20m",
+      desc:"Learn how copy trading works, how to follow top traders, and how KCG funds generate consistent returns.",
+      price:null, tag:"FREE", tagColor:"#00E87A",
+      topics:["What is copy trading","How KCG selects strategies","Risk management basics","Brokerage setup (TMGM/MultiBank)","Reading fund performance","Getting started checklist"],
+    },
+    {
+      id:"gold-1", category:"paid", instructor:"Kaizen Trader", level:"Intermediate",
+      title:"Gold Trading Masterclass (XAU/USD)", lessons:12, duration:"4h 45m",
+      desc:"Deep dive into institutional gold trading strategies — the foundation of KCG Fund 1 and Alpha Fund.",
+      price:"$97", tag:"POPULAR", tagColor:"#F59E0B",
+      topics:["Gold market structure","Session timing (London/NY)","Scalping vs intraday setups","Risk-reward frameworks","Reading gold correlations (DXY, yields)","Live trade walkthroughs"],
+    },
+    {
+      id:"forex-1", category:"paid", instructor:"Phoenix Trader", level:"Intermediate",
+      title:"Forex Fundamentals & EUR/USD Strategy", lessons:10, duration:"3h 30m",
+      desc:"Master EUR/USD price action, macro drivers, and the algorithmic approach behind the MAMALYN and Forex Fortune AI funds.",
+      price:"$79", tag:"NEW", tagColor:"#6496C8",
+      topics:["Forex market mechanics","EUR/USD macro drivers","Price action patterns","Algo vs manual strategies","Session-based entries","Risk & position sizing"],
+    },
+    {
+      id:"crypto-1", category:"paid", instructor:"VaultKano", level:"Intermediate",
+      title:"Crypto Portfolio Strategy", lessons:8, duration:"2h 55m",
+      desc:"Institutional approach to crypto allocation — Bitcoin, Ethereum, on-chain metrics, and the VaultKano fund methodology.",
+      price:"$89", tag:"COMING SOON", tagColor:"#a78bfa",
+      topics:["BTC/ETH market cycles","On-chain analysis basics","Portfolio allocation models","Crypto risk management","DeFi fundamentals","VaultKano fund breakdown"],
+    },
+    {
+      id:"risk-1", category:"paid", instructor:"KCG Team", level:"Advanced",
+      title:"Institutional Risk Management", lessons:9, duration:"3h 10m",
+      desc:"The exact risk protocols used across all KCG funds — drawdown limits, position sizing, capital preservation.",
+      price:"$119", tag:"ADVANCED", tagColor:"#F84F4F",
+      topics:["Position sizing formulas","Drawdown management","Portfolio correlation","Stop loss strategies","Capital preservation rules","Institutional reporting"],
+    },
+    {
+      id:"bundle-1", category:"bundle", instructor:"All Instructors", level:"All Levels",
+      title:"KCG Complete Trading Bundle", lessons:45, duration:"15h 40m",
+      desc:"All 4 paid courses bundled together at a significant discount. Everything you need to understand and follow KCG strategies.",
+      price:"$249", tag:"BEST VALUE", tagColor:"#00E87A",
+      topics:["All Gold Masterclass content","All Forex content","All Crypto content","Risk Management","Bonus: Live Q&A sessions","Lifetime updates"],
+    },
+  ];
+
+  const filtered = filter === "all" ? COURSES : COURSES.filter(c => c.category === filter);
+  const isUnlocked = (id) => unlocked.has(id);
+
+  const handleUnlock = (id) => {
+    setUnlocking(id);
+  };
+
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Learn from the traders</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Education Hub</h2>
+      </div>
+
+      {/* Stats bar */}
+      <div className="stat-grid" style={{ marginBottom:20 }}>
+        {[
+          { label:"Courses Available", val:"6" },
+          { label:"Total Lessons",     val:"45" },
+          { label:"Your Progress",     val:"1/6" },
+          { label:"Instructors",       val:"4" },
+        ].map(s => (
+          <div className="stat-card" key={s.label} style={{ padding:"14px 16px" }}>
+            <div className="stat-label">{s.label}</div>
+            <div className="stat-val" style={{ fontSize:20 }}>{s.val}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* Filter tabs */}
+      <div style={{ display:"flex", gap:6, marginBottom:20, flexWrap:"wrap" }}>
+        {[["all","All Courses"],["free","Free"],["paid","Paid"],["bundle","Bundle"]].map(([val,lbl]) => (
+          <button key={val} onClick={() => setFilter(val)} style={{ padding:"6px 14px", borderRadius:100, border:"none", cursor:"pointer", fontSize:11, fontWeight:700, transition:"all 0.2s", background: filter===val ? "rgba(100,150,200,0.2)" : "rgba(255,255,255,0.05)", color: filter===val ? "#6496C8" : "rgba(255,255,255,0.4)" }}>{lbl}</button>
+        ))}
+      </div>
+
+      {/* Course cards */}
+      <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
+        {filtered.map(course => {
+          const locked = !isUnlocked(course.id);
+          return (
+            <div key={course.id} className="section-card" style={{ padding:0, overflow:"hidden", opacity: course.tag==="COMING SOON" ? 0.65 : 1 }}>
+              {/* Card header */}
+              <div style={{ padding:"20px 22px 16px", background: locked && course.price ? "rgba(5,8,16,0.5)" : "rgba(5,8,16,0.3)" }}>
+                <div style={{ display:"flex", justifyContent:"space-between", alignItems:"flex-start", marginBottom:10, gap:12 }}>
+                  <div style={{ flex:1 }}>
+                    <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:6, flexWrap:"wrap" }}>
+                      <span style={{ fontSize:9, fontWeight:800, letterSpacing:"0.12em", textTransform:"uppercase", padding:"3px 8px", borderRadius:100, background:`${course.tagColor}18`, color:course.tagColor }}>{course.tag}</span>
+                      <span style={{ fontSize:9, fontWeight:700, color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.08em" }}>{course.level}</span>
+                    </div>
+                    <h3 style={{ fontSize:15, fontWeight:800, color: locked && course.price ? "rgba(255,255,255,0.5)" : "#fff", letterSpacing:"-0.01em", margin:0, lineHeight:1.3 }}>{course.title}</h3>
+                  </div>
+                  {locked && course.price && (
+                    <div style={{ fontSize:24, flexShrink:0, opacity:0.4 }}>🔒</div>
+                  )}
+                  {!locked && (
+                    <div style={{ fontSize:20, flexShrink:0 }}>✅</div>
+                  )}
+                </div>
+
+                <p style={{ fontSize:12, color:"rgba(255,255,255,0.4)", lineHeight:1.6, margin:"0 0 12px" }}>{course.desc}</p>
+
+                <div style={{ display:"flex", gap:16, flexWrap:"wrap" }}>
+                  <span style={{ fontSize:10, color:"rgba(255,255,255,0.3)" }}>👤 {course.instructor}</span>
+                  <span style={{ fontSize:10, color:"rgba(255,255,255,0.3)" }}>📚 {course.lessons} lessons</span>
+                  <span style={{ fontSize:10, color:"rgba(255,255,255,0.3)" }}>⏱ {course.duration}</span>
+                </div>
+              </div>
+
+              {/* Topics preview */}
+              <div style={{ padding:"14px 22px", borderTop:"1px solid rgba(255,255,255,0.05)" }}>
+                <div style={{ fontSize:10, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(255,255,255,0.25)", marginBottom:10 }}>What you'll learn</div>
+                <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:"6px 16px" }}>
+                  {course.topics.map((t, i) => (
+                    <div key={i} style={{ display:"flex", alignItems:"center", gap:6, fontSize:11, color: locked && course.price && i > 1 ? "rgba(255,255,255,0.2)" : "rgba(255,255,255,0.55)" }}>
+                      <span style={{ color: locked && course.price && i > 1 ? "rgba(255,255,255,0.1)" : "#00E87A", fontSize:9 }}>✓</span>
+                      {locked && course.price && i > 1 ? "••••••••••••" : t}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div style={{ padding:"14px 22px 18px", borderTop:"1px solid rgba(255,255,255,0.05)", display:"flex", alignItems:"center", justifyContent:"space-between", gap:12 }}>
+                {!locked ? (
+                  <button className="portal-btn-primary" style={{ maxWidth:200 }}>Continue Learning →</button>
+                ) : course.tag === "COMING SOON" ? (
+                  <button className="portal-btn-secondary" disabled style={{ maxWidth:200, opacity:0.5 }}>Coming Soon</button>
+                ) : (
+                  <button className="portal-btn-primary" style={{ maxWidth:200 }} onClick={() => handleUnlock(course.id)}>
+                    Unlock for {course.price} →
+                  </button>
+                )}
+                {course.price && locked && course.tag !== "COMING SOON" && (
+                  <span style={{ fontSize:22, fontWeight:900, color:"#fff", letterSpacing:"-0.02em" }}>{course.price}</span>
+                )}
+                {!locked && (
+                  <span style={{ fontSize:11, color:"rgba(0,232,122,0.6)", fontWeight:700 }}>Enrolled</span>
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Unlock modal */}
+      {unlocking && (
+        <div style={{ position:"fixed", inset:0, background:"rgba(0,0,0,0.8)", backdropFilter:"blur(8px)", zIndex:9999, display:"flex", alignItems:"center", justifyContent:"center", padding:24 }}>
+          <div style={{ background:"#070d1c", border:"1px solid rgba(255,255,255,0.1)", borderRadius:20, padding:32, maxWidth:400, width:"100%" }}>
+            <h3 style={{ fontSize:"1.2rem", fontWeight:800, color:"#fff", marginBottom:8 }}>
+              {COURSES.find(c=>c.id===unlocking)?.title}
+            </h3>
+            <p style={{ fontSize:13, color:"rgba(255,255,255,0.4)", marginBottom:20, lineHeight:1.6 }}>
+              To unlock this course, complete payment via USDT (TRC20) or contact the KCG team directly on Telegram.
+            </p>
+            <div style={{ display:"flex", gap:10 }}>
+              <a href="https://t.me/trellz_P" target="_blank" rel="noopener noreferrer" className="portal-btn-primary" style={{ textDecoration:"none", textAlign:"center", flex:1 }}>Pay via Telegram →</a>
+              <button className="portal-btn-secondary" style={{ flex:1 }} onClick={() => setUnlocking(null)}>Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Performance() {
   const d = DEMO_DATA;
   const max = Math.max(...d.returns);
@@ -833,7 +1010,7 @@ export default function Portal() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [active, setActive] = useState("overview");
 
-  const SECTIONS = { overview:<Overview/>, trading:<Trading/>, wallet:<Wallet/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
+  const SECTIONS = { overview:<Overview/>, trading:<Trading/>, wallet:<Wallet/>, education:<Education/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
 
   if (!loggedIn) return (
     <>
