@@ -511,7 +511,7 @@ export default function HeroGlobe() {
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({ map:iconTextures[type], transparent:true, opacity:0, sizeAttenuation:true })
         );
-        sprite.scale.set(0.07, 0.07, 1);
+        sprite.scale.set(0.11, 0.11, 1);
         scene.add(sprite);
 
         // Particle trail
