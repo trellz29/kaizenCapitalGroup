@@ -334,7 +334,9 @@ export default function Home() {
                         </li>
                       ))}
                     </ul>
-                    <a href={item.href} style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "10px 20px", borderRadius: 100, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.75)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, textDecoration: "none", transition: "all 0.2s ease", marginTop: "auto" }}
+                    <a href={item.href}
+                      onClick={e => { e.preventDefault(); const el = document.getElementById("contact-form"); if(el) el.scrollIntoView({ behavior:"smooth", block:"start" }); }}
+                      style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "10px 20px", borderRadius: 100, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.75)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, textDecoration: "none", transition: "all 0.2s ease", marginTop: "auto", cursor: "pointer" }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}>
                       {item.cta} →
