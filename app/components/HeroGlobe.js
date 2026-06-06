@@ -156,10 +156,10 @@ function buildEarthTexture() {
     ctx.stroke();
   }
 
-  // ── COUNTRY BORDERS (between grid and coastlines) ──
-  ctx.strokeStyle = "rgba(120,170,220,0.22)";
-  ctx.lineWidth = 0.7;
-  ctx.setLineDash([4, 6]);
+  // ── COUNTRY BORDERS ──
+  ctx.strokeStyle = "rgba(150,200,255,0.45)";
+  ctx.lineWidth = 1.2;
+  ctx.setLineDash([]);
   COUNTRY_BORDERS.forEach((line) => {
     if (line.length < 2) return;
     ctx.beginPath();
@@ -169,7 +169,6 @@ function buildEarthTexture() {
     });
     ctx.stroke();
   });
-  ctx.setLineDash([]);
 
   // Polar ice caps
   const ice = (yC, h) => {
@@ -530,7 +529,7 @@ export default function HeroGlobe() {
         const sprite = new THREE.Sprite(
           new THREE.SpriteMaterial({ map:iconTextures[type], transparent:true, opacity:0, sizeAttenuation:true })
         );
-        sprite.scale.set(0.18, 0.18, 1);
+        sprite.scale.set(0.07, 0.07, 1);
         scene.add(sprite);
 
         // Particle trail
