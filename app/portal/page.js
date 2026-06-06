@@ -1,123 +1,582 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function Portal() {
+// ── DEMO DATA ────────────────────────────────────────────────────────────────
+const DEMO_USER = { email: "investor@kcg.com", password: "kcg2024", name: "Investor" };
+
+const DEMO_DATA = {
+  balance: 24850.00,
+  profit: 2184.40,
+  todayProfit: 0.92,
+  totalWithdrawn: 0.00,
+  fundName: "KaizenCapitalGroup.Xau-TMGM",
+  fundReturn: "+9.4%",
+  fundStatus: "LIVE",
+  refCode: "KCG-INV-7291",
+  refCount: 3,
+  refEarnings: 245.00,
+  transactions: [
+    { id:1, type:"deposit",    amount:"+$10,000.00", date:"2024-11-01", status:"completed", note:"Initial capital" },
+    { id:2, type:"deposit",    amount:"+$15,000.00", date:"2024-11-15", status:"completed", note:"Top-up" },
+    { id:3, type:"profit",     amount:"+$1,102.20",  date:"2024-12-01", status:"completed", note:"Monthly return 9.4%" },
+    { id:4, type:"profit",     amount:"+$1,082.20",  date:"2025-01-01", status:"completed", note:"Monthly return 9.2%" },
+    { id:5, type:"withdrawal", amount:"-$2,500.00",  date:"2025-01-10", status:"pending",   note:"Withdrawal request" },
+  ],
+  months: ["Aug","Sep","Oct","Nov","Dec","Jan"],
+  returns: [7.2, 8.1, 9.4, 11.2, 8.8, 9.4],
+};
+
+const TELEGRAM_CHANNELS = [
+  { name:"KCG Main Channel",   desc:"Live signals & market updates", link:"https://t.me/KaizenCapitalGroup",  icon:"📡" },
+  { name:"KCG Private Alerts", desc:"Priority fund alerts",          link:"https://t.me/KaizenCapitalGroup",  icon:"🔔" },
+  { name:"Direct Support",     desc:"Message the team",              link:"https://t.me/trellz_P",            icon:"💬" },
+];
+
+// ── NAV ──────────────────────────────────────────────────────────────────────
+const NAV_ITEMS = [
+  { id:"overview",     label:"Overview",     icon:"⬡" },
+  { id:"performance",  label:"Performance",  icon:"📈" },
+  { id:"transactions", label:"Transactions", icon:"⇄" },
+  { id:"withdraw",     label:"Withdraw",     icon:"↑" },
+  { id:"referrals",    label:"Referrals",    icon:"👥" },
+  { id:"telegram",     label:"Telegram",     icon:"✈" },
+];
+
+// ── STYLES ───────────────────────────────────────────────────────────────────
+const CSS = `
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #02040a; color: #fff; font-family: sans-serif; }
+  .portal-wrap { display: flex; min-height: 100vh; }
+
+  /* Sidebar */
+  .sidebar {
+    width: 220px; flex-shrink: 0;
+    background: #070d1c; border-right: 1px solid rgba(255,255,255,0.06);
+    display: flex; flex-direction: column;
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 100;
+    transition: transform 0.3s ease;
+  }
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sidebar-logo-ring {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 900; color: #fff; flex-shrink: 0;
+  }
+  .sidebar-logo-text { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; color: rgba(255,255,255,0.6); text-transform: uppercase; }
+  .sidebar-nav { padding: 16px 12px; flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .sidebar-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 12px; border-radius: 10px; cursor: pointer;
+    font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.4);
+    transition: all 0.2s ease; border: none; background: none; width: 100%; text-align: left;
+  }
+  .sidebar-link:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); }
+  .sidebar-link.active { color: #fff; background: rgba(100,150,200,0.12); border: 1px solid rgba(100,150,200,0.15); }
+  .sidebar-link .icon { width: 20px; text-align: center; font-size: 14px; }
+  .sidebar-footer { padding: 16px 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+
+  /* Main */
+  .main { margin-left: 220px; flex: 1; padding: 32px; min-height: 100vh; }
+
+  /* Cards */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .stat-card {
+    background: #070d1c; border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 16px; padding: 20px 22px;
+  }
+  .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+  .stat-val { font-size: 26px; font-weight: 800; letter-spacing: -0.03em; color: #fff; }
+  .stat-val.green { color: #00E87A; }
+  .stat-val.red { color: #F84F4F; }
+
+  .section-card { background: #070d1c; border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 24px; margin-bottom: 20px; }
+  .section-title { font-size: 15px; font-weight: 800; color: #fff; margin-bottom: 16px; letter-spacing: -0.01em; }
+
+  /* Table */
+  .tx-row { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .tx-row:last-child { border-bottom: none; }
+  .tx-icon { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0; }
+  .tx-info { flex: 1; }
+  .tx-type { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 2px; }
+  .tx-date { font-size: 10px; color: rgba(255,255,255,0.3); }
+  .tx-note { font-size: 10px; color: rgba(255,255,255,0.25); }
+  .tx-amount { font-size: 14px; font-weight: 800; }
+  .tx-status { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 100px; text-align: right; }
+
+  /* Chart bars */
+  .bar-chart { display: flex; align-items: flex-end; gap: 8px; height: 120px; padding-top: 8px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .bar { width: 100%; border-radius: 4px 4px 0 0; background: linear-gradient(180deg, #00E87A, #00a855); transition: all 0.5s ease; }
+  .bar-lbl { font-size: 9px; color: rgba(255,255,255,0.3); font-weight: 600; }
+  .bar-pct { font-size: 9px; color: #00E87A; font-weight: 700; }
+
+  /* Inputs */
+  .portal-input { width:100%; padding:12px 14px; border-radius:10px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); color:#fff; font-family:sans-serif; font-size:13px; outline:none; transition:border-color 0.2s; margin-bottom:12px; }
+  .portal-input:focus { border-color:rgba(100,150,200,0.5); }
+  .portal-input::placeholder { color:rgba(255,255,255,0.2); }
+  .portal-btn-primary { padding:12px 24px; border-radius:10px; background:#00E87A; color:#050810; font-family:sans-serif; font-size:13px; font-weight:700; border:none; cursor:pointer; transition:all 0.2s; width:100%; }
+  .portal-btn-primary:hover { background:#00d670; }
+  .portal-btn-secondary { padding:12px 24px; border-radius:10px; background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); font-family:sans-serif; font-size:13px; font-weight:700; border:1px solid rgba(255,255,255,0.1); cursor:pointer; transition:all 0.2s; width:100%; }
+
+  /* Badge */
+  .badge { display:inline-flex; align-items:center; gap:4px; padding:3px 9px; border-radius:100px; font-size:9px; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; }
+  .badge-green { background:rgba(0,232,122,0.12); color:#00E87A; }
+  .badge-yellow { background:rgba(245,158,11,0.12); color:#F59E0B; }
+  .badge-blue { background:rgba(100,150,200,0.12); color:#6496C8; }
+
+  /* Live dot */
+  @keyframes livePulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .live-dot { width:6px; height:6px; border-radius:50%; background:#00E87A; display:inline-block; margin-right:4px; animation:livePulse 2s infinite; }
+
+  /* Referral box */
+  .ref-code { font-family:monospace; font-size:18px; font-weight:800; color:#6496C8; letter-spacing:0.1em; background:rgba(100,150,200,0.08); border:1px solid rgba(100,150,200,0.2); border-radius:10px; padding:14px 20px; text-align:center; margin:12px 0; }
+
+  /* Telegram card */
+  .tg-card { display:flex; align-items:center; gap:14px; padding:14px; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; margin-bottom:10px; text-decoration:none; transition:all 0.2s; }
+  .tg-card:hover { border-color:rgba(100,150,200,0.3); background:rgba(100,150,200,0.06); }
+
+  /* Mobile */
+  .mobile-header { display:none; padding:14px 16px; background:#070d1c; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:200; align-items:center; justify-content:space-between; }
+  .mobile-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:#070d1c; border-top:1px solid rgba(255,255,255,0.08); padding:8px 0 16px; z-index:100; }
+  .mobile-nav-items { display:flex; justify-content:space-around; }
+  .mobile-nav-item { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:4px 8px; border-radius:8px; background:none; border:none; color:rgba(255,255,255,0.35); font-size:9px; font-weight:700; letter-spacing:0.06em; transition:color 0.2s; }
+  .mobile-nav-item.active { color:#00E87A; }
+  .mobile-nav-item .icon { font-size:18px; }
+
+  @media (max-width:768px) {
+    .sidebar { display:none; }
+    .main { margin-left:0; padding:16px 16px 100px; }
+    .mobile-header { display:flex; }
+    .mobile-nav { display:block; }
+    .stat-grid { grid-template-columns:1fr 1fr; gap:10px; }
+    .stat-val { font-size:20px; }
+  }
+`;
+
+// ── LOGIN PAGE ────────────────────────────────────────────────────────────────
+function LoginPage({ onLogin }) {
   const [tab, setTab] = useState("login");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = () => {
+    if (email === DEMO_USER.email && password === DEMO_USER.password) {
+      onLogin();
+    } else {
+      setError("Invalid credentials. Use demo: investor@kcg.com / kcg2024");
+    }
+  };
 
   return (
-    <>
-      <style>{`
-        * { box-sizing: border-box; }
-        body { background: #050810; color: #fff; margin: 0; }
-        .glass { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:20px; backdrop-filter:blur(16px); }
-        .portal-input {
-          width:100%; padding:14px 16px; border-radius:12px;
-          background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1);
-          color:#fff; font-family:sans-serif; font-size:14px; outline:none;
-          transition:border-color 0.2s ease;
-        }
-        .portal-input:focus { border-color:rgba(159,180,193,0.4); }
-        .portal-input::placeholder { color:rgba(255,255,255,0.2); }
-        .portal-btn {
-          width:100%; padding:14px; border-radius:12px;
-          background:#fff; color:#050810;
-          font-family:sans-serif; font-size:14px; font-weight:700;
-          border:none; cursor:pointer; transition:all 0.2s ease;
-        }
-        .portal-btn:hover { background:rgba(255,255,255,0.88); transform:scale(1.02); }
-        .portal-tab { padding:8px 20px; border-radius:100px; font-family:sans-serif; font-size:13px; font-weight:600; cursor:pointer; border:none; transition:all 0.2s ease; }
-        .portal-tab.active { background:rgba(255,255,255,0.1); color:#fff; }
-        .portal-tab.inactive { background:transparent; color:rgba(255,255,255,0.35); }
-      `}</style>
-
-      {/* Nav */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 9000, padding: "16px 24px", background: "rgba(5,8,16,0.9)", backdropFilter: "blur(24px)", borderBottom: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
-          <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 800, color: "#fff", fontFamily: "sans-serif" }}>KCG</div>
-          <span style={{ fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.6)" }}>Kaizen Capital</span>
-        </Link>
-        <Link href="/" style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.4)", textDecoration: "none" }}>← Back to HQ</Link>
-      </nav>
-
-      {/* Background */}
-      <div style={{ position: "fixed", inset: 0, background: "radial-gradient(ellipse 60% 60% at 50% 40%, rgba(12,26,48,0.6) 0%, #050810 70%)", pointerEvents: "none" }} />
-
-      <main style={{ minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "100px 24px 60px", position: "relative", zIndex: 1 }}>
-        
-        {/* Logo */}
-        <div style={{ textAlign: "center", marginBottom: 48 }}>
-          <div style={{ width: 56, height: 56, borderRadius: "50%", background: "linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16, fontWeight: 900, color: "#fff", fontFamily: "sans-serif", margin: "0 auto 16px" }}>KCG</div>
-          <h1 style={{ fontFamily: "sans-serif", fontSize: "1.5rem", fontWeight: 800, color: "#fff", letterSpacing: "-0.02em", margin: "0 0 4px" }}>Investor Portal</h1>
-          <p style={{ fontFamily: "sans-serif", fontSize: 13, color: "rgba(255,255,255,0.35)", margin: 0 }}>Private access for KCG investors</p>
+    <main style={{ minHeight:"100vh", display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", padding:"40px 24px", background:"#02040a", position:"relative" }}>
+      <div style={{ position:"fixed", inset:0, background:"radial-gradient(ellipse 60% 60% at 50% 40%, rgba(12,26,48,0.7) 0%, #02040a 70%)", pointerEvents:"none" }}/>
+      <div style={{ position:"relative", zIndex:1, width:"100%", maxWidth:420 }}>
+        <div style={{ textAlign:"center", marginBottom:40 }}>
+          <div style={{ width:52, height:52, borderRadius:"50%", background:"linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:14, fontWeight:900, color:"#fff", margin:"0 auto 14px" }}>KCG</div>
+          <h1 style={{ fontSize:"1.5rem", fontWeight:800, color:"#fff", letterSpacing:"-0.02em", marginBottom:4 }}>Investor Portal</h1>
+          <p style={{ fontSize:12, color:"rgba(255,255,255,0.3)" }}>Private access for KCG investors</p>
         </div>
 
-        {/* Card */}
-        <div className="glass" style={{ width: "100%", maxWidth: 420, padding: 40 }}>
-          {/* Tabs */}
-          <div style={{ display: "flex", gap: 4, background: "rgba(255,255,255,0.04)", borderRadius: 100, padding: 4, marginBottom: 32 }}>
-            <button className={`portal-tab ${tab === "login" ? "active" : "inactive"}`} style={{ flex: 1 }} onClick={() => setTab("login")}>Sign In</button>
-            <button className={`portal-tab ${tab === "apply" ? "active" : "inactive"}`} style={{ flex: 1 }} onClick={() => setTab("apply")}>Apply for Access</button>
+        <div style={{ background:"#070d1c", border:"1px solid rgba(255,255,255,0.08)", borderRadius:20, padding:32 }}>
+          <div style={{ display:"flex", gap:4, background:"rgba(255,255,255,0.04)", borderRadius:100, padding:4, marginBottom:28 }}>
+            {["login","apply"].map(t => (
+              <button key={t} onClick={() => setTab(t)} style={{ flex:1, padding:"7px 0", borderRadius:100, border:"none", cursor:"pointer", fontFamily:"sans-serif", fontSize:12, fontWeight:700, background: tab===t ? "rgba(255,255,255,0.1)" : "transparent", color: tab===t ? "#fff" : "rgba(255,255,255,0.35)", transition:"all 0.2s" }}>
+                {t === "login" ? "Sign In" : "Apply for Access"}
+              </button>
+            ))}
           </div>
 
           {tab === "login" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <div style={{ display:"flex", flexDirection:"column", gap:14 }}>
               <div>
-                <label style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", display: "block", marginBottom: 8 }}>Email Address</label>
-                <input type="email" className="portal-input" placeholder="investor@example.com" />
+                <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Email Address</label>
+                <input type="email" className="portal-input" style={{ marginBottom:0 }} placeholder="investor@example.com" value={email} onChange={e => setEmail(e.target.value)} />
               </div>
               <div>
-                <label style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", display: "block", marginBottom: 8 }}>Access Code</label>
-                <input type="password" className="portal-input" placeholder="••••••••" />
+                <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Password</label>
+                <input type="password" className="portal-input" style={{ marginBottom:0 }} placeholder="••••••••" value={password} onChange={e => setPassword(e.target.value)} onKeyDown={e => e.key==="Enter" && handleLogin()} />
               </div>
-              <button className="portal-btn" style={{ marginTop: 8 }}>Access Portal →</button>
-              <p style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.25)", textAlign: "center", margin: 0 }}>
-                Don't have access?{" "}
-                <button onClick={() => setTab("apply")} style={{ background: "none", border: "none", color: "rgba(159,180,193,0.7)", fontFamily: "sans-serif", fontSize: 12, cursor: "pointer", padding: 0, textDecoration: "underline" }}>Apply here</button>
+              {error && <p style={{ fontSize:11, color:"#F84F4F", textAlign:"center" }}>{error}</p>}
+              <button className="portal-btn-primary" style={{ marginTop:4 }} onClick={handleLogin}>Access Portal →</button>
+              <p style={{ fontSize:11, color:"rgba(255,255,255,0.2)", textAlign:"center" }}>
+                Demo: investor@kcg.com / kcg2024
               </p>
             </div>
           )}
 
           {tab === "apply" && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              <div style={{ background: "rgba(0,232,120,0.06)", border: "1px solid rgba(0,232,120,0.15)", borderRadius: 12, padding: "14px 16px", marginBottom: 4 }}>
-                <p style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(0,232,120,0.8)", margin: 0, lineHeight: 1.6 }}>Portal access is by invitation and qualification only. Submit your details and a KCG representative will be in touch.</p>
+            <div style={{ display:"flex", flexDirection:"column", gap:12 }}>
+              <div style={{ background:"rgba(0,232,120,0.06)", border:"1px solid rgba(0,232,120,0.15)", borderRadius:10, padding:"12px 14px", marginBottom:4 }}>
+                <p style={{ fontSize:12, color:"rgba(0,232,120,0.8)", lineHeight:1.6 }}>Portal access is by invitation only. Submit your details and a KCG representative will be in touch within 24–48 hours.</p>
               </div>
-              <div>
-                <label style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", display: "block", marginBottom: 8 }}>Full Name</label>
-                <input type="text" className="portal-input" placeholder="Your full name" />
-              </div>
-              <div>
-                <label style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", display: "block", marginBottom: 8 }}>Email Address</label>
-                <input type="email" className="portal-input" placeholder="your@email.com" />
-              </div>
-              <div>
-                <label style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", display: "block", marginBottom: 8 }}>Telegram Handle</label>
-                <input type="text" className="portal-input" placeholder="@yourhandle" />
-              </div>
-              <div>
-                <label style={{ fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", display: "block", marginBottom: 8 }}>Investment Interest</label>
-                <select className="portal-input" style={{ appearance: "none" }}>
-                  <option value="">Select your interest...</option>
-                  <option>Copy Trading / Signal Subscription</option>
-                  <option>Capital Allocation ($10k–$50k)</option>
-                  <option>Capital Allocation ($50k+)</option>
-                  <option>Strategic Partnership</option>
-                  <option>Fund Management Discussion</option>
-                </select>
-              </div>
-              <a href="mailto:support@kaizencapitalgrp.com?subject=Portal Access Request" className="portal-btn" style={{ textDecoration: "none", textAlign: "center", display: "block", marginTop: 8 }}>Submit Application →</a>
+              <input type="text" className="portal-input" placeholder="Full name" />
+              <input type="email" className="portal-input" placeholder="Email address" />
+              <input type="text" className="portal-input" placeholder="Telegram @handle" />
+              <select className="portal-input" style={{ appearance:"none" }}>
+                <option value="">Investment interest...</option>
+                <option>Copy Trading / Signal Subscription</option>
+                <option>Capital Allocation ($10k–$50k)</option>
+                <option>Capital Allocation ($50k+)</option>
+                <option>Strategic Partnership</option>
+              </select>
+              <a href="mailto:support@kaizencapitalgrp.com?subject=Portal Access Request" className="portal-btn-primary" style={{ textDecoration:"none", textAlign:"center", display:"block" }}>Submit Application →</a>
             </div>
           )}
         </div>
 
-        {/* Trust signals */}
-        <div style={{ display: "flex", gap: 24, marginTop: 32, flexWrap: "wrap", justifyContent: "center" }}>
-          {["🔒 Encrypted", "✓ Verified Brokerages", "🏛️ Institutional Grade"].map(t => (
-            <span key={t} style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.2)", letterSpacing: "0.04em" }}>{t}</span>
+        <div style={{ display:"flex", gap:20, marginTop:24, justifyContent:"center", flexWrap:"wrap" }}>
+          {["🔒 Encrypted","✓ Verified","🏛 Institutional"].map(t => (
+            <span key={t} style={{ fontSize:10, color:"rgba(255,255,255,0.2)", letterSpacing:"0.04em" }}>{t}</span>
           ))}
         </div>
-      </main>
+      </div>
+    </main>
+  );
+}
+
+// ── DASHBOARD SECTIONS ───────────────────────────────────────────────────────
+function Overview() {
+  const d = DEMO_DATA;
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Welcome back</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Your Portfolio</h2>
+      </div>
+
+      <div className="stat-grid">
+        {[
+          { label:"Total Balance",    val:`$${d.balance.toLocaleString()}`,   cls:"" },
+          { label:"Total Profit",     val:`+$${d.profit.toLocaleString()}`,   cls:"green" },
+          { label:"Today's Return",   val:`+${d.todayProfit}%`,              cls:"green" },
+          { label:"Total Withdrawn",  val:`$${d.totalWithdrawn.toFixed(2)}`,  cls:"" },
+        ].map(s => (
+          <div className="stat-card" key={s.label}>
+            <div className="stat-label">{s.label}</div>
+            <div className={`stat-val ${s.cls}`}>{s.val}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="section-card">
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:16 }}>
+          <div className="section-title" style={{ marginBottom:0 }}>Active Fund</div>
+          <span className="badge badge-green"><span className="live-dot"/>LIVE</span>
+        </div>
+        <div style={{ display:"flex", gap:20, flexWrap:"wrap" }}>
+          <div>
+            <div style={{ fontSize:10, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Fund</div>
+            <div style={{ fontSize:14, fontWeight:700, color:"#fff" }}>{d.fundName}</div>
+          </div>
+          <div>
+            <div style={{ fontSize:10, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Monthly Return</div>
+            <div style={{ fontSize:22, fontWeight:800, color:"#00E87A" }}>{d.fundReturn}</div>
+          </div>
+          <div>
+            <div style={{ fontSize:10, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Broker</div>
+            <div style={{ fontSize:14, fontWeight:700, color:"#fff" }}>TMGM</div>
+          </div>
+        </div>
+      </div>
+
+      <div className="section-card">
+        <div className="section-title">Recent Transactions</div>
+        {d.transactions.slice(0,3).map(tx => <TxRow key={tx.id} tx={tx} />)}
+      </div>
+    </div>
+  );
+}
+
+function TxRow({ tx }) {
+  const isProfit = tx.type === "profit";
+  const isDeposit = tx.type === "deposit";
+  const isWithdraw = tx.type === "withdrawal";
+  const iconBg = isProfit ? "rgba(0,232,122,0.12)" : isDeposit ? "rgba(100,150,200,0.12)" : "rgba(248,113,113,0.12)";
+  const iconColor = isProfit ? "#00E87A" : isDeposit ? "#6496C8" : "#F84F4F";
+  const icon = isProfit ? "%" : isDeposit ? "↓" : "↑";
+  const statusCls = tx.status === "completed" ? "badge badge-green" : tx.status === "pending" ? "badge badge-yellow" : "badge badge-blue";
+
+  return (
+    <div className="tx-row">
+      <div className="tx-icon" style={{ background:iconBg, color:iconColor }}>{icon}</div>
+      <div className="tx-info">
+        <div className="tx-type" style={{ textTransform:"capitalize" }}>{tx.type}</div>
+        <div className="tx-date">{tx.date} · <span className="tx-note">{tx.note}</span></div>
+      </div>
+      <div style={{ textAlign:"right" }}>
+        <div className="tx-amount" style={{ color:isWithdraw?"#F84F4F":"#00E87A", marginBottom:4 }}>{tx.amount}</div>
+        <span className={statusCls}>{tx.status}</span>
+      </div>
+    </div>
+  );
+}
+
+function Performance() {
+  const d = DEMO_DATA;
+  const max = Math.max(...d.returns);
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Fund Performance</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Monthly Returns</h2>
+      </div>
+
+      <div className="section-card">
+        <div className="section-title">Return History</div>
+        <div className="bar-chart">
+          {d.months.map((m, i) => (
+            <div className="bar-col" key={m}>
+              <div className="bar-pct">{d.returns[i]}%</div>
+              <div className="bar" style={{ height:`${(d.returns[i]/max)*88}px` }}/>
+              <div className="bar-lbl">{m}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="stat-grid">
+        {[
+          { label:"Avg Monthly Return", val:"9.2%" },
+          { label:"Best Month",         val:"11.2%" },
+          { label:"Months Active",      val:"6" },
+          { label:"Drawdown",           val:"<2%" },
+        ].map(s => (
+          <div className="stat-card" key={s.label}>
+            <div className="stat-label">{s.label}</div>
+            <div className="stat-val green">{s.val}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="section-card">
+        <div className="section-title">Fund Details</div>
+        {[
+          ["Strategy","Gold Scalping"],["Broker","TMGM"],["Risk Level","Medium"],
+          ["Timeframe","Intraday"],["Copy Platform","TradeZella / Signal"],
+          ["Min Allocation","$500"],
+        ].map(([k,v]) => (
+          <div key={k} style={{ display:"flex", justifyContent:"space-between", padding:"10px 0", borderBottom:"1px solid rgba(255,255,255,0.04)", fontSize:13 }}>
+            <span style={{ color:"rgba(255,255,255,0.4)" }}>{k}</span>
+            <span style={{ fontWeight:700 }}>{v}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Transactions() {
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Account History</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>All Transactions</h2>
+      </div>
+      <div className="section-card">
+        {DEMO_DATA.transactions.map(tx => <TxRow key={tx.id} tx={tx} />)}
+      </div>
+      <p style={{ fontSize:11, color:"rgba(255,255,255,0.25)", textAlign:"center", marginTop:12 }}>Showing last 5 transactions · Contact support for full history</p>
+    </div>
+  );
+}
+
+function Withdraw() {
+  const [amount, setAmount] = useState("");
+  const [wallet, setWallet] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Capital Management</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Withdrawal Request</h2>
+      </div>
+
+      <div className="stat-grid" style={{ marginBottom:24 }}>
+        <div className="stat-card">
+          <div className="stat-label">Available Balance</div>
+          <div className="stat-val green">$24,850.00</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">Pending Withdrawals</div>
+          <div className="stat-val">$2,500.00</div>
+        </div>
+      </div>
+
+      {submitted ? (
+        <div className="section-card" style={{ textAlign:"center", padding:40 }}>
+          <div style={{ fontSize:40, marginBottom:16 }}>✓</div>
+          <h3 style={{ color:"#00E87A", fontWeight:800, marginBottom:8 }}>Request Submitted</h3>
+          <p style={{ color:"rgba(255,255,255,0.4)", fontSize:13 }}>Your withdrawal request has been submitted. Processing takes 2–5 business days. You will be notified via email and Telegram.</p>
+          <button className="portal-btn-secondary" style={{ marginTop:20, width:"auto", padding:"10px 24px" }} onClick={() => setSubmitted(false)}>New Request</button>
+        </div>
+      ) : (
+        <div className="section-card">
+          <div className="section-title">Submit Request</div>
+          <div style={{ background:"rgba(245,158,11,0.06)", border:"1px solid rgba(245,158,11,0.15)", borderRadius:10, padding:"12px 14px", marginBottom:20 }}>
+            <p style={{ fontSize:12, color:"rgba(245,158,11,0.8)", lineHeight:1.6 }}>⚠ Withdrawal requests are reviewed manually. Minimum withdrawal: $500. Processing time: 2–5 business days.</p>
+          </div>
+          <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Amount (USD)</label>
+          <input type="number" className="portal-input" placeholder="0.00" value={amount} onChange={e => setAmount(e.target.value)} />
+          <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>USDT Wallet Address (TRC20)</label>
+          <input type="text" className="portal-input" placeholder="T..." value={wallet} onChange={e => setWallet(e.target.value)} />
+          <label style={{ fontSize:10, fontWeight:700, letterSpacing:"0.12em", textTransform:"uppercase", color:"rgba(159,180,193,0.5)", display:"block", marginBottom:7 }}>Notes (optional)</label>
+          <input type="text" className="portal-input" placeholder="Any additional notes..." />
+          <button className="portal-btn-primary" onClick={() => setSubmitted(true)} style={{ marginTop:4 }}>Submit Withdrawal Request →</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Referrals() {
+  const d = DEMO_DATA;
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Earn Together</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Referral Program</h2>
+      </div>
+
+      <div className="stat-grid" style={{ marginBottom:20 }}>
+        {[
+          { label:"Your Referrals", val:d.refCount },
+          { label:"Referral Earnings", val:`$${d.refEarnings}` },
+          { label:"Commission Rate", val:"5%" },
+          { label:"Pending Payout", val:"$45.00" },
+        ].map(s => (
+          <div className="stat-card" key={s.label}>
+            <div className="stat-label">{s.label}</div>
+            <div className="stat-val green">{s.val}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="section-card">
+        <div className="section-title">Your Referral Code</div>
+        <div className="ref-code">{d.refCode}</div>
+        <p style={{ fontSize:12, color:"rgba(255,255,255,0.3)", marginBottom:16 }}>Share this code and earn 5% of your referral's monthly profits for the lifetime of their account.</p>
+        <button className="portal-btn-secondary" onClick={() => navigator.clipboard?.writeText(d.refCode)}>Copy Code</button>
+      </div>
+
+      <div className="section-card">
+        <div className="section-title">Share Link</div>
+        <div style={{ background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.08)", borderRadius:10, padding:"12px 14px", fontFamily:"monospace", fontSize:12, color:"rgba(255,255,255,0.5)", marginBottom:12, wordBreak:"break-all" }}>
+          https://kaizencapitalgrp.com?ref={d.refCode}
+        </div>
+        <button className="portal-btn-secondary" onClick={() => navigator.clipboard?.writeText(`https://kaizencapitalgrp.com?ref=${d.refCode}`)}>Copy Link</button>
+      </div>
+    </div>
+  );
+}
+
+function Telegram() {
+  return (
+    <div>
+      <div style={{ marginBottom:24 }}>
+        <p style={{ fontSize:11, color:"rgba(255,255,255,0.3)", letterSpacing:"0.1em", textTransform:"uppercase", marginBottom:4 }}>Stay Connected</p>
+        <h2 style={{ fontSize:"1.6rem", fontWeight:800, letterSpacing:"-0.02em", color:"#fff" }}>Telegram Access</h2>
+      </div>
+
+      <div className="section-card" style={{ marginBottom:20 }}>
+        <div className="section-title">Your Channels</div>
+        {TELEGRAM_CHANNELS.map(ch => (
+          <a key={ch.name} href={ch.link} target="_blank" rel="noopener noreferrer" className="tg-card">
+            <div style={{ width:44, height:44, borderRadius:12, background:"rgba(35,158,217,0.15)", border:"1px solid rgba(35,158,217,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:20, flexShrink:0 }}>{ch.icon}</div>
+            <div style={{ flex:1 }}>
+              <div style={{ fontSize:13, fontWeight:700, color:"#fff", marginBottom:2 }}>{ch.name}</div>
+              <div style={{ fontSize:11, color:"rgba(255,255,255,0.35)" }}>{ch.desc}</div>
+            </div>
+            <div style={{ fontSize:12, color:"rgba(100,150,200,0.7)" }}>Join →</div>
+          </a>
+        ))}
+      </div>
+
+      <div className="section-card">
+        <div className="section-title">Direct Support</div>
+        <p style={{ fontSize:13, color:"rgba(255,255,255,0.4)", marginBottom:16, lineHeight:1.6 }}>Need help? Message the KCG team directly on Telegram for portfolio questions, technical support, or account inquiries.</p>
+        <a href="https://t.me/trellz_P" target="_blank" rel="noopener noreferrer" className="portal-btn-primary" style={{ textDecoration:"none", textAlign:"center", display:"block" }}>Message @trellz_P →</a>
+      </div>
+    </div>
+  );
+}
+
+// ── MAIN PORTAL ──────────────────────────────────────────────────────────────
+export default function Portal() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [active, setActive] = useState("overview");
+
+  const SECTIONS = { overview:<Overview/>, performance:<Performance/>, transactions:<Transactions/>, withdraw:<Withdraw/>, referrals:<Referrals/>, telegram:<Telegram/> };
+
+  if (!loggedIn) return (
+    <>
+      <style>{CSS}</style>
+      <LoginPage onLogin={() => setLoggedIn(true)} />
+    </>
+  );
+
+  return (
+    <>
+      <style>{CSS}</style>
+      <div className="portal-wrap">
+
+        {/* Sidebar */}
+        <aside className="sidebar">
+          <div className="sidebar-logo">
+            <div className="sidebar-logo-ring">KCG</div>
+            <span className="sidebar-logo-text">Kaizen Capital</span>
+          </div>
+          <nav className="sidebar-nav">
+            {NAV_ITEMS.map(item => (
+              <button key={item.id} className={`sidebar-link${active===item.id?" active":""}`} onClick={() => setActive(item.id)}>
+                <span className="icon">{item.icon}</span>
+                {item.label}
+              </button>
+            ))}
+          </nav>
+          <div className="sidebar-footer">
+            <button className="sidebar-link" onClick={() => setLoggedIn(false)} style={{ color:"rgba(248,113,113,0.6)", width:"100%" }}>
+              <span className="icon">⊗</span> Sign Out
+            </button>
+            <Link href="/" style={{ display:"flex", alignItems:"center", gap:8, padding:"8px 12px", fontSize:12, color:"rgba(255,255,255,0.25)", textDecoration:"none", marginTop:4 }}>
+              ← Back to HQ
+            </Link>
+          </div>
+        </aside>
+
+        {/* Mobile header */}
+        <div className="mobile-header">
+          <div style={{ display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ width:28, height:28, borderRadius:"50%", background:"linear-gradient(135deg,#9FB4C1,#0C1A30)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:8, fontWeight:900, color:"#fff" }}>KCG</div>
+            <span style={{ fontSize:12, fontWeight:700, letterSpacing:"0.1em", color:"rgba(255,255,255,0.6)", textTransform:"uppercase" }}>Portal</span>
+          </div>
+          <button onClick={() => setLoggedIn(false)} style={{ fontSize:11, color:"rgba(248,113,113,0.6)", background:"none", border:"none", cursor:"pointer" }}>Sign Out</button>
+        </div>
+
+        {/* Main content */}
+        <main className="main">
+          {SECTIONS[active]}
+        </main>
+
+        {/* Mobile bottom nav */}
+        <nav className="mobile-nav">
+          <div className="mobile-nav-items">
+            {NAV_ITEMS.map(item => (
+              <button key={item.id} className={`mobile-nav-item${active===item.id?" active":""}`} onClick={() => setActive(item.id)}>
+                <span className="icon">{item.icon}</span>
+                {item.label}
+              </button>
+            ))}
+          </div>
+        </nav>
+      </div>
     </>
   );
 }
