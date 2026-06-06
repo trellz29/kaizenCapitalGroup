@@ -24,7 +24,7 @@ export default function KineticText({ children, as: Tag = "h2", className = "", 
   const words = text.split(" ");
 
   return (
-    <Tag ref={ref} className={className} aria-label={text} style={{ overflow: "hidden" }}>
+    <Tag ref={ref} className={className} aria-label={text} style={{ overflow: "hidden", wordSpacing: "normal", textAlign: "left" }}>
       {words.map((word, wi) => (
         <span key={wi} style={{ display: "inline-block", whiteSpace: "pre" }}>
           {word.split("").map((char) => {
@@ -45,9 +45,6 @@ export default function KineticText({ children, as: Tag = "h2", className = "", 
               </span>
             );
           })}
-          {wi < words.length - 1 && (
-            <span style={{ display: "inline-block", opacity: 0 }}>_</span>
-          )}
           {wi < words.length - 1 && " "}
         </span>
       ))}

@@ -259,9 +259,17 @@ body { overflow-x: hidden; width: 100%; max-width: 100vw; }
 
 /* ---- GENERAL SCENE SECTIONS ---- */
 @media (max-width: 768px) {
-  .scene-h2 { font-size: clamp(1.7rem, 7vw, 2.4rem) !important; }
-  .glass-card { border-radius: 16px !important; }
+  .scene-h2 {
+    font-size: clamp(1.6rem, 6.5vw, 2.2rem) !important;
+    text-align: left !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.15 !important;
+    word-spacing: normal !important;
+  }
+  section[id], section { padding: 48px 0 !important; }
   .scene-label { font-size: 9px !important; }
+  .glass-card { border-radius: 16px !important; }
+  .scene-p { font-size: 14px !important; line-height: 1.6 !important; }
 }
 
 /* ---- COMMUNITY CARDS MOBILE ---- */
