@@ -229,14 +229,60 @@ export default function HorizontalFundScroll() {
                 Every fund. <span style={{ color:"rgba(255,255,255,0.35)" }}>Scroll to explore.</span>
               </h2>
             </div>
-            <div className="hfs-dots">
-              {FUNDS.map((_,i) => (
-                <div key={i} className="hfs-dot" style={{
-                  width: i===activeIdx ? 16 : 5,
-                  height: 5,
-                  background: i===activeIdx ? "#00E87A" : "rgba(255,255,255,0.15)",
-                }}/>
-              ))}
+            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
+              {/* Arrow buttons */}
+              <button
+                onClick={() => {
+                  const newIdx = Math.max(0, activeIdx - 1);
+                  const track = trackRef.current;
+                  if (!track) return;
+                  const step = CARD_W + CARD_GAP;
+                  track.style.transition = "transform 0.4s cubic-bezier(0.23,1,0.32,1)";
+                  track.style.transform = `translateX(-${newIdx * step}px)`;
+                  setTimeout(() => { track.style.transition = ""; }, 420);
+                  setActiveIdx(newIdx);
+                }}
+                style={{
+                  width:40, height:40, borderRadius:"50%",
+                  background: activeIdx === 0 ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.1)",
+                  border:"1px solid rgba(255,255,255,0.1)",
+                  color: activeIdx === 0 ? "rgba(255,255,255,0.2)" : "#fff",
+                  cursor: activeIdx === 0 ? "default" : "pointer",
+                  fontSize:18, display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"all 0.2s ease", outline:"none",
+                }}
+              >←</button>
+              <button
+                onClick={() => {
+                  const newIdx = Math.min(FUNDS.length - 1, activeIdx + 1);
+                  const track = trackRef.current;
+                  if (!track) return;
+                  const step = CARD_W + CARD_GAP;
+                  track.style.transition = "transform 0.4s cubic-bezier(0.23,1,0.32,1)";
+                  track.style.transform = `translateX(-${newIdx * step}px)`;
+                  setTimeout(() => { track.style.transition = ""; }, 420);
+                  setActiveIdx(newIdx);
+                }}
+                style={{
+                  width:40, height:40, borderRadius:"50%",
+                  background: activeIdx === FUNDS.length - 1 ? "rgba(255,255,255,0.05)" : "rgba(0,232,122,0.15)",
+                  border:`1px solid ${activeIdx === FUNDS.length - 1 ? "rgba(255,255,255,0.1)" : "rgba(0,232,122,0.3)"}`,
+                  color: activeIdx === FUNDS.length - 1 ? "rgba(255,255,255,0.2)" : "#00E87A",
+                  cursor: activeIdx === FUNDS.length - 1 ? "default" : "pointer",
+                  fontSize:18, display:"flex", alignItems:"center", justifyContent:"center",
+                  transition:"all 0.2s ease", outline:"none",
+                }}
+              >→</button>
+              {/* Dots */}
+              <div className="hfs-dots">
+                {FUNDS.map((_,i) => (
+                  <div key={i} className="hfs-dot" style={{
+                    width: i===activeIdx ? 16 : 5,
+                    height: 5,
+                    background: i===activeIdx ? "#00E87A" : "rgba(255,255,255,0.15)",
+                  }}/>
+                ))}
+              </div>
             </div>
           </div>
 
