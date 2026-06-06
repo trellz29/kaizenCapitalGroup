@@ -149,8 +149,10 @@ export default function HorizontalFundScroll() {
   const [progress, setProgress]   = useState(0);
   const [activeIdx, setActiveIdx] = useState(0);
 
-  // scroll height = viewport + enough to translate all cards
-  const totalScrollPx = (CARD_W + CARD_GAP) * FUNDS.length + 200;
+  // Only need to scroll the amount the track overflows the viewport
+  // trackOverflow = (cardW + gap) * numCards - viewportW
+  // We add 100vh so the section pins for long enough, plus a small buffer
+  const totalScrollPx = Math.max((CARD_W + CARD_GAP) * FUNDS.length - (typeof window !== "undefined" ? window.innerWidth : 1200) + 120, 800);
 
   useEffect(() => {
     const section = sectionRef.current;
