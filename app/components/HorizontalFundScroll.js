@@ -25,14 +25,23 @@ function Sparkline({ color }) {
     h: 25 + Math.sin(i * 0.7 + 1) * 15 + i * 1.5,
   }));
   return (
-    <div style={{ display:"flex", gap:3, height:44, alignItems:"flex-end", margin:"14px 0" }}>
-      {bars.map((b, i) => (
-        <div key={i} style={{
-          flex:1, borderRadius:2,
-          background: i === bars.length-1 ? color : `${color}55`,
-          height:`${Math.min(b.h,100)}%`,
-        }}/>
-      ))}
+    <div style={{ marginBottom: 12 }}>
+      <div style={{ fontSize:9, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(255,255,255,0.25)", marginBottom:6 }}>
+        16-Month Performance
+      </div>
+      <div style={{ display:"flex", gap:3, height:44, alignItems:"flex-end" }}>
+        {bars.map((b, i) => (
+          <div key={i} style={{
+            flex:1, borderRadius:2,
+            background: i === bars.length-1 ? color : `${color}55`,
+            height:`${Math.min(b.h,100)}%`,
+          }}/>
+        ))}
+      </div>
+      <div style={{ display:"flex", justifyContent:"space-between", marginTop:4 }}>
+        <span style={{ fontSize:8, color:"rgba(255,255,255,0.2)" }}>16mo ago</span>
+        <span style={{ fontSize:8, color:"rgba(255,255,255,0.2)" }}>This month</span>
+      </div>
     </div>
   );
 }
