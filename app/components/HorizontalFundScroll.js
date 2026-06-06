@@ -149,7 +149,7 @@ export default function HorizontalFundScroll() {
   const [progress, setProgress]   = useState(0);
   const [activeIdx, setActiveIdx] = useState(0);
 
-  const [sectionHeight, setSectionHeight] = useState("300vh");
+  const [sectionHeight, setSectionHeight] = useState("100vh");
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -157,20 +157,25 @@ export default function HorizontalFundScroll() {
     if (!section || !track) return;
 
     const calcHeight = () => {
-      const overflow = track.scrollWidth - window.innerWidth;
-      const h = Math.max(overflow + window.innerHeight + 100, window.innerHeight * 1.5);
-      setSectionHeight(`${h}px`);
+      // Section height = 1 viewport (for sticky) + exact track overflow
+      const trackOverflow = Math.max(0, track.scrollWidth - track.offsetWidth);
+      setSectionHeight(`${window.innerHeight + trackOverflow}px`);
     };
 
-    calcHeight();
+    // Measure after paint so cards are laid out
+    const raf = requestAnimationFrame(() => {
+      calcHeight();
+    });
+
     window.addEventListener("resize", calcHeight);
 
     const onScroll = () => {
-      const rect     = section.getBoundingClientRect();
-      const sectionH = section.offsetHeight;
-      const viewH    = window.innerHeight;
-      const scrolled = -rect.top;
+      const rect      = section.getBoundingClientRect();
+      const sectionH  = section.offsetHeight;
+      const viewH     = window.innerHeight;
+      const scrolled  = -rect.top;
       const maxScroll = sectionH - viewH;
+      if (maxScroll <= 0) return;
       const pct = Math.max(0, Math.min(1, scrolled / maxScroll));
       setProgress(pct);
 
@@ -181,9 +186,10 @@ export default function HorizontalFundScroll() {
       setActiveIdx(Math.min(FUNDS.length - 1, Math.floor((pct * trackScrollW) / step)));
     };
 
-    window.addEventListener("scroll", onScroll, { passive:true });
+    window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();
     return () => {
+      cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", calcHeight);
     };
