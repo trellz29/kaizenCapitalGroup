@@ -90,7 +90,7 @@ const CSS = `
   /* Cards */
   .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
   .stat-card {
-    background: #070d1c; border: 1px solid rgba(255,255,255,0.07);
+    background: #070d1c; border: 1px solid rgba(255,255,255,0.1);
     border-radius: 16px; padding: 20px 22px;
   }
   .stat-label { font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
@@ -145,16 +145,16 @@ const CSS = `
   .tg-card:hover { border-color:rgba(100,150,200,0.3); background:rgba(100,150,200,0.06); }
 
   /* Mobile */
-  .mobile-header { display:none; padding:14px 16px; background:#070d1c; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:200; align-items:center; justify-content:space-between; }
-  .mobile-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:#070d1c; border-top:1px solid rgba(255,255,255,0.08); padding:8px 0 16px; z-index:100; }
-  .mobile-nav-items { display:flex; justify-content:space-around; }
-  .mobile-nav-item { display:flex; flex-direction:column; align-items:center; gap:3px; cursor:pointer; padding:4px 8px; border-radius:8px; background:none; border:none; color:rgba(255,255,255,0.35); font-size:9px; font-weight:700; letter-spacing:0.06em; transition:color 0.2s; }
+  .mobile-header { display:none; padding:12px 16px; background:#070d1c; border-bottom:1px solid rgba(255,255,255,0.07); position:sticky; top:0; z-index:200; align-items:center; justify-content:space-between; }
+  .mobile-nav { display:none; position:fixed; bottom:0; left:0; right:0; background:#070d1c; border-top:1px solid rgba(255,255,255,0.08); padding:6px 0 20px; z-index:100; overflow-x:auto; }
+  .mobile-nav-items { display:flex; justify-content:space-around; min-width:max-content; width:100%; padding:0 4px; gap:0; }
+  .mobile-nav-item { display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; padding:4px 10px; border-radius:8px; background:none; border:none; color:rgba(255,255,255,0.35); font-size:8px; font-weight:700; letter-spacing:0.04em; transition:color 0.2s; white-space:nowrap; flex-shrink:0; }
   .mobile-nav-item.active { color:#00E87A; }
-  .mobile-nav-item .icon { font-size:18px; }
+  .mobile-nav-item .icon { font-size:16px; }
 
   @media (max-width:768px) {
     .sidebar { display:none; }
-    .main { margin-left:0; padding:16px 16px 100px; }
+    .main { margin-left:0; padding:20px 16px 110px; }
     .mobile-header { display:flex; }
     .mobile-nav { display:block; }
     .stat-grid { grid-template-columns:1fr 1fr; gap:10px; }
