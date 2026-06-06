@@ -163,9 +163,7 @@ export default function CinematicNav() {
 
           {/* CTA */}
           <a
-            href="https://calendly.com/trellzp12/30min"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/portal"
             className="cnav-cta"
           >
             Get Started
@@ -191,9 +189,7 @@ export default function CinematicNav() {
             </a>
           ))}
           <a
-            href="https://calendly.com/trellzp12/30min"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/portal"
             className="cnav-mobile-cta"
           >
             Get Started ↗
