@@ -111,7 +111,7 @@ function BentoStat({ num, label, prefix = "", suffix = "", accent }) {
 /* --- GLOBAL CSS --------------------------------------------------- */
 const GLOBAL_CSS = `
   *, *::before, *::after { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: auto; }
   body { background: #050810; color: #fff; overflow-x: hidden; }
   ::selection { background: rgba(159,180,193,0.25); }
   ::-webkit-scrollbar { width: 4px; }

@@ -9,13 +9,15 @@ export default function LenisProvider() {
     const init = async () => {
       const { default: Lenis } = await import("@studio-freight/lenis");
       lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        duration: 1.8,
+        easing: (t) => 1 - Math.pow(1 - t, 4),
         direction: "vertical",
         gestureDirection: "vertical",
         smooth: true,
         smoothTouch: false,
-        touchMultiplier: 2,
+        touchMultiplier: 1.5,
+        infinite: false,
+        lerp: 0.07,
       });
 
       const animate = (time) => {
