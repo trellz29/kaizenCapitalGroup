@@ -68,7 +68,7 @@ export default function CinematicLoader({ onComplete }) {
           fontSize: "clamp(2.8rem, 8vw, 6.5rem)",
           fontWeight: 800,
           letterSpacing: "-0.04em",
-          color: "rgba(255,255,255,0.07)",
+          color: "rgba(159,180,193,0.55)",
           userSelect: "none",
           lineHeight: 1,
         }}>
@@ -82,7 +82,7 @@ export default function CinematicLoader({ onComplete }) {
           fontSize: 11,
           fontWeight: 700,
           letterSpacing: "0.35em",
-          color: "rgba(255,255,255,0.12)",
+          color: "rgba(159,180,193,0.45)",
           textTransform: "uppercase",
         }}>
           KCG
@@ -108,7 +108,7 @@ export default function CinematicLoader({ onComplete }) {
       <div style={{
         position: "absolute", bottom: 24, right: 28,
         fontFamily: "monospace", fontSize: 11, fontWeight: 700,
-        letterSpacing: "0.15em", color: "rgba(255,255,255,0.18)",
+        letterSpacing: "0.15em", color: "rgba(159,180,193,0.5)",
       }}>
         {String(count).padStart(3, "0")}
       </div>
@@ -117,7 +117,7 @@ export default function CinematicLoader({ onComplete }) {
       <div style={{
         position: "absolute", bottom: 24, left: 28,
         fontFamily: "sans-serif", fontSize: 10, fontWeight: 700,
-        letterSpacing: "0.28em", color: "rgba(255,255,255,0.15)",
+        letterSpacing: "0.28em", color: "rgba(159,180,193,0.45)",
         textTransform: "uppercase",
       }}>
         Kaizen Capital Group
