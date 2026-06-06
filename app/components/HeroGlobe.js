@@ -7,8 +7,8 @@ const LAND_POLYS = [[[-59.6,-80.0],[-59.9,-80.5],[-60.2,-81.0],[-62.3,-80.9],[-6
 
 
 // Transaction types: BTC, ETH, wire, cash, USDT
-const TX_TYPES = ["BTC","ETH","WIRE","CASH","USDT"];
-const TX_COLORS = { BTC:"#f7931a", ETH:"#627eea", WIRE:"#6496c8", CASH:"#00e87a", USDT:"#26a17b" };
+const TX_TYPES = ["BTC","ETH","SOL","WIRE","CASH","USDT"];
+const TX_COLORS = { BTC:"#f7931a", ETH:"#627eea", SOL:"#9945ff", WIRE:"#6496c8", CASH:"#00e87a", USDT:"#26a17b" };
 
 function buildEarthTexture() {
   const W = 4096, H = 2048;
@@ -156,7 +156,15 @@ function makeIconTexture(THREE, type) {
     ctx.font = `bold ${s*0.42}px Arial`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("$", cx, cy);
-  } else if (type === "USDT") {
+  } else if (type === "SOL") {
+    ctx.font = `bold ${s*0.48}px serif`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    // Solana gradient purple-teal
+    const sg = ctx.createLinearGradient(cx-16, cy-16, cx+16, cy+16);
+    sg.addColorStop(0, "#9945ff");
+    sg.addColorStop(1, "#14f195");
+    ctx.fillStyle = sg;
+    ctx.fillText("◎", cx, cy);
     ctx.font = `bold ${s*0.48}px serif`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("₮", cx, cy);
@@ -363,6 +371,19 @@ export default function HeroGlobe() {
         [12,19,"WIRE",0.003],// BuenosAires-Zurich
         [13,17,"CASH",0.003],// Bogota-Paris
         [1,16,"USDT",0.003], // Toronto-London
+        // ── SOLANA ─────────────────────────────────────────────────
+        [6,38,"SOL",0.009],  // SF-Tokyo
+        [0,16,"SOL",0.008],  // NYC-London
+        [2,6,"SOL",0.009],   // LA-SF
+        [35,37,"SOL",0.009], // Shanghai-Singapore
+        [38,39,"SOL",0.009], // Tokyo-Seoul
+        [16,19,"SOL",0.008], // London-Zurich
+        [0,11,"SOL",0.007],  // NYC-SP
+        [37,43,"SOL",0.008], // Singapore-Sydney
+        [25,33,"SOL",0.008], // Dubai-Mumbai
+        [3,17,"SOL",0.008],  // Chicago-Dallas
+        [36,35,"SOL",0.009], // HK-Shanghai
+        [10,1,"SOL",0.008],  // Vancouver-Toronto
         // ── TRANS-PACIFIC ──────────────────────────────────────────
         [6,38,"BTC",0.003],  // SF-Tokyo
         [6,39,"ETH",0.005],  // SF-Seoul
