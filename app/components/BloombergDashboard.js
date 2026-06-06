@@ -115,7 +115,7 @@ const FUND_DATA = [
 
 const METRICS = [
   { label: "TOTAL AUM", value: "847", prefix: "$", suffix: "M+", decimals: 0 },
-  { label: "ACTIVE FUNDS", value: "12", prefix: "", suffix: "", decimals: 0 },
+  { label: "ACTIVE FUNDS", value: "13", prefix: "", suffix: "", decimals: 0 },
   { label: "AVG MONTHLY RETURN", value: "9.2", prefix: "", suffix: "%", decimals: 1 },
   { label: "LIVE STRATEGIES", value: "4", prefix: "", suffix: "", decimals: 0 },
 ];
@@ -204,8 +204,8 @@ export default function BloombergDashboard() {
           {/* Fund table */}
           <div style={{ borderRight: "1px solid rgba(255,255,255,0.05)" }}>
             {/* Table header */}
-            <div style={{ display: "grid", gridTemplateColumns: "80px 1fr 80px 80px 80px 120px", padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", gap: 8 }}>
-              {["TICKER", "FUND NAME", "MTH RETURN", "AUM", "STATUS", "7D CHART"].map(h => (
+            <div style={{ display: "grid", gridTemplateColumns: "70px 1fr 72px 72px 80px", padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", gap: 8 }}>
+              {["TICKER", "FUND NAME", "MTH RTN", "AUM", "STATUS"].map(h => (
                 <div key={h} style={{ ...styles.label }}>{h}</div>
               ))}
             </div>
@@ -216,18 +216,15 @@ export default function BloombergDashboard() {
                 key={fund.ticker}
                 className={`bb-row${activeRow === i ? " active" : ""}`}
                 onClick={() => setActiveRow(i)}
-                style={{ display: "grid", gridTemplateColumns: "80px 1fr 80px 80px 80px 120px", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.03)", gap: 8, cursor: "pointer", transition: "background 0.2s", alignItems: "center", borderLeft: "2px solid transparent" }}
+                style={{ display: "grid", gridTemplateColumns: "70px 1fr 72px 72px 80px", padding: "12px 16px", borderBottom: "1px solid rgba(255,255,255,0.03)", gap: 8, cursor: "pointer", transition: "background 0.2s", alignItems: "center", borderLeft: "2px solid transparent" }}
               >
                 <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: "rgba(0,232,120,0.8)" }}>{fund.ticker}</div>
                 <div style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.65)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{fund.name}</div>
                 <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: fund.ret === "—" ? "rgba(255,255,255,0.3)" : "#00E87A" }}>{fund.ret}</div>
-                <div className="bb-aum" style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{fund.aum}</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{fund.aum}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                   <span className={fund.status === "LIVE" ? "bb-live" : ""} style={{ width: 5, height: 5, borderRadius: "50%", background: fund.status === "LIVE" ? "#00E87A" : "#F59E0B", flexShrink: 0, display: "inline-block" }} />
                   <span style={{ fontFamily: "monospace", fontSize: 9, color: fund.status === "LIVE" ? "rgba(0,232,120,0.7)" : "rgba(245,158,11,0.7)", letterSpacing: "0.1em" }}>{fund.status}</span>
-                </div>
-                <div className="bb-chart" style={{ height: 32 }}>
-                  <MiniChart data={fund.data} color={fund.ret === "—" ? "#9FB4C1" : "#00E87A"} height={32} animated={visible} />
                 </div>
               </div>
             ))}
