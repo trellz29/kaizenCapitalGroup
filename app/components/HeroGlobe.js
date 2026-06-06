@@ -121,10 +121,16 @@ function makeIconTexture(THREE, type) {
   const cx = s/2, cy = s/2;
 
   if (type === "BTC") {
-    // Bold B shape
+    // Orange circle background
+    ctx.beginPath();
+    ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+    ctx.fillStyle = col;
+    ctx.fill();
+    // White B
+    ctx.fillStyle = "#fff";
     ctx.font = `bold ${s*0.42}px Arial`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("B", cx, cy);
+    ctx.fillText("B", cx + 1, cy);
   } else if (type === "ETH") {
     // Ethereum diamond — two triangles
     ctx.lineWidth = 1.5;
