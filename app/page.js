@@ -144,7 +144,13 @@ export default function Home() {
 
       <AnimatePresence>
         {showLoader && (
-          <motion.div key="loader" exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+          <motion.div
+            key="loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.7 }}
+            style={{ position: "fixed", inset: 0, zIndex: 999999 }}
+          >
             <CinematicLoader onComplete={() => setShowLoader(false)} />
           </motion.div>
         )}
