@@ -6,6 +6,57 @@ const LAND_POLYS = [[[-59.6,-80.0],[-59.9,-80.5],[-60.2,-81.0],[-62.3,-80.9],[-6
 
 
 
+const COUNTRY_BORDERS = [
+  // USA/Canada 49th parallel
+  [[-95,49],[-100,49],[-110,49],[-120,49],[-123,49]],
+  [[-95,49],[-90,48],[-84,46],[-82,43],[-79,43],[-76,44],[-75,45],[-72,45],[-70,47],[-67,47]],
+  // USA/Mexico
+  [[-117,32],[-114,32],[-111,31],[-108,31],[-104,29],[-100,28],[-99,26],[-97,26]],
+  // Canada provinces
+  [[-120,49],[-120,54],[-120,60]],[[-110,49],[-110,54],[-110,60]],
+  [[-102,49],[-102,54],[-102,60]],[[-79,44],[-79,45],[-76,45],[-75,45]],
+  // US States — CA east, NV, AZ, TX, FL, NY, IL, ID
+  [[-120,42],[-120,35],[-117,35],[-114,35],[-114,32]],
+  [[-114,37],[-114,32],[-111,31],[-109,31],[-109,37],[-114,37]],
+  [[-103,37],[-103,32],[-104,29],[-100,28]],[[-100,36],[-100,28]],[[-94,33],[-94,30]],
+  [[-87,31],[-85,30],[-82,29],[-81,25]],
+  [[-79,42],[-76,42],[-74,41],[-72,41],[-73,45],[-76,44],[-79,43]],
+  [[-91,42],[-88,42],[-88,37],[-89,37],[-91,37],[-91,42]],
+  [[-117,42],[-114,42],[-114,37]],
+  // S.America borders
+  [[-73,12],[-68,12],[-60,5],[-52,4],[-44,2]],
+  [[-73,12],[-73,8],[-70,4],[-68,0],[-68,-5],[-70,-10],[-68,-15],[-60,-16],[-58,-20]],
+  [[-58,-20],[-58,-25],[-53,-33],[-58,-38]],
+  [[-68,-55],[-69,-50],[-70,-45],[-71,-40],[-71,-35],[-70,-30],[-70,-25],[-68,-22]],
+  [[-78,2],[-78,-2],[-76,-5],[-73,-8]],
+  // Europe borders
+  [[-2,43],[0,42],[2,42],[3,42]],[[6,48],[7,48],[8,48],[8,47],[7,47]],
+  [[14,54],[14,52],[14,51],[15,51]],[[12,50],[13,50],[15,50],[16,48],[15,48]],
+  [[24,54],[24,52],[22,50],[24,50],[26,50],[28,48]],
+  [[12,58],[12,60],[14,62],[16,64],[18,66],[20,68],[22,70],[28,70]],
+  [[20,58],[22,60],[24,62],[26,64],[28,66],[28,70]],
+  [[7,44],[8,46],[10,47],[12,47],[14,46],[14,44]],
+  [[-2,53],[-3,54],[-2,55],[-2,56],[-3,57]],[[-7,42],[-7,40],[-7,38],[-7,37]],
+  // Africa borders
+  [[25,22],[25,30],[25,32]],[[32,22],[36,22],[36,12]],
+  [[-2,35],[0,33],[2,32],[8,33],[10,37]],
+  [[3,6],[4,7],[8,12],[13,13],[14,12],[14,8],[3,6]],
+  [[36,4],[38,4],[40,4],[42,2],[42,10],[38,15]],
+  [[17,-29],[20,-29],[22,-29],[28,-22],[32,-25],[33,-29],[28,-34],[20,-34],[17,-29]],
+  [[36,22],[38,10],[40,15],[38,22]],
+  // Asia borders
+  [[80,50],[90,50],[100,52],[110,54],[120,52],[128,48],[130,46]],
+  [[88,48],[98,48],[106,48],[112,46],[116,42],[120,40]],
+  [[78,32],[80,30],[84,28],[88,26],[92,28],[96,28]],
+  [[100,22],[104,22],[106,22],[108,22]],
+  [[68,22],[70,26],[72,30],[74,32],[76,34]],
+  [[88,22],[90,24],[92,24],[92,22]],
+  [[126,38],[128,38],[130,38]],
+  [[102,22],[102,18],[104,14],[102,10],[100,8]],
+  [[98,28],[100,22],[100,18],[98,14]],
+  [[50,52],[55,54],[60,55],[65,54],[70,52],[78,50],[80,50]],
+];
+
 // Transaction types: BTC, ETH, wire, cash, USDT
 const TX_TYPES = ["BTC","ETH","WIRE","CASH","USDT"];
 const TX_COLORS = { BTC:"#f7931a", ETH:"#627eea", WIRE:"#6496c8", CASH:"#00e87a", USDT:"#26a17b" };
@@ -73,6 +124,53 @@ function buildEarthTexture() {
     ctx.stroke();
   });
 
+  // ── GRID LAYER 1: Fine 10-degree grid (behind everything) ──
+  ctx.strokeStyle = "rgba(70,110,160,0.07)";
+  ctx.lineWidth = 0.5;
+  for (let lat = -80; lat <= 80; lat += 10) {
+    const [,y] = px(0, lat);
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+  }
+  for (let lon = -170; lon <= 180; lon += 10) {
+    ctx.beginPath();
+    for (let lat = -90; lat <= 90; lat += 1) {
+      const [x,y] = px(lon, lat);
+      lat === -90 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+
+  // ── GRID LAYER 2: Major 30-degree lines (slightly brighter) ──
+  ctx.strokeStyle = "rgba(100,150,200,0.12)";
+  ctx.lineWidth = 0.8;
+  for (let lat = -60; lat <= 60; lat += 30) {
+    const [,y] = px(0, lat);
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+  }
+  for (let lon = -150; lon <= 180; lon += 30) {
+    ctx.beginPath();
+    for (let lat = -90; lat <= 90; lat += 1) {
+      const [x,y] = px(lon, lat);
+      lat === -90 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+
+  // ── COUNTRY BORDERS (between grid and coastlines) ──
+  ctx.strokeStyle = "rgba(120,170,220,0.22)";
+  ctx.lineWidth = 0.7;
+  ctx.setLineDash([4, 6]);
+  COUNTRY_BORDERS.forEach((line) => {
+    if (line.length < 2) return;
+    ctx.beginPath();
+    line.forEach(([lon, lat], i) => {
+      const [x, y] = px(lon, lat);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  });
+  ctx.setLineDash([]);
+
   // Polar ice caps
   const ice = (yC, h) => {
     const g = ctx.createLinearGradient(0, yC-h, 0, yC+h);
@@ -82,22 +180,6 @@ function buildEarthTexture() {
     ctx.fillStyle = g; ctx.fillRect(0, yC-h, W, h*2);
   };
   ice(0, 60); ice(H, 80);
-
-  // Lat/lon grid
-  ctx.strokeStyle = "rgba(100,150,200,0.1)";
-  ctx.lineWidth = 1;
-  for (let lat = -75; lat <= 75; lat += 15) {
-    const [,y] = px(0, lat);
-    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
-  }
-  for (let lon = -165; lon <= 180; lon += 15) {
-    ctx.beginPath();
-    for (let lat = -90; lat <= 90; lat += 2) {
-      const [x,y] = px(lon, lat);
-      lat === -90 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
-    }
-    ctx.stroke();
-  }
 
   return canvas;
 }
@@ -272,18 +354,42 @@ export default function HeroGlobe() {
       };
 
       // City pulse dots (small, site-green)
+      // Major financial hubs get bigger/brighter nodes
+      const MAJOR_HUBS = new Set([0,1,2,3,4,6,7,10,13,14,16,19,25,32,33,35,36,37,38,39,43]);
+
       const cityObjs = CITIES.map(([lat,lon], i) => {
         const pos = ll2v(lat, lon, R*1.013);
+        const isMajor = MAJOR_HUBS.has(i);
+        const nodeColor = isMajor ? 0x00e87a : 0x6496c8;
+        const nodeSize  = isMajor ? 0.028 : 0.016;
+
+        // Core dot
         const dot = new THREE.Mesh(
-          new THREE.SphereGeometry(0.02, 8, 8),
-          new THREE.MeshBasicMaterial({ color:0x6496c8, transparent:true, opacity:0.9 })
+          new THREE.SphereGeometry(nodeSize, 10, 10),
+          new THREE.MeshBasicMaterial({ color: nodeColor, transparent:true, opacity:1 })
         );
         dot.position.copy(pos);
-        const rg = new THREE.RingGeometry(0.028, 0.044, 18);
-        const ring = new THREE.Mesh(rg, new THREE.MeshBasicMaterial({ color:0x6496c8, transparent:true, opacity:0.5, side:THREE.DoubleSide }));
-        ring.position.copy(pos); ring.lookAt(new THREE.Vector3(0,0,0));
-        scene.add(dot); scene.add(ring);
-        return { pos, dot, ring, phase:(i/CITIES.length)*Math.PI*2 };
+
+        // Inner glow ring
+        const ring1 = new THREE.Mesh(
+          new THREE.RingGeometry(nodeSize*1.4, nodeSize*2.2, 24),
+          new THREE.MeshBasicMaterial({ color: nodeColor, transparent:true, opacity:0.6, side:THREE.DoubleSide })
+        );
+        ring1.position.copy(pos); ring1.lookAt(new THREE.Vector3(0,0,0));
+
+        // Outer pulse ring (major hubs only)
+        let ring2 = null;
+        if (isMajor) {
+          ring2 = new THREE.Mesh(
+            new THREE.RingGeometry(nodeSize*3, nodeSize*4, 24),
+            new THREE.MeshBasicMaterial({ color: nodeColor, transparent:true, opacity:0.25, side:THREE.DoubleSide })
+          );
+          ring2.position.copy(pos); ring2.lookAt(new THREE.Vector3(0,0,0));
+          scene.add(ring2);
+        }
+
+        scene.add(dot); scene.add(ring1);
+        return { pos, dot, ring1, ring2, phase:(i/CITIES.length)*Math.PI*2, isMajor };
       });
 
       // Arc definitions with transaction types
@@ -505,11 +611,26 @@ export default function HeroGlobe() {
         globe.rotation.x=Math.max(-Math.PI/2,Math.min(Math.PI/2,globe.rotation.x));
 
         // City pulses follow globe
-        cityObjs.forEach(({pos,dot,ring,phase})=>{
+        cityObjs.forEach(({pos, dot, ring1, ring2, phase, isMajor})=>{
           const rp = pos.clone().applyEuler(globe.rotation);
-          dot.position.copy(rp); ring.position.copy(rp); ring.lookAt(new THREE.Vector3(0,0,0));
-          const p = Math.abs(Math.sin(t*2.5+phase));
-          ring.scale.setScalar(1+0.7*p); ring.material.opacity=0.1+0.4*p;
+          dot.position.copy(rp);
+          ring1.position.copy(rp); ring1.lookAt(new THREE.Vector3(0,0,0));
+          if (ring2) { ring2.position.copy(rp); ring2.lookAt(new THREE.Vector3(0,0,0)); }
+
+          // Face-camera visibility: nodes facing camera are brighter
+          const facingFactor = Math.max(0, rp.clone().normalize().dot(new THREE.Vector3(0,0,1)));
+          const pulse = Math.abs(Math.sin(t*2.5+phase));
+
+          dot.material.opacity = 0.4 + facingFactor * 0.6;
+          ring1.scale.setScalar(1 + 0.8*pulse);
+          ring1.material.opacity = facingFactor * (0.15 + 0.45*pulse);
+
+          if (ring2) {
+            // Outer ring pulses slower, offset phase
+            const pulse2 = Math.abs(Math.sin(t*1.8 + phase + 1));
+            ring2.scale.setScalar(1 + 1.2*pulse2);
+            ring2.material.opacity = facingFactor * (0.08 + 0.18*pulse2);
+          }
         });
 
         // Arc animations
