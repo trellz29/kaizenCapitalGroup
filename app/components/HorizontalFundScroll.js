@@ -1,11 +1,11 @@
 "use client";
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useEffect } from "react";
 
 const FUNDS = [
   { id:"1",  name:"KaizenCapitalGroup.Xau-TMGM", focus:"Gold Scalping",   broker:"TMGM",      status:"live",         ret:"+9.4%",  tag:"FLAGSHIP",     color:"#00E87A", link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM" },
   { id:"1a", name:"KaizenCapitalGroup.Xau-MB",   focus:"Gold Intra-day",  broker:"MultiBank", status:"live",         ret:"+11.2%", tag:"LIVE",         color:"#00E87A", link:"https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30" },
   { id:"2",  name:"TradeXMarkets Fund",          focus:"Gold + Oil",      broker:"—",         status:"coming",       ret:"—",      tag:"COMING SOON",  color:"#6496C8", link:null },
-  { id:"3",  name:"VaultKano Fund",              focus:"Crypto",          broker:"MultiBank", status:"relaunching",  ret:"—",      tag:"RE-LAUNCHING",  color:"#F59E0B", link:null },
+  { id:"3",  name:"VaultKano Fund",              focus:"Crypto",          broker:"MultiBank", status:"relaunching",  ret:"—",      tag:"RE-LAUNCHING", color:"#F59E0B", link:null },
   { id:"4",  name:"Exodus Investments",          focus:"Crypto + Gold",   broker:"—",         status:"coming",       ret:"—",      tag:"US INCLUDED",  color:"#9FB4C1", link:null },
   { id:"5",  name:"KCG + Phoenix",               focus:"Gold + FX",       broker:"—",         status:"coming",       ret:"—",      tag:"SPECULATIVE",  color:"#6496C8", link:null },
   { id:"6",  name:"Phoenix",                     focus:"Forex",           broker:"—",         status:"coming",       ret:"—",      tag:"COMING SOON",  color:"#6496C8", link:null },
@@ -22,7 +22,7 @@ const CARD_GAP = 20;
 
 function Sparkline({ color }) {
   const bars = Array.from({ length: 16 }, (_, i) => ({
-    h: 25 + Math.sin(i * 0.7 + 1) * 15 + i * 1.5 + Math.random() * 8,
+    h: 25 + Math.sin(i * 0.7 + 1) * 15 + i * 1.5,
   }));
   return (
     <div style={{ display:"flex", gap:3, height:44, alignItems:"flex-end", margin:"14px 0" }}>
@@ -31,7 +31,6 @@ function Sparkline({ color }) {
           flex:1, borderRadius:2,
           background: i === bars.length-1 ? color : `${color}55`,
           height:`${Math.min(b.h,100)}%`,
-          transition:`height 0.4s ease ${i*18}ms`,
         }}/>
       ))}
     </div>
@@ -41,7 +40,6 @@ function Sparkline({ color }) {
 function FundCard({ fund, active }) {
   const cardRef = useRef(null);
   const [tilt, setTilt] = useState({ x:0, y:0, glow:false });
-
   const isTouch = typeof window !== "undefined" && window.matchMedia("(hover: none)").matches;
 
   const onMouseMove = useCallback((e) => {
@@ -52,14 +50,14 @@ function FundCard({ fund, active }) {
     const x = ((e.clientX - r.left) / r.width - 0.5) * 18;
     const y = -((e.clientY - r.top) / r.height - 0.5) * 18;
     setTilt({ x, y, glow:true });
-  }, []);
+  }, [isTouch]);
 
-  const onMouseLeave = useCallback(() => { if (!isTouch) setTilt({ x:0, y:0, glow:false }); }, [isTouch]);
+  const onMouseLeave = useCallback(() => {
+    if (!isTouch) setTilt({ x:0, y:0, glow:false });
+  }, [isTouch]);
 
   const isLive = fund.status === "live";
-  const tagBg = isLive ? "rgba(0,232,122,0.12)"
-    : fund.status === "relaunching" ? "rgba(245,158,11,0.12)"
-    : "rgba(255,255,255,0.05)";
+  const tagBg = isLive ? "rgba(0,232,122,0.12)" : fund.status === "relaunching" ? "rgba(245,158,11,0.12)" : "rgba(255,255,255,0.05)";
 
   const btnLabel = isLive ? "Subscribe Now →"
     : fund.status === "relaunching" ? "Re-Launching Soon"
@@ -73,43 +71,28 @@ function FundCard({ fund, active }) {
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseLeave}
       style={{
-        flexShrink:0,
-        width: CARD_W,
+        flexShrink:0, width: CARD_W,
         background: active ? "rgba(15,28,55,0.95)" : "rgba(10,18,38,0.85)",
         border: `1px solid ${tilt.glow ? `${fund.color}40` : active ? "rgba(100,150,200,0.25)" : "rgba(255,255,255,0.07)"}`,
-        borderRadius:16,
-        padding:"26px 22px 22px",
+        borderRadius:16, padding:"26px 22px 22px",
         display:"flex", flexDirection:"column",
-        transform: `perspective(800px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) scale(${tilt.glow ? 1.03 : active ? 1.01 : 1})`,
-        transition: tilt.glow ? "transform 0.1s ease, border-color 0.2s ease, box-shadow 0.2s ease"
-          : "transform 0.5s cubic-bezier(0.23,1,0.32,1), border-color 0.3s ease, box-shadow 0.3s ease",
-        boxShadow: tilt.glow ? `0 20px 60px rgba(0,0,0,0.5), 0 0 30px ${fund.color}18`
-          : active ? "0 8px 32px rgba(0,0,0,0.3)" : "none",
+        transform: `perspective(800px) rotateX(${tilt.y}deg) rotateY(${tilt.x}deg) scale(${tilt.glow ? 1.03 : 1})`,
+        transition: tilt.glow ? "transform 0.1s ease, border-color 0.2s ease" : "transform 0.5s cubic-bezier(0.23,1,0.32,1), border-color 0.3s ease",
+        boxShadow: tilt.glow ? `0 20px 60px rgba(0,0,0,0.5), 0 0 30px ${fund.color}18` : "none",
         cursor: isLive ? "pointer" : "default",
-        willChange:"transform",
+        scrollSnapAlign: "start",
       }}
     >
-      {/* Header */}
       <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-        <span style={{ fontFamily:"sans-serif", fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.25)", letterSpacing:"0.1em" }}>
-          FUND {fund.id}
-        </span>
+        <span style={{ fontFamily:"sans-serif", fontSize:10, fontWeight:700, color:"rgba(255,255,255,0.25)", letterSpacing:"0.1em" }}>FUND {fund.id}</span>
         <span style={{ background:tagBg, color:fund.color, padding:"3px 9px", borderRadius:100, fontSize:9, fontWeight:800, letterSpacing:"0.1em", fontFamily:"sans-serif" }}>
-          {isLive && <span style={{ display:"inline-block", width:5, height:5, borderRadius:"50%", background:fund.color, marginRight:4, verticalAlign:"middle", animation:"pulse 2s infinite" }}/>}
+          {isLive && <span style={{ display:"inline-block", width:5, height:5, borderRadius:"50%", background:fund.color, marginRight:4, verticalAlign:"middle" }}/>}
           {fund.tag}
         </span>
       </div>
-
-      <div style={{ fontFamily:"sans-serif", fontSize:17, fontWeight:800, color:"#fff", lineHeight:1.2, margin:"8px 0 3px", letterSpacing:"-0.02em" }}>
-        {fund.name}
-      </div>
-      <div style={{ fontFamily:"sans-serif", fontSize:11, color:"rgba(255,255,255,0.35)", marginBottom:12 }}>
-        {fund.focus} · {fund.broker}
-      </div>
-
+      <div style={{ fontFamily:"sans-serif", fontSize:17, fontWeight:800, color:"#fff", lineHeight:1.2, margin:"8px 0 3px", letterSpacing:"-0.02em" }}>{fund.name}</div>
+      <div style={{ fontFamily:"sans-serif", fontSize:11, color:"rgba(255,255,255,0.35)", marginBottom:12 }}>{fund.focus} · {fund.broker}</div>
       {isLive && <Sparkline color={fund.color} />}
-
-      {/* Stats */}
       <div style={{ display:"flex", gap:10, marginTop: isLive ? 0 : 16 }}>
         <div style={{ flex:1, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:10, padding:"10px 12px" }}>
           <div style={{ fontFamily:"sans-serif", fontSize:9, color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:3 }}>Monthly</div>
@@ -117,215 +100,93 @@ function FundCard({ fund, active }) {
         </div>
         <div style={{ flex:1, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:10, padding:"10px 12px" }}>
           <div style={{ fontFamily:"sans-serif", fontSize:9, color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:3 }}>Status</div>
-          <div style={{ fontFamily:"sans-serif", fontSize:12, fontWeight:700, color: isLive ? fund.color : "rgba(255,255,255,0.4)", letterSpacing:"0.02em" }}>{fund.status.toUpperCase()}</div>
+          <div style={{ fontFamily:"sans-serif", fontSize:12, fontWeight:700, color: isLive ? fund.color : "rgba(255,255,255,0.4)" }}>{fund.status.toUpperCase()}</div>
         </div>
       </div>
-
-      {/* CTA */}
       {fund.link ? (
-        <a href={fund.link} target="_blank" rel="noopener noreferrer" style={{
-          marginTop:16, display:"block", textAlign:"center", padding:"12px",
-          borderRadius:10, background:fund.color, color:"#050810",
-          fontFamily:"sans-serif", fontSize:12, fontWeight:700, letterSpacing:"0.05em",
-          textDecoration:"none", transition:"opacity 0.2s ease",
-        }}
-          onMouseEnter={e=>e.currentTarget.style.opacity="0.85"}
-          onMouseLeave={e=>e.currentTarget.style.opacity="1"}
-        >{btnLabel}</a>
+        <a href={fund.link} target="_blank" rel="noopener noreferrer" style={{ marginTop:16, display:"block", textAlign:"center", padding:"12px", borderRadius:10, background:fund.color, color:"#050810", fontFamily:"sans-serif", fontSize:12, fontWeight:700, letterSpacing:"0.05em", textDecoration:"none" }}>
+          {btnLabel}
+        </a>
       ) : (
-        <div style={{
-          marginTop:16, textAlign:"center", padding:"12px", borderRadius:10,
-          background:"rgba(255,255,255,0.04)", color:"rgba(255,255,255,0.25)",
-          fontFamily:"sans-serif", fontSize:12, fontWeight:700, letterSpacing:"0.05em",
-        }}>{btnLabel}</div>
+        <div style={{ marginTop:16, textAlign:"center", padding:"12px", borderRadius:10, background:"rgba(255,255,255,0.04)", color:"rgba(255,255,255,0.25)", fontFamily:"sans-serif", fontSize:12, fontWeight:700 }}>{btnLabel}</div>
       )}
     </div>
   );
 }
 
 export default function HorizontalFundScroll() {
-  const sectionRef = useRef(null);
-  const trackRef   = useRef(null);
-  const [progress, setProgress]   = useState(0);
+  const trackRef = useRef(null);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [canLeft, setCanLeft] = useState(false);
+  const [canRight, setCanRight] = useState(true);
 
-  const [sectionHeight, setSectionHeight] = useState("100vh");
-
-  useEffect(() => {
-    const section = sectionRef.current;
-    const track   = trackRef.current;
-    if (!section || !track) return;
-
-    const isMobile = window.innerWidth <= 768;
-
-    const calcHeight = () => {
-      if (window.innerWidth <= 768) {
-        // Mobile: no sticky scroll needed, natural height
-        setSectionHeight("auto");
-        return;
-      }
-      // Desktop: viewport + (total cards width - viewport width)
-      const totalTrackW = FUNDS.length * (CARD_W + CARD_GAP) - CARD_GAP + 160;
-      const overflow = Math.max(0, totalTrackW - window.innerWidth);
-      setSectionHeight(`${window.innerHeight + overflow}px`);
-    };
-
-    // Triple ensure layout is done
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      calcHeight();
-      setTimeout(calcHeight, 300);
-    }));
-
-    window.addEventListener("resize", calcHeight);
-
-    const onScroll = () => {
-      if (window.innerWidth <= 768) return;
-      const rect      = section.getBoundingClientRect();
-      const sectionH  = section.offsetHeight;
-      const viewH     = window.innerHeight;
-      const scrolled  = -rect.top;
-      const maxScroll = sectionH - viewH;
-      if (maxScroll <= 0) return;
-      const pct = Math.max(0, Math.min(1, scrolled / maxScroll));
-      setProgress(pct);
-
-      const trackScrollW = track.scrollWidth - track.offsetWidth;
-      track.style.transform = `translateX(-${pct * trackScrollW}px)`;
-
-      const step = CARD_W + CARD_GAP;
-      setActiveIdx(Math.min(FUNDS.length - 1, Math.floor((pct * trackScrollW) / step)));
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", calcHeight);
-    };
+  const updateArrows = useCallback(() => {
+    const t = trackRef.current;
+    if (!t) return;
+    setCanLeft(t.scrollLeft > 10);
+    setCanRight(t.scrollLeft < t.scrollWidth - t.clientWidth - 10);
+    const step = CARD_W + CARD_GAP;
+    setActiveIdx(Math.min(FUNDS.length - 1, Math.round(t.scrollLeft / step)));
   }, []);
 
+  useEffect(() => {
+    const t = trackRef.current;
+    if (!t) return;
+    t.addEventListener("scroll", updateArrows, { passive: true });
+    updateArrows();
+    return () => t.removeEventListener("scroll", updateArrows);
+  }, [updateArrows]);
+
+  const scrollTo = (dir) => {
+    const t = trackRef.current;
+    if (!t) return;
+    t.scrollBy({ left: dir * (CARD_W + CARD_GAP), behavior: "smooth" });
+  };
+
   return (
-    <>
-      <style>{`
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-        .hfs-section { position:relative; }
-        .hfs-sticky {
-          position:sticky; top:0; height:100vh; overflow:hidden;
-          display:flex; flex-direction:column; justify-content:center;
-        }
-        .hfs-header {
-          padding: 0 clamp(1.5rem,6vw,80px) 28px;
-          display:flex; align-items:flex-end; justify-content:space-between; flex-shrink:0;
-        }
-        .hfs-track {
-          display:flex; gap:${CARD_GAP}px;
-          padding: 0 clamp(1.5rem,6vw,60px) 8px;
-          will-change:transform;
-          transition: transform 0.06s linear;
-        }
-        .hfs-progress {
-          position:absolute; bottom:24px;
-          left:clamp(1.5rem,6vw,80px); right:clamp(1.5rem,6vw,80px);
-          height:2px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden;
-        }
-        .hfs-progress-fill { height:100%; border-radius:2px; transition:width 0.05s linear; }
-        .hfs-dots { display:flex; gap:5px; align-items:center; }
-        .hfs-dot { border-radius:3px; transition:all 0.3s ease; }
-        @media(max-width:768px){
-          .hfs-section { height:auto !important; }
-          .hfs-sticky { position:relative; height:auto; overflow:visible; padding:60px 0; }
-          .hfs-track { overflow-x:auto; transform:none !important; padding-bottom:16px; scroll-snap-type:x mandatory; }
-          .hfs-track::-webkit-scrollbar { height:3px; }
-          .hfs-track::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.15); border-radius:2px; }
-        }
-      `}</style>
-
-      <div
-        ref={sectionRef}
-        className="hfs-section"
-        style={{ height: sectionHeight }}
-      >
-        <div className="hfs-sticky">
-          <div className="hfs-header">
-            <div>
-              <p style={{ fontFamily:"sans-serif", fontSize:11, fontWeight:700, letterSpacing:"0.25em", color:"rgba(255,255,255,0.28)", textTransform:"uppercase", margin:"0 0 8px" }}>
-                KCG Fund Collection
-              </p>
-              <h2 style={{ fontFamily:"sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:900, color:"#fff", margin:0, letterSpacing:"-0.03em", lineHeight:1 }}>
-                Every fund. <span style={{ color:"rgba(255,255,255,0.35)" }}>Scroll to explore.</span>
-              </h2>
-            </div>
-            <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-              {/* Arrow buttons */}
-              <button
-                onClick={() => {
-                  const newIdx = Math.max(0, activeIdx - 1);
-                  const track = trackRef.current;
-                  if (!track) return;
-                  const step = CARD_W + CARD_GAP;
-                  track.style.transition = "transform 0.4s cubic-bezier(0.23,1,0.32,1)";
-                  track.style.transform = `translateX(-${newIdx * step}px)`;
-                  setTimeout(() => { track.style.transition = ""; }, 420);
-                  setActiveIdx(newIdx);
-                }}
-                style={{
-                  width:40, height:40, borderRadius:"50%",
-                  background: activeIdx === 0 ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.1)",
-                  border:"1px solid rgba(255,255,255,0.1)",
-                  color: activeIdx === 0 ? "rgba(255,255,255,0.2)" : "#fff",
-                  cursor: activeIdx === 0 ? "default" : "pointer",
-                  fontSize:18, display:"flex", alignItems:"center", justifyContent:"center",
-                  transition:"all 0.2s ease", outline:"none",
-                }}
-              >←</button>
-              <button
-                onClick={() => {
-                  const newIdx = Math.min(FUNDS.length - 1, activeIdx + 1);
-                  const track = trackRef.current;
-                  if (!track) return;
-                  const step = CARD_W + CARD_GAP;
-                  track.style.transition = "transform 0.4s cubic-bezier(0.23,1,0.32,1)";
-                  track.style.transform = `translateX(-${newIdx * step}px)`;
-                  setTimeout(() => { track.style.transition = ""; }, 420);
-                  setActiveIdx(newIdx);
-                }}
-                style={{
-                  width:40, height:40, borderRadius:"50%",
-                  background: activeIdx === FUNDS.length - 1 ? "rgba(255,255,255,0.05)" : "rgba(0,232,122,0.15)",
-                  border:`1px solid ${activeIdx === FUNDS.length - 1 ? "rgba(255,255,255,0.1)" : "rgba(0,232,122,0.3)"}`,
-                  color: activeIdx === FUNDS.length - 1 ? "rgba(255,255,255,0.2)" : "#00E87A",
-                  cursor: activeIdx === FUNDS.length - 1 ? "default" : "pointer",
-                  fontSize:18, display:"flex", alignItems:"center", justifyContent:"center",
-                  transition:"all 0.2s ease", outline:"none",
-                }}
-              >→</button>
-              {/* Dots */}
-              <div className="hfs-dots">
-                {FUNDS.map((_,i) => (
-                  <div key={i} className="hfs-dot" style={{
-                    width: i===activeIdx ? 16 : 5,
-                    height: 5,
-                    background: i===activeIdx ? "#00E87A" : "rgba(255,255,255,0.15)",
-                  }}/>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div ref={trackRef} className="hfs-track">
-            {FUNDS.map((fund, i) => (
-              <FundCard key={fund.id} fund={fund} active={i===activeIdx} />
+    <div style={{ padding: "80px 0 100px" }}>
+      {/* Header */}
+      <div style={{ display:"flex", alignItems:"flex-end", justifyContent:"space-between", padding:"0 clamp(1.5rem,6vw,80px) 28px" }}>
+        <div>
+          <p style={{ fontFamily:"sans-serif", fontSize:11, fontWeight:700, letterSpacing:"0.25em", color:"rgba(255,255,255,0.28)", textTransform:"uppercase", margin:"0 0 8px" }}>KCG Fund Collection</p>
+          <h2 style={{ fontFamily:"sans-serif", fontSize:"clamp(1.8rem,3.5vw,2.8rem)", fontWeight:900, color:"#fff", margin:0, letterSpacing:"-0.03em", lineHeight:1 }}>
+            Every fund. <span style={{ color:"rgba(255,255,255,0.35)" }}>Scroll to explore.</span>
+          </h2>
+        </div>
+        {/* Arrow buttons */}
+        <div style={{ display:"flex", alignItems:"center", gap:10 }}>
+          <button onClick={() => scrollTo(-1)} style={{ width:40, height:40, borderRadius:"50%", background: canLeft ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)", border:`1px solid ${canLeft ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.06)"}`, color: canLeft ? "#fff" : "rgba(255,255,255,0.2)", fontSize:18, cursor: canLeft ? "pointer" : "default", display:"flex", alignItems:"center", justifyContent:"center", outline:"none", transition:"all 0.2s" }}>←</button>
+          <button onClick={() => scrollTo(1)} style={{ width:40, height:40, borderRadius:"50%", background: canRight ? "rgba(0,232,122,0.15)" : "rgba(255,255,255,0.04)", border:`1px solid ${canRight ? "rgba(0,232,122,0.3)" : "rgba(255,255,255,0.06)"}`, color: canRight ? "#00E87A" : "rgba(255,255,255,0.2)", fontSize:18, cursor: canRight ? "pointer" : "default", display:"flex", alignItems:"center", justifyContent:"center", outline:"none", transition:"all 0.2s" }}>→</button>
+          {/* Dots */}
+          <div style={{ display:"flex", gap:5, marginLeft:8 }}>
+            {FUNDS.map((_,i) => (
+              <div key={i} style={{ height:5, borderRadius:3, transition:"all 0.3s ease", width: i===activeIdx ? 16 : 5, background: i===activeIdx ? "#00E87A" : "rgba(255,255,255,0.15)" }}/>
             ))}
-          </div>
-
-          <div className="hfs-progress">
-            <div className="hfs-progress-fill" style={{
-              width:`${progress*100}%`,
-              background:"linear-gradient(90deg,#6496C8,#00E87A)",
-            }}/>
           </div>
         </div>
       </div>
-    </>
+
+      {/* Scrollable track */}
+      <div
+        ref={trackRef}
+        style={{
+          display:"flex", gap:CARD_GAP, overflowX:"auto", overflowY:"visible",
+          padding:`8px clamp(1.5rem,6vw,80px) 24px`,
+          scrollSnapType:"x mandatory",
+          WebkitOverflowScrolling:"touch",
+          scrollbarWidth:"thin",
+          scrollbarColor:"rgba(255,255,255,0.15) transparent",
+        }}
+      >
+        {FUNDS.map((fund, i) => (
+          <FundCard key={fund.id} fund={fund} active={i === activeIdx} />
+        ))}
+      </div>
+
+      {/* Progress bar */}
+      <div style={{ margin:"12px clamp(1.5rem,6vw,80px) 0", height:2, background:"rgba(255,255,255,0.06)", borderRadius:2, overflow:"hidden" }}>
+        <div style={{ height:"100%", borderRadius:2, background:"linear-gradient(90deg,#6496C8,#00E87A)", width:`${((activeIdx+1)/FUNDS.length)*100}%`, transition:"width 0.3s ease" }}/>
+      </div>
+    </div>
   );
 }
