@@ -110,16 +110,61 @@ function makeIconTexture(THREE, type) {
   const ctx = c.getContext("2d");
   const col = TX_COLORS[type];
 
-  // Glow circle bg
+  // Glow bg
   const g = ctx.createRadialGradient(s/2,s/2,0, s/2,s/2,s/2);
-  g.addColorStop(0, col+"55"); g.addColorStop(1, "rgba(0,0,0,0)");
+  g.addColorStop(0, col+"66"); g.addColorStop(1, "rgba(0,0,0,0)");
   ctx.fillStyle = g; ctx.fillRect(0,0,s,s);
 
   ctx.fillStyle = col;
-  ctx.font = `bold ${s*0.38}px Arial`;
-  ctx.textAlign = "center"; ctx.textBaseline = "middle";
-  const labels = { BTC:"₿", ETH:"Ξ", WIRE:"⇄", CASH:"$", USDT:"₮" };
-  ctx.fillText(labels[type] || "$", s/2, s/2);
+  ctx.strokeStyle = col;
+
+  const cx = s/2, cy = s/2;
+
+  if (type === "BTC") {
+    // Bold B shape
+    ctx.font = `bold ${s*0.42}px Arial`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("B", cx, cy);
+  } else if (type === "ETH") {
+    // Ethereum diamond — two triangles
+    ctx.lineWidth = 1.5;
+    // Top diamond
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - 18);
+    ctx.lineTo(cx + 12, cy - 2);
+    ctx.lineTo(cx, cy + 4);
+    ctx.lineTo(cx - 12, cy - 2);
+    ctx.closePath();
+    ctx.fill();
+    // Bottom diamond (smaller)
+    ctx.globalAlpha = 0.6;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + 18);
+    ctx.lineTo(cx + 12, cy + 2);
+    ctx.lineTo(cx, cy - 4);
+    ctx.lineTo(cx - 12, cy + 2);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+  } else if (type === "WIRE") {
+    // Arrow left-right
+    ctx.lineWidth = 3;
+    ctx.lineCap = "round";
+    ctx.beginPath(); ctx.moveTo(cx-14,cy); ctx.lineTo(cx+14,cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx+8,cy-6); ctx.lineTo(cx+14,cy); ctx.lineTo(cx+8,cy+6); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx-8,cy-6); ctx.lineTo(cx-14,cy); ctx.lineTo(cx-8,cy+6); ctx.stroke();
+  } else if (type === "CASH") {
+    ctx.font = `bold ${s*0.42}px Arial`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("$", cx, cy);
+  } else if (type === "USDT") {
+    ctx.font = `bold ${s*0.38}px Arial`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("T", cx, cy);
+    // Underline
+    ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(cx-10, cy+14); ctx.lineTo(cx+10, cy+14); ctx.stroke();
+  }
 
   return new THREE.CanvasTexture(c);
 }
@@ -247,23 +292,23 @@ export default function HeroGlobe() {
       const ARC_DEFS = [
         // ── NORTH AMERICA INTRA ─────────────────────────────────────
         [0,8,"BTC",0.006],   // NYC-Boston
-        [0,3,"ETH",0.006],   // NYC-Chicago
+        [0,3,"ETH",0.008],   // NYC-Chicago
         [0,5,"WIRE",0.005],  // NYC-Miami
         [0,9,"USDT",0.006],  // NYC-Montreal
         [0,1,"CASH",0.006],  // NYC-Toronto
         [0,2,"BTC",0.004],   // NYC-LA
-        [0,6,"ETH",0.004],   // NYC-SF
+        [0,6,"ETH",0.007],   // NYC-SF
         [2,6,"BTC",0.007],   // LA-SF
         [2,4,"WIRE",0.005],  // LA-Houston
         [2,7,"USDT",0.006],  // LA-Dallas
-        [6,10,"ETH",0.007],  // SF-Vancouver
+        [6,10,"ETH",0.009],  // SF-Vancouver
         [6,3,"BTC",0.005],   // SF-Chicago
         [3,4,"CASH",0.006],  // Chicago-Houston
-        [3,7,"ETH",0.006],   // Chicago-Dallas
+        [3,7,"ETH",0.008],   // Chicago-Dallas
         [3,1,"WIRE",0.006],  // Chicago-Toronto
         [4,5,"USDT",0.007],  // Houston-Miami
         [4,7,"BTC",0.007],   // Houston-Dallas
-        [8,9,"ETH",0.007],   // Boston-Montreal
+        [8,9,"ETH",0.009],   // Boston-Montreal
         [9,10,"WIRE",0.006], // Montreal-Vancouver
         [10,1,"BTC",0.006],  // Vancouver-Toronto
         [1,9,"USDT",0.007],  // Toronto-Montreal
@@ -271,82 +316,82 @@ export default function HeroGlobe() {
         [14,4,"BTC",0.005],  // MexCity-Houston
         // ── SOUTH AMERICA INTRA ────────────────────────────────────
         [11,12,"BTC",0.005], // SP-BuenosAires
-        [11,13,"ETH",0.005], // SP-Bogota
+        [11,13,"ETH",0.007], // SP-Bogota
         [11,15,"WIRE",0.005],// SP-Lima
         [13,14,"USDT",0.005],// Bogota-MexCity
         // ── EUROPE INTRA ───────────────────────────────────────────
         [16,17,"BTC",0.007], // London-Paris
-        [16,18,"ETH",0.006], // London-Berlin
+        [16,18,"ETH",0.008], // London-Berlin
         [16,19,"WIRE",0.006],// London-Zurich
         [16,21,"USDT",0.006],// London-Madrid
         [17,18,"CASH",0.007],// Paris-Berlin
         [17,19,"BTC",0.007], // Paris-Zurich
-        [17,20,"ETH",0.006], // Paris-Rome
+        [17,20,"ETH",0.008], // Paris-Rome
         [18,22,"WIRE",0.006],// Berlin-Stockholm
         [18,23,"USDT",0.007],// Berlin-Prague
         [19,24,"BTC",0.007], // Zurich-Vienna
-        [20,21,"ETH",0.006], // Rome-Madrid
+        [20,21,"ETH",0.008], // Rome-Madrid
         [22,23,"CASH",0.006],// Stockholm-Prague
         // ── MIDDLE EAST / AFRICA INTRA ─────────────────────────────
         [25,26,"BTC",0.006], // Dubai-Riyadh
-        [25,27,"ETH",0.006], // Dubai-Cairo
+        [25,27,"ETH",0.008], // Dubai-Cairo
         [25,31,"WIRE",0.006],// Dubai-Beirut
         [27,28,"USDT",0.005],// Cairo-Nairobi
         [28,29,"BTC",0.005], // Nairobi-Lagos
-        [28,30,"ETH",0.005], // Nairobi-Johannesburg
+        [28,30,"ETH",0.007], // Nairobi-Johannesburg
         [29,30,"WIRE",0.005],// Lagos-Johannesburg
         // ── ASIA INTRA ─────────────────────────────────────────────
         [32,35,"BTC",0.005], // Moscow-Shanghai
-        [33,34,"ETH",0.006], // Mumbai-Delhi
+        [33,34,"ETH",0.008], // Mumbai-Delhi
         [33,37,"WIRE",0.005],// Mumbai-Singapore
         [34,35,"USDT",0.005],// Delhi-Shanghai
         [35,36,"BTC",0.007], // Shanghai-HongKong
-        [35,38,"ETH",0.006], // Shanghai-Tokyo
+        [35,38,"ETH",0.008], // Shanghai-Tokyo
         [35,39,"WIRE",0.006],// Shanghai-Seoul
         [36,37,"CASH",0.007],// HK-Singapore
         [36,38,"BTC",0.006], // HK-Tokyo
-        [37,40,"ETH",0.007], // Singapore-Bangkok
+        [37,40,"ETH",0.009], // Singapore-Bangkok
         [37,41,"WIRE",0.007],// Singapore-KL
         [37,42,"USDT",0.006],// Singapore-Jakarta
         [38,39,"BTC",0.007], // Tokyo-Seoul
-        [40,41,"ETH",0.007], // Bangkok-KL
+        [40,41,"ETH",0.009], // Bangkok-KL
         [43,44,"WIRE",0.007],// Sydney-Melbourne
         [43,37,"BTC",0.004], // Sydney-Singapore
         // ── TRANSATLANTIC ──────────────────────────────────────────
         [0,16,"BTC",0.003],  // NYC-London
-        [0,17,"ETH",0.003],  // NYC-Paris
+        [0,17,"ETH",0.005],  // NYC-Paris
         [8,16,"WIRE",0.003], // Boston-London
         [5,16,"USDT",0.003], // Miami-London
         [11,16,"BTC",0.003], // SP-London
-        [11,17,"ETH",0.003], // SP-Paris
+        [11,17,"ETH",0.005], // SP-Paris
         [12,19,"WIRE",0.003],// BuenosAires-Zurich
         [13,17,"CASH",0.003],// Bogota-Paris
         [1,16,"USDT",0.003], // Toronto-London
         // ── TRANS-PACIFIC ──────────────────────────────────────────
         [6,38,"BTC",0.003],  // SF-Tokyo
-        [6,39,"ETH",0.003],  // SF-Seoul
+        [6,39,"ETH",0.005],  // SF-Seoul
         [6,35,"WIRE",0.003], // SF-Shanghai
         [2,38,"USDT",0.003], // LA-Tokyo
         [2,36,"BTC",0.003],  // LA-HongKong
-        [10,38,"ETH",0.003], // Vancouver-Tokyo
+        [10,38,"ETH",0.005], // Vancouver-Tokyo
         [43,6,"WIRE",0.003], // Sydney-SF
         [43,2,"BTC",0.003],  // Sydney-LA
         // ── NA TO MIDDLE EAST / ASIA ───────────────────────────────
         [0,25,"BTC",0.003],  // NYC-Dubai
-        [0,33,"ETH",0.003],  // NYC-Mumbai
+        [0,33,"ETH",0.005],  // NYC-Mumbai
         [2,25,"WIRE",0.003], // LA-Dubai
         [16,25,"USDT",0.003],// London-Dubai
         [16,33,"BTC",0.003], // London-Mumbai
-        [16,32,"ETH",0.003], // London-Moscow
+        [16,32,"ETH",0.005], // London-Moscow
         [19,25,"WIRE",0.003],// Zurich-Dubai
         // ── AFRICA TO WORLD ────────────────────────────────────────
         [28,16,"BTC",0.003], // Nairobi-London
-        [29,16,"ETH",0.003], // Lagos-London
+        [29,16,"ETH",0.005], // Lagos-London
         [30,25,"WIRE",0.003],// Johannesburg-Dubai
         [27,25,"BTC",0.004], // Cairo-Dubai
         // ── EUROPE TO ASIA ─────────────────────────────────────────
         [16,35,"BTC",0.003], // London-Shanghai
-        [16,37,"ETH",0.003], // London-Singapore
+        [16,37,"ETH",0.005], // London-Singapore
         [17,33,"WIRE",0.003],// Paris-Mumbai
         [19,25,"USDT",0.003],// Zurich-Dubai
         [32,35,"CASH",0.003],// Moscow-Shanghai
