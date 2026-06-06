@@ -110,10 +110,12 @@ function makeIconTexture(THREE, type) {
   const ctx = c.getContext("2d");
   const col = TX_COLORS[type];
 
-  // Glow bg
-  const g = ctx.createRadialGradient(s/2,s/2,0, s/2,s/2,s/2);
-  g.addColorStop(0, col+"66"); g.addColorStop(1, "rgba(0,0,0,0)");
-  ctx.fillStyle = g; ctx.fillRect(0,0,s,s);
+  // Glow bg — skip for symbol-only types
+  if (type !== "BTC" && type !== "USDT") {
+    const g = ctx.createRadialGradient(s/2,s/2,0, s/2,s/2,s/2);
+    g.addColorStop(0, col+"66"); g.addColorStop(1, "rgba(0,0,0,0)");
+    ctx.fillStyle = g; ctx.fillRect(0,0,s,s);
+  }
 
   ctx.fillStyle = col;
   ctx.strokeStyle = col;
@@ -157,19 +159,9 @@ function makeIconTexture(THREE, type) {
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText("$", cx, cy);
   } else if (type === "USDT") {
-    // Green filled circle
-    ctx.beginPath();
-    ctx.arc(cx, cy, 22, 0, Math.PI * 2);
-    ctx.fillStyle = "#26a17b";
-    ctx.fill();
-    // White T letter
-    ctx.fillStyle = "#fff";
-    ctx.font = `bold ${s*0.42}px Arial`;
+    ctx.font = `bold ${s*0.48}px serif`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("T", cx, cy + 2);
-    // White horizontal bar across top of T
-    ctx.fillStyle = "#fff";
-    ctx.fillRect(cx - 14, cy - 12, 28, 4);
+    ctx.fillText("₮", cx, cy);
   }
 
   return new THREE.CanvasTexture(c);
