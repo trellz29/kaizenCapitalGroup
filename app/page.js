@@ -186,15 +186,15 @@ function Scene({ id, children, className = "", style = {} }) {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+    const obs = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setVisible(true); obs.disconnect(); } }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
     obs.observe(el);
     return () => obs.disconnect();
   }, []);
   return (
     <section ref={ref} id={id} className={className} style={{
       opacity: visible ? 1 : 0,
-      transform: visible ? "translateY(0)" : "translateY(60px)",
-      transition: "opacity 1s cubic-bezier(0.16,1,0.3,1), transform 1s cubic-bezier(0.16,1,0.3,1)",
+      transform: visible ? "translateY(0) scale(1)" : "translateY(48px) scale(0.99)",
+      transition: "opacity 1.1s cubic-bezier(0.16,1,0.3,1), transform 1.1s cubic-bezier(0.16,1,0.3,1)",
       ...style,
     }}>
       {children}

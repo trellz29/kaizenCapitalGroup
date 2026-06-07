@@ -114,12 +114,12 @@ export default function CinematicHero() {
       setReady(true);
       requestAnimationFrame(() => {
         const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-        if (titleRef.current) tl.fromTo(titleRef.current, { opacity: 0, y: 80, filter: "blur(12px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.4 }, 0);
-        if (subRef.current) tl.fromTo(subRef.current, { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1 }, 0.5);
-        if (ctaRef.current) tl.fromTo(ctaRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, 0.8);
-        if (statsRef.current) tl.fromTo(statsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.8 }, 1);
+        if (titleRef.current) tl.fromTo(titleRef.current, { opacity: 0, y: 60, filter: "blur(16px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.6 }, 0);
+        if (subRef.current) tl.fromTo(subRef.current, { opacity: 0, y: 30, filter: "blur(8px)" }, { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.1 }, 0.4);
+        if (ctaRef.current) tl.fromTo(ctaRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9 }, 0.7);
+        if (statsRef.current) tl.fromTo(statsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.9 }, 0.9);
       });
-    }, 200);
+    }, 2800); // Fire after loader finishes
     return () => clearTimeout(t);
   }, []);
 

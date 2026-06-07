@@ -469,3 +469,53 @@ img, video, iframe, canvas { max-width: 100%; }
     grid-template-columns: 1fr !important;
   }
 }
+
+/* ── PREMIUM ANIMATION POLISH ── */
+
+/* Smooth hover on all cards */
+.glass-card {
+  transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+.glass-card:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3) !important;
+  border-color: rgba(100,150,200,0.2) !important;
+}
+
+/* Scene label animation */
+.scene-label {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.scene-label::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: rgba(159,180,193,0.4);
+  display: inline-block;
+}
+
+/* Smooth link underlines */
+a { text-underline-offset: 3px; }
+
+/* Selection colour */
+::selection { background: rgba(100,150,200,0.3); color: #fff; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(100,150,200,0.2); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(100,150,200,0.4); }
+
+/* Number stat hover glow */
+.hero-stat-num {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+.hero-stat-num:hover {
+  text-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+/* Smooth image loads */
+img { transition: opacity 0.3s ease; }
