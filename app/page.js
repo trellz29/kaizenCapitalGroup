@@ -325,7 +325,7 @@ export default function Home() {
               <SlideReveal direction="up" delay={0}><BentoStat num="13" label="Funds Active" accent="rgba(0,232,120,0.6)" /></SlideReveal>
               <SlideReveal direction="up" delay={80}><BentoStat num="9.2" label="Avg Monthly Return" suffix="%" accent="rgba(159,180,193,0.6)" /></SlideReveal>
               <SlideReveal direction="up" delay={160}><BentoStat num="847" label="Total Volume" prefix="$" suffix="M+" accent="rgba(100,150,255,0.6)" /></SlideReveal>
-              <SlideReveal direction="up" delay={240}><BentoStat num="100" label="Active Users" suffix="+" accent="rgba(200,180,100,0.6)" /></SlideReveal>
+              <SlideReveal direction="up" delay={240}><BentoStat num="1000" label="Active Users" suffix="+" accent="rgba(200,180,100,0.6)" /></SlideReveal>
             </div>
 
             {/* Overview cards */}
