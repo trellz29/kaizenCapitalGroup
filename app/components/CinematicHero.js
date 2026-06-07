@@ -274,10 +274,10 @@ export default function CinematicHero() {
 
         <div className="hero-stats" ref={statsRef} style={{ opacity: 0 }}>
           {[
-            { num: "12", lbl: "Active Funds" },
+            { num: "13", lbl: "Active Funds" },
             { num: "9.2%", lbl: "Avg Monthly Return" },
             { num: "$847M+", lbl: "Total Volume" },
-            { num: "4+", lbl: "Active Users" },
+            { num: "1,000+", lbl: "Active Users" },
           ].map(s => (
             <div key={s.lbl}>
               <div className="hero-stat-num">{s.num}</div>
