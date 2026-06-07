@@ -265,7 +265,7 @@ const GLOBAL_CSS = `
 
 /* --- MAIN PAGE ---------------------------------------------------- */
 export default function Home() {
-  const [showLoader, setShowLoader] = useState(false);
+  const [showLoader, setShowLoader] = useState(true);
   useEffect(() => { setShowLoader(true); }, []);
 
   return (
@@ -706,22 +706,97 @@ export default function Home() {
         {/* ??????????????????????????????????????
             FOOTER
         ?????????????????????????????????????? */}
-        <footer style={{ background: "#050810", borderTop: "1px solid rgba(255,255,255,0.05)", padding: "40px 0" }}>
-          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)", display: "flex", flexWrap: "wrap", justifyContent: "space-between", alignItems: "center", gap: 20 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 800, color: "#fff", fontFamily: "sans-serif" }}>KCG</div>
-              <span style={{ fontFamily: "sans-serif", fontSize: 12, fontWeight: 600, letterSpacing: "0.12em", color: "rgba(255,255,255,0.3)" }}>KAIZEN CAPITAL GROUP</span>
+        <footer style={{ background: "#030710", borderTop: "1px solid rgba(255,255,255,0.06)", padding: "64px 0 32px" }}>
+          <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 clamp(1.5rem,5vw,3rem)" }}>
+
+            {/* Top row */}
+            <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr 1fr 1fr", gap: "40px 24px", marginBottom: 48, flexWrap: "wrap" }}>
+
+              {/* Brand */}
+              <div>
+                <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+                  <div style={{ width: 32, height: 32, borderRadius: "50%", background: "linear-gradient(135deg,#9FB4C1,#0C1A30,#C9D8E2)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 9, fontWeight: 800, color: "#fff", fontFamily: "sans-serif" }}>KCG</div>
+                  <span style={{ fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, letterSpacing: "0.14em", color: "rgba(255,255,255,0.6)", textTransform: "uppercase" }}>Kaizen Capital Group</span>
+                </div>
+                <p style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.3)", lineHeight: 1.7, maxWidth: 280, marginBottom: 20 }}>
+                  A disciplined multi-fund platform operating across Gold, Forex, Crypto and multi-asset strategies — built for serious capital allocation.
+                </p>
+                <div style={{ display: "flex", gap: 12 }}>
+                  {[
+                    { label: "Telegram", href: "https://t.me/KaizenCapitalGroup", icon: "✈" },
+                    { label: "Discord", href: "https://discord.gg/rJWSD6dhWm", icon: "💬" },
+                    { label: "Portal", href: "/portal", icon: "⬡" },
+                  ].map(s => (
+                    <a key={s.label} href={s.href} target={s.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
+                      style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, textDecoration: "none", transition: "all 0.2s" }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.1)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "rgba(255,255,255,0.05)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}>
+                      {s.icon}
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              {/* Funds */}
+              <div>
+                <p style={{ fontFamily: "sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>Funds</p>
+                {["Fund 1 — TMGM", "Fund 1a — MultiBank", "Alpha Fund", "MAMALYN Fund", "CXFund", "VaultKano", "View All Funds →"].map((l, i) => (
+                  <a key={l} href="#funds" style={{ display: "block", fontFamily: "sans-serif", fontSize: 12, color: i === 6 ? "rgba(0,232,122,0.7)" : "rgba(255,255,255,0.3)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}
+                    onMouseEnter={e => e.currentTarget.style.color = i === 6 ? "#00E87A" : "rgba(255,255,255,0.6)"}
+                    onMouseLeave={e => e.currentTarget.style.color = i === 6 ? "rgba(0,232,122,0.7)" : "rgba(255,255,255,0.3)"}>
+                    {l}
+                  </a>
+                ))}
+              </div>
+
+              {/* Company */}
+              <div>
+                <p style={{ fontFamily: "sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>Company</p>
+                {[
+                  { label: "About", href: "/about" },
+                  { label: "Performance", href: "/performance" },
+                  { label: "Insights", href: "/insights" },
+                  { label: "Brokerages", href: "#brokerages" },
+                  { label: "Community", href: "#community" },
+                  { label: "Investor Portal", href: "/portal" },
+                ].map(l => (
+                  <a key={l.label} href={l.href} style={{ display: "block", fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}
+                    onMouseEnter={e => e.currentTarget.style.color = "rgba(255,255,255,0.6)"}
+                    onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}>
+                    {l.label}
+                  </a>
+                ))}
+              </div>
+
+              {/* Contact */}
+              <div>
+                <p style={{ fontFamily: "sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 16 }}>Contact</p>
+                {[
+                  { label: "support@kaizencapitalgrp.com", href: "mailto:support@kaizencapitalgrp.com" },
+                  { label: "@trellz_P", href: "https://t.me/trellz_P" },
+                  { label: "Book a Call", href: "https://calendly.com/trellzp12/30min" },
+                  { label: "Privacy Policy", href: "/privacy" },
+                  { label: "Risk Disclaimer", href: "/disclaimer" },
+                ].map(l => (
+                  <a key={l.label} href={l.href} target={l.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
+                    style={{ display: "block", fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.3)", textDecoration: "none", marginBottom: 10, transition: "color 0.2s" }}
+                    onMouseEnter={e => e.currentTarget.style.color = "rgba(255,255,255,0.6)"}
+                    onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.3)"}>
+                    {l.label}
+                  </a>
+                ))}
+              </div>
             </div>
-            <div style={{ display: "flex", gap: 24, alignItems: "center", flexWrap: "wrap" }}>
-              {[{ href: "/privacy", label: "Privacy Policy" }, { href: "/disclaimer", label: "Risk Disclaimer" }, { href: "/about", label: "About" }, { href: "/insights", label: "Insights" }].map(l => (
-                <a key={l.href} href={l.href} style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.25)", textDecoration: "none", transition: "color 0.2s ease" }}
-                  onMouseEnter={e => e.currentTarget.style.color = "rgba(255,255,255,0.55)"}
-                  onMouseLeave={e => e.currentTarget.style.color = "rgba(255,255,255,0.25)"}>
-                  {l.label}
-                </a>
-              ))}
+
+            {/* Divider */}
+            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", paddingTop: 24, display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 12 }}>
+              <p style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.18)", margin: 0 }}>
+                © {new Date().getFullYear()} Kaizen Capital Group. All rights reserved.
+              </p>
+              <p style={{ fontFamily: "sans-serif", fontSize: 10, color: "rgba(255,255,255,0.12)", margin: 0, maxWidth: 500, textAlign: "right", lineHeight: 1.5 }}>
+                Trading involves risk. Past performance is not indicative of future results. Not financial advice.
+              </p>
             </div>
-            <p style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.18)", margin: 0 }}>© {new Date().getFullYear()} Kaizen Capital Group</p>
           </div>
         </footer>
 

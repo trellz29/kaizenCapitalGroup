@@ -9,13 +9,12 @@ export default function CinematicLoader({ onComplete }) {
   const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
+    // Lock scroll during load
+    document.documentElement.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
-  }, []);
 
-  useEffect(() => {
     let frame = 0;
-    const total = 130;
+    const total = 120;
     const tick = () => {
       frame++;
       setCount(Math.min(Math.round((frame / total) * 100), 100));
@@ -30,12 +29,18 @@ export default function CinematicLoader({ onComplete }) {
     const fadeTimer = setTimeout(() => {
       clearInterval(wordInterval);
       setOpacity(0);
-      setTimeout(() => { onComplete && onComplete(); }, 750);
-    }, 2600);
+      setTimeout(() => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+        onComplete && onComplete();
+      }, 700);
+    }, 2400);
 
     return () => {
       clearInterval(wordInterval);
       clearTimeout(fadeTimer);
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
     };
   }, [onComplete]);
 
@@ -47,54 +52,45 @@ export default function CinematicLoader({ onComplete }) {
       height: "100vh",
       zIndex: 999999,
       background: "#050810",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
       opacity,
       transform: opacity < 1 ? "scale(1.03)" : "scale(1)",
-      transition: opacity < 1 ? "opacity 0.75s ease, transform 0.75s ease" : "none",
+      transition: opacity < 1 ? "opacity 0.7s ease, transform 0.7s ease" : "none",
       pointerEvents: opacity < 1 ? "none" : "all",
     }}>
-
-      {/* Centre content — absolutely positioned to true centre */}
+      {/* Cycling word */}
       <div style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        textAlign: "center",
-        width: "100%",
+        fontFamily: "sans-serif",
+        fontSize: "clamp(2.8rem, 8vw, 6.5rem)",
+        fontWeight: 800,
+        letterSpacing: "-0.04em",
+        color: "rgba(159,180,193,0.55)",
+        userSelect: "none",
+        lineHeight: 1,
       }}>
-        {/* Cycling word */}
-        <div style={{
-          fontFamily: "sans-serif",
-          fontSize: "clamp(2.8rem, 8vw, 6.5rem)",
-          fontWeight: 800,
-          letterSpacing: "-0.04em",
-          color: "rgba(159,180,193,0.55)",
-          userSelect: "none",
-          lineHeight: 1,
-        }}>
-          {WORDS[wordIdx]}
-        </div>
-
-        {/* KCG wordmark */}
-        <div style={{
-          marginTop: 16,
-          fontFamily: "sans-serif",
-          fontSize: 11,
-          fontWeight: 700,
-          letterSpacing: "0.35em",
-          color: "rgba(159,180,193,0.45)",
-          textTransform: "uppercase",
-        }}>
-          KCG
-        </div>
+        {WORDS[wordIdx]}
       </div>
 
-      {/* Progress bar — pinned to bottom */}
+      {/* KCG wordmark */}
       <div style={{
-        position: "absolute",
-        bottom: 0, left: 0, right: 0,
-        height: 1,
-        background: "rgba(255,255,255,0.06)",
+        marginTop: 16,
+        fontFamily: "sans-serif",
+        fontSize: 11,
+        fontWeight: 700,
+        letterSpacing: "0.35em",
+        color: "rgba(159,180,193,0.4)",
+        textTransform: "uppercase",
+      }}>
+        KCG
+      </div>
+
+      {/* Progress bar */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        height: 1, background: "rgba(255,255,255,0.06)",
       }}>
         <div style={{
           height: "100%",
@@ -104,18 +100,18 @@ export default function CinematicLoader({ onComplete }) {
         }} />
       </div>
 
-      {/* Counter — bottom right */}
+      {/* Counter */}
       <div style={{
-        position: "absolute", bottom: 24, right: 28,
+        position: "absolute", bottom: 20, right: 28,
         fontFamily: "monospace", fontSize: 11, fontWeight: 700,
         letterSpacing: "0.15em", color: "rgba(159,180,193,0.5)",
       }}>
         {String(count).padStart(3, "0")}
       </div>
 
-      {/* Brand — bottom left */}
+      {/* Brand */}
       <div style={{
-        position: "absolute", bottom: 24, left: 28,
+        position: "absolute", bottom: 20, left: 28,
         fontFamily: "sans-serif", fontSize: 10, fontWeight: 700,
         letterSpacing: "0.28em", color: "rgba(159,180,193,0.45)",
         textTransform: "uppercase",

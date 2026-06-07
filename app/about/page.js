@@ -6,7 +6,7 @@ const TEAM = [
     role: "Founder & Chief Capital Strategist",
     name: "KCG Leadership",
     bio: "Built KCG from the ground up as an institutional-grade capital platform. Oversees all fund strategy, brokerage relationships, and investor communication across multiple active funds.",
-    stats: [{ label: "Funds Managed", val: "12" }, { label: "Strategies", val: "8+" }, { label: "Since", val: "2022" }],
+    stats: [{ label: "Funds Managed", val: "13" }, { label: "Strategies", val: "8+" }, { label: "Since", val: "2022" }],
   },
 ];
 
@@ -14,7 +14,7 @@ const MILESTONES = [
   { year: "2022", title: "Foundation", desc: "KCG established with a focus on disciplined Gold trading through TMGM." },
   { year: "2023", title: "Expansion", desc: "Fund 8 (Alpha), MAMALYN, and 4 additional strategies launched. MultiBank partnership secured." },
   { year: "2024", title: "Algorithmic Systems", desc: "Algo Amalgamation Fund and fully automated EUR/USD strategies deployed." },
-  { year: "2025", title: "Institutional Scale", desc: "$847M+ in tracked volume. 12 funds across Gold, Forex, Crypto, and multi-asset strategies." },
+  { year: "2025", title: "Institutional Scale", desc: "$847M+ in tracked volume. 13 funds across Gold, Forex, Crypto, and multi-asset strategies." },
   { year: "2026", title: "Global Reach", desc: "VaultKano re-launching. Copy trading network expanding. Portal and investor onboarding platform live." },
 ];
 
@@ -109,7 +109,7 @@ export default function About() {
       <section style={{ padding: "80px clamp(1.5rem,5vw,3rem)", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(160px,calc(50% - 8px)),1fr))", gap: 16 }}>
           {[
-            { num: "12", label: "Active Funds", accent: "rgba(0,232,120,0.6)" },
+            { num: "13", label: "Active Funds", accent: "rgba(0,232,120,0.6)" },
             { num: "9.2%", label: "Avg Monthly Return", accent: "rgba(159,180,193,0.6)" },
             { num: "$847M+", label: "Total Volume Tracked", accent: "rgba(100,150,255,0.6)" },
             { num: "3", label: "Verified Brokerages", accent: "rgba(200,180,100,0.6)" },

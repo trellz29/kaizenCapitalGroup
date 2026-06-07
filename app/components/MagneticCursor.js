@@ -21,8 +21,8 @@ export default function MagneticCursor() {
       smooth.x += (posRef.current.x - smooth.x) * 0.18;
       smooth.y += (posRef.current.y - smooth.y) * 0.18;
       if (cursorRef.current) {
-        cursorRef.current.style.transform =
-          `translate(${smooth.x}px, ${smooth.y}px) translate(-50%, -50%)`;
+        cursorRef.current.style.left = `${smooth.x}px`;
+        cursorRef.current.style.top  = `${smooth.y}px`;
       }
       raf = requestAnimationFrame(tick);
     };
