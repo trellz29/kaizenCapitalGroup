@@ -96,17 +96,10 @@ export default function AdminPanel() {
   const [editing, setEditing] = useState(null);
   const [form, setForm]       = useState(EMPTY_CLIENT);
   const [saved, setSaved]     = useState(false);
-  const [withdrawals, setWithdrawals] = useState([
-    { id:"w1", client:"Cottrell", email:"cottrell@kaizencapitalgrp.com", amount:2500, wallet:"TRcXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX", date:"2025-01-10", status:"pending" },
-  ]);
-
   if (!authed) return <LoginGate onLogin={() => setAuthed(true)} />;
-
-  const totalBalance   = clients.reduce((s,c)=>s+c.balance,0);
   const totalProfit    = clients.reduce((s,c)=>s+c.profit,0);
   const totalWithdrawn = clients.reduce((s,c)=>s+c.withdrawn,0);
   const activeCount    = clients.filter(c=>c.status==="active").length;
-  const pendingW       = withdrawals.filter(w=>w.status==="pending").length;
 
   const openAdd = () => { setForm({...EMPTY_CLIENT, id:Date.now().toString()}); setEditing(null); setModal("form"); };
   const openEdit = c => { setForm({...c}); setEditing(c.id); setModal("form"); };
@@ -122,9 +115,6 @@ export default function AdminPanel() {
 
   const remove = id => confirm("Remove this client permanently?") && setClients(prev=>prev.filter(c=>c.id!==id));
   const uf = (k,v) => setForm(f=>({...f,[k]:v}));
-
-  const approveW = id => setWithdrawals(prev=>prev.map(w=>w.id===id?{...w,status:"approved"}:w));
-  const rejectW  = id => setWithdrawals(prev=>prev.map(w=>w.id===id?{...w,status:"rejected"}:w));
 
   return (
     <>
@@ -152,7 +142,7 @@ export default function AdminPanel() {
 
           {/* Tabs */}
           <div style={{ display:"flex", gap:6, marginBottom:22, flexWrap:"wrap" }}>
-            {[["clients",`👥 Clients (${clients.length})`],["withdrawals",`💸 Withdrawals${pendingW>0?` (${pendingW})`:""}`,],["funds","📊 Funds"]].map(([id,label])=>(
+            {[["clients",`👥 Clients (${clients.length})`],["funds","📊 Funds"]].map(([id,label])=>(
               <button key={id} className="btn" onClick={()=>setTab(id)}
                 style={{ background:tab===id?"rgba(100,150,200,0.18)":"rgba(255,255,255,0.05)", color:tab===id?"#6496C8":"rgba(255,255,255,0.45)", border:`1px solid ${tab===id?"rgba(100,150,200,0.3)":"transparent"}` }}>
                 {label}
@@ -169,7 +159,6 @@ export default function AdminPanel() {
                 {l:"Total AUM",     v:`$${totalBalance.toLocaleString()}`, g:true},
                 {l:"Total Profit",  v:`$${totalProfit.toLocaleString()}`,  g:true},
                 {l:"Withdrawn",     v:`$${totalWithdrawn.toLocaleString()}`, g:false},
-                {l:"Pending Withdrawals", v:pendingW, g:false},
               ].map(s=>(
                 <div className="sb" key={s.l}>
                   <div className="sbl">{s.l}</div>
@@ -214,37 +203,6 @@ export default function AdminPanel() {
               </div>
             </div>
           </>}
-
-          {/* ── WITHDRAWALS ── */}
-          {tab==="withdrawals" && (
-            <div className="card">
-              <div className="ct">Withdrawal Requests</div>
-              <table>
-                <thead><tr>{["Client","Email","Amount","Wallet","Date","Status","Action"].map(h=><th key={h}>{h}</th>)}</tr></thead>
-                <tbody>
-                  {withdrawals.map(w=>(
-                    <tr key={w.id}>
-                      <td style={{ fontWeight:700 }}>{w.client}</td>
-                      <td style={{ fontSize:11, color:"rgba(255,255,255,0.4)" }}>{w.email}</td>
-                      <td style={{ fontWeight:700, color:"#F84F4F" }}>${w.amount.toLocaleString()}</td>
-                      <td style={{ fontFamily:"monospace", fontSize:10, color:"rgba(255,255,255,0.4)" }}>{w.wallet.slice(0,16)}…</td>
-                      <td style={{ color:"rgba(255,255,255,0.4)", fontSize:11 }}>{w.date}</td>
-                      <td><span className={`badge ${w.status==="approved"?"bg":w.status==="rejected"?"br":"by"}`}>{w.status}</span></td>
-                      <td>
-                        {w.status==="pending" && (
-                          <div style={{ display:"flex", gap:5 }}>
-                            <button className="btn b-g" onClick={()=>approveW(w.id)}>Approve</button>
-                            <button className="btn b-r" onClick={()=>rejectW(w.id)}>Reject</button>
-                          </div>
-                        )}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              {withdrawals.length===0 && <p style={{ textAlign:"center", color:"rgba(255,255,255,0.2)", padding:"32px 0", fontSize:12 }}>No withdrawal requests</p>}
-            </div>
-          )}
 
           {/* ── FUNDS ── */}
           {tab==="funds" && (
