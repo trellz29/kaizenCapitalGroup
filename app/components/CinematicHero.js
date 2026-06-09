@@ -119,7 +119,7 @@ export default function CinematicHero() {
         if (ctaRef.current) tl.fromTo(ctaRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.9 }, 0.7);
         if (statsRef.current) tl.fromTo(statsRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.9 }, 0.9);
       });
-    }, 2800); // Fire after loader finishes
+    }, 500); // Fire quickly after mount
     return () => clearTimeout(t);
   }, []);
 

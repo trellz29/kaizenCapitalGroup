@@ -670,11 +670,11 @@ export default function HeroGlobe() {
   return (
     <div ref={mountRef} className="hero-globe-wrap" style={{
       position:"absolute",
-      left:"50%",
+      left:"46%",
       top:"50%",
       transform:"translateY(-50%)",
-      width:"min(48vw, 600px)",
-      height:"min(48vw, 600px)",
+      width:"min(50vw, 620px)",
+      height:"min(50vw, 620px)",
       zIndex:3,
       overflow:"visible",
       opacity: ready?1:0, transition:"opacity 1.2s ease 0.5s",
