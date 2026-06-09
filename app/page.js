@@ -160,7 +160,7 @@ function TradingViewWidget({ widgetType, config, minHeight }) {
     s.innerHTML = JSON.stringify(config);
     el.appendChild(s);
   }, [widgetType]);
-  return <div ref={ref} style={{ minHeight }} />;
+  return <div ref={ref} style={{ minHeight, background:"#050810", borderRadius:4, overflow:"hidden" }} />;
 }
 
 /* --- Calendly widget ---------------------------------------------- */

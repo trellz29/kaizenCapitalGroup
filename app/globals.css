@@ -519,3 +519,6 @@ a { text-underline-offset: 3px; }
 
 /* Smooth image loads */
 img { transition: opacity 0.3s ease; }
+
+/* ── TRADINGVIEW IFRAME FIX ── */
+.tradingview-widget-container iframe { background: #050810 !important; }
