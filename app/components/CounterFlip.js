@@ -12,7 +12,7 @@ export default function CounterFlip({ value, prefix = "", suffix = "", duration 
     if (!node) return;
     const observer = new IntersectionObserver(
       ([entry]) => { if (entry.isIntersecting) { setStarted(true); observer.disconnect(); } },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
     observer.observe(node);
     return () => observer.disconnect();
