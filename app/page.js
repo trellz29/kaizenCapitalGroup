@@ -361,8 +361,29 @@ export default function Home() {
               <p className="scene-p" style={{ maxWidth: 500, marginBottom: "2.5rem" }}>Gold, EUR/USD, Bitcoin, DXY, and oil — updating live so the platform always feels active and institutional.</p>
             </SlideReveal>
 
-            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.06)", padding: "0 0 2px", overflow: "hidden", marginBottom: 24 }}>
-              <TradingViewWidget widgetType="ticker-tape" minHeight="72px" config={{ symbols: [{ proName: "OANDA:XAUUSD", title: "Gold" }, { proName: "FX:EURUSD", title: "EUR/USD" }, { proName: "BITSTAMP:BTCUSD", title: "Bitcoin" }, { proName: "TVC:DXY", title: "DXY" }, { proName: "TVC:USOIL", title: "Oil" }], showSymbolLogo: true, isTransparent: true, displayMode: "adaptive", colorTheme: "dark", locale: "en" }} />
+            <div style={{ background: "rgba(255,255,255,0.02)", borderRadius: 16, border: "1px solid rgba(255,255,255,0.06)", padding: "0", overflow: "hidden", marginBottom: 24, height: 48, display: "flex", alignItems: "center" }}>
+              <div style={{ overflow: "hidden", width: "100%", position: "relative" }}>
+                <div style={{ display: "flex", gap: 48, animation: "kcgTicker 20s linear infinite", whiteSpace: "nowrap", padding: "0 24px" }}>
+                  {[
+                    { label: "XAU/USD", val: "3,248.40", chg: "+0.41%", up: true },
+                    { label: "EUR/USD", val: "1.1062",  chg: "+0.82%", up: true },
+                    { label: "BTC/USD", val: "63,148",  chg: "-1.28%", up: false },
+                    { label: "DXY",     val: "99.84",   chg: "-0.31%", up: false },
+                    { label: "OIL",     val: "70.12",   chg: "+0.64%", up: true },
+                    { label: "XAU/USD", val: "3,248.40", chg: "+0.41%", up: true },
+                    { label: "EUR/USD", val: "1.1062",  chg: "+0.82%", up: true },
+                    { label: "BTC/USD", val: "63,148",  chg: "-1.28%", up: false },
+                    { label: "DXY",     val: "99.84",   chg: "-0.31%", up: false },
+                    { label: "OIL",     val: "70.12",   chg: "+0.64%", up: true },
+                  ].map((t, i) => (
+                    <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 8, fontFamily: "sans-serif", fontSize: 12 }}>
+                      <span style={{ fontWeight: 700, color: "rgba(255,255,255,0.6)", letterSpacing: "0.06em" }}>{t.label}</span>
+                      <span style={{ fontWeight: 800, color: "#fff" }}>{t.val}</span>
+                      <span style={{ fontWeight: 700, color: t.up ? "#00E87A" : "#F84F4F" }}>{t.chg}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(260px,100%),1fr))", gap: 16 }}>
