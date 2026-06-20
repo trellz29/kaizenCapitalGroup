@@ -191,7 +191,7 @@ function LoginPage({ onLogin }) {
       onLogin();
     } else {
       if (email) sendToTrello({ type: "Portal Login Attempt", email, name: email.split("@")[0], source: "KCG Portal" });
-      setError("Invalid credentials. Use demo: investor@kcg.com / kcg2024");
+      setError("Invalid email or password. Please try again.");
     }
   };
 
