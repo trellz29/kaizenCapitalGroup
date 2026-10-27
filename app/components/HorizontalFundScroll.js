@@ -26,7 +26,6 @@ const FUNDS = [
     link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026",
     track:"https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb?lang=en?preview=P3U9NjJiODU0JmE9MTg3MzkmcD0xOTI0NyZ3PTEmcz1jYzMwNmFkOTdlZjI0M2E1YWEwOTJjZDRkMGQyMjZiYg==" },
 ];
-];
 
 const CARD_W = 300;
 const CARD_GAP = 20;
