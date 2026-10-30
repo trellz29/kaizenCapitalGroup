@@ -1,5 +1,6 @@
 "use client";
 import { CinematicPageNav } from "../components/CinematicPageShell";
+import { LIVE_COUNT, FUND_COUNT } from "../data/funds";
 
 const TEAM = [
   {
@@ -14,7 +15,7 @@ const MILESTONES = [
   { year: "2022", title: "Foundation", desc: "KCG established with a focus on disciplined Gold trading through TMGM." },
   { year: "2023", title: "Expansion", desc: "Fund 8 (Alpha), MAMALYN, and 4 additional strategies launched. MultiBank partnership secured." },
   { year: "2024", title: "Algorithmic Systems", desc: "Algo Amalgamation Fund and fully automated EUR/USD strategies deployed." },
-  { year: "2025", title: "Institutional Scale", desc: "$847M+ in tracked volume. 13 funds across Gold, Forex, Crypto, and multi-asset strategies." },
+  { year: "2025", title: "Institutional Scale", desc: "Funds across Gold, Forex, Crypto, and multi-asset strategies, each run on an approved brokerage." },
   { year: "2026", title: "Global Reach", desc: "VaultKano re-launching. Copy trading network expanding. Portal and investor onboarding platform live." },
 ];
 
@@ -109,12 +110,10 @@ export default function About() {
       <section style={{ padding: "80px clamp(1.5rem,5vw,3rem)", maxWidth: 1200, margin: "0 auto" }}>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(160px,calc(50% - 8px)),1fr))", gap: 16 }}>
           {[
-            { num: "13", label: "Active Funds", accent: "rgba(0,232,120,0.6)" },
-            { num: "9.2%", label: "Avg Monthly Return", accent: "rgba(159,180,193,0.6)" },
-            { num: "$847M+", label: "Total Volume Tracked", accent: "rgba(100,150,255,0.6)" },
+            { num: String(LIVE_COUNT), label: "Live Funds", accent: "rgba(0,232,120,0.6)" },
+            { num: String(FUND_COUNT), label: "Strategies Listed", accent: "rgba(159,180,193,0.6)" },
             { num: "3", label: "Verified Brokerages", accent: "rgba(200,180,100,0.6)" },
             { num: "4+", label: "Years Operating", accent: "rgba(200,100,200,0.6)" },
-            { num: "100%", label: "Third-Party Verified", accent: "rgba(100,200,180,0.6)" },
           ].map(s => (
             <div key={s.label} className="glass" style={{ padding: "24px 28px", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,transparent,${s.accent},transparent)` }} />

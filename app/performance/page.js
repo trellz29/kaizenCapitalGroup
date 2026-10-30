@@ -2,11 +2,18 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-const FUNDS = [
-  { name: "KaizenCapitalGroup.Xau-TMGM", myfxbook: null, label: "Fund 1", broker: "TMGM", focus: "Gold Scalping" },
-  { name: "KaizenCapitalGroup.Xau-MB", myfxbook: null, label: "Fund 1a", broker: "MultiBank", focus: "Gold Scalping" },
-  { name: "MAMALYN Fund", myfxbook: "https://www.myfxbook.com/members/Panevino83/mamalyn-mt4-31229860/11078849", label: "Fund 11", broker: "MultiBank", focus: "EUR/USD Algo" },
-];
+import { LIVE_FUNDS, LIVE_COUNT, FUND_COUNT, APPROVED_BROKERS, RISK_LINE } from "../data/funds";
+
+// F12: same live-fund list as the homepage, from the shared roster.
+const FUNDS = LIVE_FUNDS.map(f => ({
+  name: f.name,
+  label: `Fund ${f.id}`,
+  broker: f.broker,
+  focus: f.focus,
+  track: f.track,
+  myfxbook: f.track && f.track.includes("myfxbook.com") ? f.track : null,
+}));
+const WITH_RECORD = FUNDS.filter(f => f.track).length;
 
 function MyfxbookWidget({ url, label }) {
   const ref = useRef(null);
@@ -64,10 +71,10 @@ export default function Performance() {
         {/* Stats row */}
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(150px,calc(50% - 8px)),1fr))", gap: 16, marginBottom: 64 }}>
           {[
-            { label: "Active Funds", value: "12", accent: "rgba(0,232,120,0.5)" },
-            { label: "Live Tracking", value: "3", accent: "rgba(159,180,193,0.5)" },
-            { label: "Avg Monthly", value: "9.2%", accent: "rgba(100,150,255,0.5)" },
-            { label: "Total Volume", value: "$847M+", accent: "rgba(200,180,100,0.5)" },
+            { label: "Live Funds", value: String(LIVE_COUNT), accent: "rgba(0,232,120,0.5)" },
+            { label: "With Verified Record", value: String(WITH_RECORD), accent: "rgba(159,180,193,0.5)" },
+            { label: "Strategies Listed", value: String(FUND_COUNT), accent: "rgba(100,150,255,0.5)" },
+            { label: "Approved Brokerages", value: String(APPROVED_BROKERS.length), accent: "rgba(200,180,100,0.5)" },
           ].map(s => (
             <div key={s.label} className="glass" style={{ padding: "20px 24px", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,transparent,${s.accent},transparent)` }} />
@@ -91,13 +98,13 @@ export default function Performance() {
                     <div style={{ fontFamily: "sans-serif", fontSize: "1.2rem", fontWeight: 800, color: "#fff", letterSpacing: "-0.02em" }}>{fund.name}</div>
                     <div style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", marginTop: 4 }}>{fund.focus}</div>
                   </div>
-                  {fund.myfxbook && (
-                    <a href={fund.myfxbook} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", borderRadius: 100, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(200,220,235,0.7)", fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, textDecoration: "none", letterSpacing: "0.04em" }}>
-                      View on Myfxbook ↗
+                  {fund.track && (
+                    <a href={fund.track} target="_blank" rel="noopener noreferrer" style={{ padding: "8px 16px", borderRadius: 100, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(200,220,235,0.7)", fontFamily: "sans-serif", fontSize: 11, fontWeight: 700, textDecoration: "none", letterSpacing: "0.04em" }}>
+                      {fund.myfxbook ? "View on Myfxbook ↗" : "View verified record ↗"}
                     </a>
                   )}
                 </div>
-                <MyfxbookWidget url={fund.myfxbook} label={fund.label} />
+                {fund.myfxbook || !fund.track ? <MyfxbookWidget url={fund.myfxbook} label={fund.label} /> : null}
               </div>
             ))}
           </div>
@@ -106,7 +113,7 @@ export default function Performance() {
         {/* Disclaimer */}
         <div style={{ background: "rgba(255,200,50,0.04)", border: "1px solid rgba(255,200,50,0.1)", borderRadius: 12, padding: "20px 24px" }}>
           <p style={{ fontFamily: "sans-serif", fontSize: "0.8rem", color: "rgba(255,255,255,0.3)", margin: 0, lineHeight: 1.7 }}>
-            ⚠️ Past performance is not indicative of future results. Trading CFDs and Forex carries significant risk. All performance data shown is sourced from verified third-party platforms. KCG does not guarantee future returns.{" "}
+            ⚠️ {RISK_LINE} Trading CFDs and Forex carries significant risk. All performance data shown is sourced from verified third-party platforms. KCG does not guarantee future returns.{" "}
             <Link href="/disclaimer" style={{ color: "rgba(159,180,193,0.6)", textDecoration: "none" }}>Read full disclaimer →</Link>
           </p>
         </div>

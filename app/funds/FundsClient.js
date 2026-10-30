@@ -168,23 +168,27 @@ function FundCard({ label, name, focus, strategy, managers, brokerage, status, e
   );
 }
 
-const FUND_DATA = [
+const RAW_FUND_DATA = [
   {label:"Fund 1",name:"KaizenCapitalGroup.Xau-TMGM",focus:"Gold CFD",status:"Live",strategy:"Gold Scalping & Intra-day",managers:"1",brokerage:"TMGM",totalReturn:"+18.9%",winRate:"79.4%",maxDrawdown:"-4.2%",sharpe:"2.14",riskLevel:"Medium",minInvestment:"$100",sparkData:[12,14,13,16,15,18,17,19,21,20,22,24,23,26],monthlyReturns:[{month:"J",val:2.1},{month:"F",val:1.8},{month:"M",val:3.2},{month:"A",val:-0.4},{month:"M",val:2.8},{month:"J",val:1.9},{month:"J",val:3.1},{month:"A",val:2.4}],primaryLink:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM",secondaryLinks:[{label:"Ratings",url:"https://ratings.tmgmplatform.com/widgets/shared/5173e304d7494051b27287f70426a327?lang=en%3Fpreview%3DP3U9ODIxMzA2JmE9MTM0NjMmcD0xMzgzNCZ3PTEmcz01MTczZTMwNGQ3NDk0MDUxYjI3Mjg3ZjcwNDI2YTMyNw%3D%3D"}]},
   {label:"Fund 1a",name:"KaizenCapitalGroup.Xau-MB",focus:"Gold CFD",status:"Live",strategy:"Gold Scalping & Intra-day",managers:"1",brokerage:"MultiBank",totalReturn:"+22.1%",winRate:"71.6%",maxDrawdown:"-5.8%",sharpe:"1.87",riskLevel:"Medium",minInvestment:"$100",sparkData:[10,12,11,15,14,17,16,20,19,22,21,25,24,27],monthlyReturns:[{month:"J",val:3.1},{month:"F",val:2.4},{month:"M",val:-0.8},{month:"A",val:4.2},{month:"M",val:1.6},{month:"J",val:3.8},{month:"J",val:2.1},{month:"A",val:3.4}],primaryLink:"https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30"},
   {label:"Fund 2",name:"TradeXMarkets Fund",focus:"Gold & potentially Oil",strategy:"Gold Trading & automated trading mix",managers:"1",brokerage:"MultiBank",status:"N/A"},
   {label:"Fund 3",name:"VaultKano Fund",focus:"Crypto",strategy:"Manual & automated trading mix",managers:"1",brokerage:"MultiBank",status:"Re-Launching"},
-  {label:"Fund 4",name:"Exodus Investments",focus:"Crypto & Gold",strategy:"Scalping + Macro / Swing Trading",managers:"2",brokerage:"TradeSmart",status:"N/A",extra:"United States Included"},
+  {label:"Fund 4",name:"Exodus Investments",focus:"Crypto & Gold",strategy:"Scalping + Macro / Swing Trading",managers:"2",brokerage:"TBC",status:"N/A",extra:"United States Included"},
   {label:"Fund 5",name:"KCG + Phoenix",focus:"Gold & FX currencies",strategy:"To be defined",managers:"1",brokerage:"MultiBank",status:"N/A",extra:"Speculative"},
   {label:"Fund 6",name:"Phoenix",focus:"Forex mixed assets",strategy:"Automated trading mix of all instruments",managers:"Potential fully automated managed fund (1)",brokerage:"MultiBank",status:"N/A"},
   {label:"Fund 7",name:"Forex Fortune AI",focus:"EURUSD",strategy:"Automated trading mix of EUR instruments",managers:"1",brokerage:"MultiBank",status:"N/A"},
   {label:"Fund 8",name:"The Alpha Fund",focus:"Gold trading",status:"Live",strategy:"Manual trading",managers:"2 traders",brokerage:"TMGM",totalReturn:"+24.7%",winRate:"73.2%",maxDrawdown:"-6.1%",sharpe:"1.96",riskLevel:"Medium",minInvestment:"$1,000",sparkData:[8,11,13,12,16,15,18,20,19,23,22,26,25,29],monthlyReturns:[{month:"J",val:4.1},{month:"F",val:-1.2},{month:"M",val:3.8},{month:"A",val:2.9},{month:"M",val:1.4},{month:"J",val:4.2},{month:"J",val:3.6},{month:"A",val:2.8}],primaryLink:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha",secondaryLinks:[{label:"Ratings",url:"https://ratings.tmgmplatform.com/widgets/shared/05a7391d205e4c82982ea3141e98aee5"}]},
-  {label:"Fund 9",name:"Algo Amalgamation Fund",focus:"Multi-asset (Gold, Forex, Crypto & others)",strategy:"Fully algorithmic — amalgamation of strategies from Funds 1–8",managers:"Mixture of algorithmic bots",brokerage:"MultiBank / TradeSmart / TMGM",status:"N/A"},
+  {label:"Fund 9",name:"Algo Amalgamation Fund",focus:"Multi-asset (Gold, Forex, Crypto & others)",strategy:"Fully algorithmic — amalgamation of strategies from Funds 1–8",managers:"Mixture of algorithmic bots",brokerage:"MultiBank / TMGM",status:"N/A"},
   {label:"Fund 10",name:"PfaneTXau Fund",focus:"All CFD indices and commodities",strategy:"Swarm",managers:"1 (potentially 2)",brokerage:"To be confirmed",status:"Discontinuation"},
   {label:"Fund 11",name:"MAMALYN Fund",focus:"EUR/USD",status:"Live",strategy:"Fully algorithmic trading",managers:"1",brokerage:"MultiBank",totalReturn:"+31.5%",winRate:"68.9%",maxDrawdown:"-7.4%",sharpe:"1.74",riskLevel:"High",minInvestment:"$3,000",sparkData:[6,9,11,14,13,17,16,20,22,21,25,28,27,31],monthlyReturns:[{month:"J",val:5.2},{month:"F",val:3.1},{month:"M",val:-2.1},{month:"A",val:6.4},{month:"M",val:4.8},{month:"J",val:-1.2},{month:"J",val:5.9},{month:"A",val:4.1}],primaryLink:"https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars",secondaryLinks:[{label:"FX Blue",url:"https://www.fxblue.com/users/mamalyn"},{label:"Myfxbook",url:"https://www.myfxbook.com/members/Panevino83/mamalyn-mt4-31229860/11078849"}]},
   {label:"Fund 12",name:"CXFund",focus:"Gold trading",status:"Disconnected",strategy:"Manual trading",managers:"2 traders",brokerage:"TMGM",primaryLink:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026",secondaryLinks:[{label:"Ratings",url:"https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb"}]},,
   {label:"Fund 14",name:"KTAi Sentinel Dynamics (US_500 & TECH100)",focus:"US Equities CFD (S&P 500 & NASDAQ 100)",status:"Live",strategy:"AI-driven forecasting with time-varying auto-adaptive algorithms. 80% forecast accuracy across multiple horizons.",managers:"Kooy Labs Inc.",brokerage:"GenesisFX",totalReturn:"+101.2%",winRate:"92.59%",maxDrawdown:"-7.16%",minInvestment:"$250,000",riskLevel:"Medium",extra:"72-day live track record (Mar-May 2026). Same Sentinel Dynamics system as ES & NQ, implemented on CFD instruments.",primaryLink:"https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B"},
   {label:"Fund 15",name:"KTAi Stellite FOREX",focus:"G10 Forex Pairs",status:"Live",strategy:"Systematic trend-following with multi-timeframe consensus scoring. Volatility-adaptive trailing stops and autonomous Corrective Control system.",managers:"Kooy Labs Inc.",brokerage:"GenesisFX",totalReturn:"+88.69%",winRate:"44.30%",maxDrawdown:"-4.65%",sharpe:"1.46",minInvestment:"$250,000",riskLevel:"Low",extra:"15-month track record (Jan 2025 - Apr 2026). CAGR: 61.31%. No human intervention required — fully autonomous risk management.",primaryLink:"https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B"}
 ];
+// D1/D2: no return, win-rate, drawdown or Sharpe figure without its own verified record link.
+const FUND_DATA = RAW_FUND_DATA.map(({ totalReturn, winRate, maxDrawdown, sharpe, monthlyReturns, sparkData, ...f }) => f);
+const LIVE_N = FUND_DATA.filter(f => f.status === "Live").length;
+
 
 
 
@@ -214,10 +218,10 @@ export default function FundsPage() {
               <span className="h-1.5 w-1.5 rounded-full bg-[#1F5E36] animate-pulse" />
               <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[#2E4358]">KCG Multiplied Funds</span>
             </div>
-            <h1 className="max-w-4xl text-5xl font-bold leading-tight text-[#0F1A28] sm:text-6xl md:text-7xl" style={{ animation: "fadeUp 0.7s ease-out 0.2s both" }}>15 funds. One<br />institutional platform.</h1>
+            <h1 className="max-w-4xl text-5xl font-bold leading-tight text-[#0F1A28] sm:text-6xl md:text-7xl" style={{ animation: "fadeUp 0.7s ease-out 0.2s both" }}>{FUND_DATA.length} funds. One<br />institutional platform.</h1>
             <p className="mt-6 max-w-2xl text-lg text-[#2E4358]" style={{ animation: "fadeUp 0.7s ease-out 0.35s both" }}>Explore KCG's complete fund ecosystem across Gold, Forex, Crypto, and multi-asset instruments. Live funds include direct access links, performance metrics, and risk profiles.</p>
             <div className="mt-10 grid gap-4 sm:grid-cols-4" style={{ animation: "fadeUp 0.7s ease-out 0.45s both" }}>
-              {[{label:"Total Funds",value:"15"},{label:"Live Funds",value:"6"},{label:"Brokerages",value:"3"},{label:"Avg Return",value:"9.2%"}].map(s=>(
+              {[{label:"Total Funds",value:String(FUND_DATA.length)},{label:"Live Funds",value:String(LIVE_N)},{label:"Brokerages",value:"3"},{label:"Track Records",value:"Linked per fund"}].map(s=>(
                 <div key={s.label} className="rounded-2xl border border-white/50 bg-white/55 p-4 backdrop-blur-sm">
                   <p className="text-xs font-semibold uppercase tracking-wider text-[#5A7188]">{s.label}</p>
                   <p className="mt-1 text-2xl font-bold text-[#0F1A28]">{s.value}</p>

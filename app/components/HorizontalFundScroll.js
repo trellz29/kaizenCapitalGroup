@@ -1,60 +1,10 @@
 "use client";
 import { useRef, useState, useCallback, useEffect } from "react";
 
-const FUNDS = [
-  { id:"1",  name:"KaizenCapitalGroup.Xau-TMGM",  focus:"Gold Scalping & Intra-day", broker:"TMGM",       managers:1, status:"live",         ret:"+9.4%",  tag:"FLAGSHIP",       color:"#00E87A",
-    link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/94720/KCG-TMGM",
-    track:"https://ratings.tmgmplatform.com/widgets/shared/5173e304d7494051b27287f70426a327?lang=en%3Fpreview%3DP3U9ODIxMzA2JmE9MTM0NjMmcD0xMzgzNCZ3PTEmcz01MTczZTMwNGQ3NDk0MDUxYjI3Mjg3ZjcwNDI2YTMyNw%3D%3D" },
-  { id:"1a", name:"KaizenCapitalGroup.Xau-MB",     focus:"Gold Scalping & Intra-day", broker:"MultiBank",  managers:1, status:"live",         ret:"+11.2%", tag:"LIVE",           color:"#00E87A",
-    link:"https://social.mexatlantic.com/portal/registration/subscription/89528/KCG30",
-    track:null },
-  { id:"2",  name:"TradeXMarkets Fund",            focus:"Gold + Oil",                broker:"MultiBank",  managers:2, status:"coming",       ret:"—",      tag:"COMING SOON",    color:"#6496C8", link:null, track:null },
-  { id:"3",  name:"VaultKano Fund",               focus:"Crypto (BTC) + Gold",       broker:"MultiBank",  managers:2, status:"relaunching",  ret:"—",      tag:"RE-LAUNCHING",   color:"#F59E0B", link:null, track:null },
-  { id:"4",  name:"Forex Profit Snipers Fund",    focus:"Forex + Gold",              broker:"TradeSmart", managers:2, status:"coming",       ret:"—",      tag:"US INCLUDED",    color:"#9FB4C1", link:null, track:null },
-  { id:"5",  name:"Trellz + Phoenix",             focus:"Gold + FX Currencies",      broker:"MultiBank",  managers:2, status:"coming",       ret:"—",      tag:"SPECULATIVE",    color:"#6496C8", link:null, track:null },
-  { id:"6",  name:"Phoenix",                      focus:"Forex Mixed Assets",        broker:"MultiBank",  managers:1, status:"coming",       ret:"—",      tag:"AI · COMING SOON", color:"#a78bfa", link:null, track:null },
-  { id:"7",  name:"Forex Fortune Fund",           focus:"EUR/USD",                   broker:"MultiBank",  managers:1, status:"coming",       ret:"—",      tag:"AI POWERED",     color:"#a78bfa", link:null, track:null },
-  { id:"8",  name:"The Alpha Fund",               focus:"Gold Manual Trading",       broker:"TMGM",       managers:2, status:"live",         ret:"+7.8%",  tag:"LIVE",           color:"#00E87A",
-    link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/67622/Alpha",
-    track:"https://ratings.tmgmplatform.com/widgets/shared/05a7391d205e4c82982ea3141e98aee5?lang=en?preview=P3U9N2M1Y2IwJmE9MTg5ODgmcD0xOTUwMCZ3PTEmcz0wNWE3MzkxZDIwNWU0YzgyOTgyZWEzMTQxZTk4YWVlNQ==" },
-  { id:"9",  name:"Algo Amalgamation Fund",       focus:"Multi-asset (Fully Algo)",  broker:"MultiBank / TradeSmart / TMGM", managers:0, status:"coming", ret:"—", tag:"ALGORITHMIC", color:"#6496C8", link:null, track:null },
-  { id:"10", name:"PfaneTXau Fund",               focus:"CFDs — All Indices",        broker:"TBC",        managers:1, status:"discontinued", ret:"—",      tag:"DISCONTINUED",   color:"#555",    link:null, track:null },
-  { id:"11", name:"MAMALYN Fund",                 focus:"EUR/USD Fully Algorithmic", broker:"MultiBank",  managers:1, status:"live",         ret:"+8.9%",  tag:"LIVE",           color:"#00E87A",
-    link:"https://social.multibankfx.com/portal/registration/subscription/89236/mamalynMin3000dollars",
-    track:"https://www.myfxbook.com/members/Panevino83/mamalyn-mt4-31229860/11078849" },
-  { id:"12", name:"CXFund",                       focus:"Gold Manual Trading",       broker:"TMGM",       managers:2, status:"live",         ret:"—",      tag:"LIVE",           color:"#00E87A",
-    link:"https://signal.tmc2lnbmfs.com/portal/registration/subscription/69413/CXFund2026",
-    track:"https://ratings.tmgmplatform.com/widgets/shared/cc306ad97ef243a5aa092cd4d0d226bb?lang=en?preview=P3U9NjJiODU0JmE9MTg3MzkmcD0xOTI0NyZ3PTEmcz1jYzMwNmFkOTdlZjI0M2E1YWEwOTJjZDRkMGQyMjZiYg==" },
-];
+import { FUNDS, RISK_LINE } from "../data/funds";
 
 const CARD_W = 300;
 const CARD_GAP = 20;
-
-function Sparkline({ color }) {
-  const bars = Array.from({ length: 16 }, (_, i) => ({
-    h: 25 + Math.sin(i * 0.7 + 1) * 15 + i * 1.5,
-  }));
-  return (
-    <div style={{ marginBottom: 12 }}>
-      <div style={{ fontSize:9, fontWeight:700, letterSpacing:"0.1em", textTransform:"uppercase", color:"rgba(255,255,255,0.25)", marginBottom:6 }}>
-        16-Month Performance
-      </div>
-      <div style={{ display:"flex", gap:3, height:44, alignItems:"flex-end" }}>
-        {bars.map((b, i) => (
-          <div key={i} style={{
-            flex:1, borderRadius:2,
-            background: i === bars.length-1 ? color : `${color}55`,
-            height:`${Math.min(b.h,100)}%`,
-          }}/>
-        ))}
-      </div>
-      <div style={{ display:"flex", justifyContent:"space-between", marginTop:4 }}>
-        <span style={{ fontSize:8, color:"rgba(255,255,255,0.2)" }}>16mo ago</span>
-        <span style={{ fontSize:8, color:"rgba(255,255,255,0.2)" }}>This month</span>
-      </div>
-    </div>
-  );
-}
 
 function FundCard({ fund, active }) {
   const cardRef = useRef(null);
@@ -116,11 +66,10 @@ function FundCard({ fund, active }) {
         {fund.managers > 0 && <span style={{ fontFamily:"sans-serif", fontSize:10, color:"rgba(255,255,255,0.28)" }}>👤 {fund.managers} {fund.managers === 1 ? "Manager" : "Managers"}</span>}
         {fund.managers === 0 && <span style={{ fontFamily:"sans-serif", fontSize:10, color:"rgba(100,150,200,0.6)" }}>🤖 Algorithmic</span>}
       </div>
-      {isLive && <Sparkline color={fund.color} />}
       <div style={{ display:"flex", gap:10, marginTop: isLive ? 0 : 16 }}>
         <div style={{ flex:1, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:10, padding:"10px 12px" }}>
-          <div style={{ fontFamily:"sans-serif", fontSize:9, color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:3 }}>Monthly</div>
-          <div style={{ fontFamily:"sans-serif", fontSize:18, fontWeight:800, color: isLive ? fund.color : "rgba(255,255,255,0.2)", letterSpacing:"-0.03em" }}>{fund.ret}</div>
+          <div style={{ fontFamily:"sans-serif", fontSize:9, color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:3 }}>Track record</div>
+          <div style={{ fontFamily:"sans-serif", fontSize:12, fontWeight:700, color: fund.track ? fund.color : "rgba(255,255,255,0.4)" }}>{fund.track ? "Verified ↓" : isLive ? "Link pending" : "—"}</div>
         </div>
         <div style={{ flex:1, background:"rgba(255,255,255,0.03)", border:"1px solid rgba(255,255,255,0.06)", borderRadius:10, padding:"10px 12px" }}>
           <div style={{ fontFamily:"sans-serif", fontSize:9, color:"rgba(255,255,255,0.3)", textTransform:"uppercase", letterSpacing:"0.1em", marginBottom:3 }}>Status</div>
@@ -217,6 +166,9 @@ export default function HorizontalFundScroll() {
         ))}
       </div>
 
+      <p style={{ margin:"0 clamp(1.5rem,6vw,80px) 16px", fontFamily:"sans-serif", fontSize:11, color:"rgba(255,255,255,0.4)", lineHeight:1.6 }}>
+        Fund performance is shown only on each fund&apos;s own verified track record. {RISK_LINE}
+      </p>
       {/* Progress bar */}
       <div style={{ margin:"12px clamp(1.5rem,6vw,80px) 0", height:2, background:"rgba(255,255,255,0.06)", borderRadius:2, overflow:"hidden" }}>
         <div style={{ height:"100%", borderRadius:2, background:"linear-gradient(90deg,#6496C8,#00E87A)", width:`${((activeIdx+1)/FUNDS.length)*100}%`, transition:"width 0.3s ease" }}/>

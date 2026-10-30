@@ -14,96 +14,11 @@ import GlobalCapitalMap from "./components/GlobalCapitalMap";
 import HorizontalFundScroll from "./components/HorizontalFundScroll";
 import MagneticCursor from "./components/MagneticCursor";
 import KineticText from "./components/KineticText";
-import CounterFlip from "./components/CounterFlip";
+import { FUND_COUNT, LIVE_COUNT, LIVE_FUNDS, APPROVED_BROKERS, RISK_LINE, CALENDLY_URL, SUPPORT_EMAIL } from "./data/funds";
 import SlideReveal from "./components/SlideReveal";
 import StaggerGrid from "./components/StaggerGrid";
 
 /* --- TradingView widget ------------------------------------------- */
-/* --- Live Trades Feed -------------------------------------------- */
-const ALL_TRADES = [
-  { action:"BUY",  pair:"XAUUSD", fund:"Fund 1 · TMGM",        lots:"0.10", result:"+12.4 pips", win:true  },
-  { action:"SELL", pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.05", result:"+8.1 pips",  win:true  },
-  { action:"BUY",  pair:"BTCUSD", fund:"VaultKano · MultiBank", lots:"0.01", result:"+2.7%",      win:true  },
-  { action:"SELL", pair:"XAUUSD", fund:"Alpha Fund · TMGM",     lots:"0.08", result:"-3.2 pips",  win:false },
-  { action:"BUY",  pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.05", result:"+11.0 pips", win:true  },
-  { action:"BUY",  pair:"XAUUSD", fund:"Fund 1a · MultiBank",   lots:"0.12", result:"+9.8 pips",  win:true  },
-  { action:"SELL", pair:"XAUUSD", fund:"Alpha Fund · TMGM",     lots:"0.06", result:"+14.2 pips", win:true  },
-  { action:"BUY",  pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.08", result:"+6.5 pips",  win:true  },
-  { action:"SELL", pair:"XAUUSD", fund:"CXFund · TMGM",         lots:"0.10", result:"+18.3 pips", win:true  },
-  { action:"BUY",  pair:"XAUUSD", fund:"Fund 1 · TMGM",         lots:"0.15", result:"-4.1 pips",  win:false },
-  { action:"BUY",  pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.05", result:"+7.2 pips",  win:true  },
-  { action:"SELL", pair:"XAUUSD", fund:"Fund 1a · MultiBank",   lots:"0.10", result:"+11.6 pips", win:true  },
-  { action:"BUY",  pair:"BTCUSD", fund:"VaultKano · MultiBank", lots:"0.02", result:"+3.4%",      win:true  },
-  { action:"SELL", pair:"EURUSD", fund:"MAMALYN · MultiBank",   lots:"0.08", result:"+5.9 pips",  win:true  },
-  { action:"BUY",  pair:"XAUUSD", fund:"CXFund · TMGM",         lots:"0.08", result:"+22.1 pips", win:true  },
-];
-
-function LiveTradesFeed() {
-  const [trades, setTrades] = useState(ALL_TRADES.slice(0, 5));
-  const [newIdx, setNewIdx] = useState(null);
-  const poolRef = useRef(ALL_TRADES.slice(5));
-
-  useEffect(() => {
-    // Add a new trade every 3.5 seconds
-    const interval = setInterval(() => {
-      setTrades(prev => {
-        const pool = poolRef.current;
-        if (pool.length === 0) {
-          poolRef.current = ALL_TRADES;
-          return prev;
-        }
-        const next = pool[Math.floor(Math.random() * pool.length)];
-        const newTrade = {
-          ...next,
-          lots: `${(Math.random() * 0.15 + 0.01).toFixed(2)}`,
-          result: next.win
-            ? `+${(Math.random() * 20 + 2).toFixed(1)} pips`
-            : `-${(Math.random() * 8 + 1).toFixed(1)} pips`,
-          isNew: true,
-        };
-        setNewIdx(0);
-        setTimeout(() => setNewIdx(null), 600);
-        return [newTrade, ...prev.slice(0, 4)];
-      });
-    }, 3500);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div style={{ display:"flex", flexDirection:"column", gap:8, overflow:"hidden" }}>
-      {trades.map((t, i) => (
-        <div key={`${t.pair}-${t.result}-${i}`} style={{
-          background: "rgba(255,255,255,0.02)",
-          border: `1px solid ${i === newIdx ? (t.win ? "rgba(0,232,120,0.3)" : "rgba(248,113,113,0.3)") : "rgba(255,255,255,0.06)"}`,
-          borderRadius: 12, padding: "14px 16px",
-          display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
-          transform: i === newIdx ? "translateX(0)" : "translateX(0)",
-          opacity: 1,
-          transition: "border-color 0.4s ease, background 0.4s ease",
-          background: i === newIdx ? (t.win ? "rgba(0,232,122,0.04)" : "rgba(248,113,113,0.04)") : "rgba(255,255,255,0.02)",
-          animation: i === 0 && newIdx === 0 ? "slideInTrade 0.4s cubic-bezier(0.16,1,0.3,1)" : "none",
-        }}>
-          <div style={{ display:"flex", alignItems:"center", gap:12 }}>
-            <div style={{ width:36, height:36, borderRadius:10, background: t.win ? "rgba(0,232,120,0.1)" : "rgba(248,113,113,0.1)", border:`1px solid ${t.win ? "rgba(0,232,120,0.2)" : "rgba(248,113,113,0.2)"}`, display:"flex", alignItems:"center", justifyContent:"center", fontFamily:"sans-serif", fontSize:9, fontWeight:800, color: t.win ? "#00E87A" : "#F87171", letterSpacing:"0.05em", flexShrink:0 }}>
-              {t.action}
-            </div>
-            <div>
-              <div style={{ fontFamily:"sans-serif", fontSize:"0.875rem", fontWeight:700, color:"#fff" }}>{t.pair} · {t.lots} lots</div>
-              <div style={{ fontFamily:"sans-serif", fontSize:11, color:"rgba(255,255,255,0.3)" }}>{t.fund}</div>
-            </div>
-          </div>
-          <div style={{ textAlign:"right", flexShrink:0 }}>
-            <div style={{ fontFamily:"sans-serif", fontSize:"0.875rem", fontWeight:700, color: t.win ? "#00E87A" : "#F87171" }}>{t.result}</div>
-            <div style={{ fontFamily:"sans-serif", fontSize:10, color:"rgba(255,255,255,0.2)" }}>{i === 0 ? "just now" : i === 1 ? "1m ago" : `${i * 3}m ago`}</div>
-          </div>
-        </div>
-      ))}
-      <style>{`@keyframes slideInTrade { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }`}</style>
-    </div>
-  );
-}
-
-/* --- Lead Capture Form ------------------------------------------- */
 function LeadCaptureForm() {
   const [name, setName]       = useState("");
   const [email, setEmail]     = useState("");
@@ -230,7 +145,7 @@ function BentoStat({ num, label, prefix = "", suffix = "", accent }) {
     }}>
       {accent && <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg,transparent,${accent},transparent)` }} />}
       <div style={{ fontFamily: "sans-serif", fontSize: "clamp(1.8rem,3vw,2.6rem)", fontWeight: 900, color: "#fff", letterSpacing: "-0.04em", lineHeight: 1 }}>
-        <CounterFlip value={parseFloat(String(num).replace(/[^0-9.]/g, ""))} prefix={prefix} suffix={suffix} decimals={String(num).includes(".") ? 1 : 0} />
+        {prefix}{num}{suffix}
       </div>
       <div style={{ fontFamily: "sans-serif", fontSize: 10, fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(159,180,193,0.5)", marginTop: 8 }}>{label}</div>
     </div>
@@ -297,7 +212,7 @@ export default function Home() {
           <div className="marquee-track">
             {[...Array(3)].map((_, si) => (
               <div key={si} style={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
-                {["INSTITUTIONAL EXECUTION", "MULTIPLE FUNDS", "DISCIPLINED CAPITAL", "$847M+ VOLUME", "9.2% AVG MONTHLY RETURN", "COPY TRADING LIVE", "KAIZEN CAPITAL GROUP", "VERIFIED STRATEGIES"].map((item, i) => (
+                {["INSTITUTIONAL EXECUTION", "MULTIPLE FUNDS", "DISCIPLINED CAPITAL", "VERIFIED TRACK RECORDS", "TMGM · MULTIBANK · GENESIS FX", "COPY TRADING LIVE", "KAIZEN CAPITAL GROUP", "VERIFIED STRATEGIES"].map((item, i) => (
                   <span key={i} style={{ display: "inline-flex", alignItems: "center", gap: 24, paddingRight: 48 }}>
                     <span style={{ fontSize: 10, fontWeight: 700, letterSpacing: "0.28em", color: "rgba(159,180,193,0.4)", fontFamily: "sans-serif", textTransform: "uppercase" }}>{item}</span>
                     <span style={{ width: 3, height: 3, borderRadius: "50%", background: "rgba(159,180,193,0.2)", flexShrink: 0, display: "inline-block" }} />
@@ -322,10 +237,9 @@ export default function Home() {
 
             {/* Bento grid */}
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(180px,calc(50% - 8px)),1fr))", gap: 12, marginBottom: 40 }}>
-              <SlideReveal direction="up" delay={0}><BentoStat num="13" label="Funds Active" accent="rgba(0,232,120,0.6)" /></SlideReveal>
-              <SlideReveal direction="up" delay={80}><BentoStat num="9.2" label="Avg Monthly Return" suffix="%" accent="rgba(159,180,193,0.6)" /></SlideReveal>
-              <SlideReveal direction="up" delay={160}><BentoStat num="847" label="Total Volume" prefix="$" suffix="M+" accent="rgba(100,150,255,0.6)" /></SlideReveal>
-              <SlideReveal direction="up" delay={240}><BentoStat num="1000" label="Active Users" suffix="+" accent="rgba(200,180,100,0.6)" /></SlideReveal>
+              <SlideReveal direction="up" delay={0}><BentoStat num={LIVE_COUNT} label="Live Funds" accent="rgba(0,232,120,0.6)" /></SlideReveal>
+              <SlideReveal direction="up" delay={80}><BentoStat num={FUND_COUNT} label="Strategies Listed" accent="rgba(159,180,193,0.6)" /></SlideReveal>
+              <SlideReveal direction="up" delay={160}><BentoStat num={APPROVED_BROKERS.length} label="Approved Brokerages" accent="rgba(100,150,255,0.6)" /></SlideReveal>
             </div>
 
             {/* Overview cards */}
@@ -468,9 +382,9 @@ export default function Home() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(280px,100%),1fr))", gap: 16 }}>
               {[
-                { n: "01", title: "Private Investors", desc: "Built for individuals seeking structured exposure, disciplined execution, and premium communication.", points: ["Explore current live fund opportunities", "Review fit based on your goals", "Begin a direct conversation with KCG"], cta: "Investor Inquiry", href: "#contact-form" },
-                { n: "02", title: "Fund Allocation", desc: "Designed for larger capital conversations, managed allocation discussions, and formal fund placement interest.", points: ["Discuss allocation objectives", "Review strategy alignment", "Position for advanced capital conversation"], cta: "Discuss Allocation", href: "#contact-form" },
-                { n: "03", title: "Strategic Partnerships", desc: "For broker relationships, business partnerships, platform collaborations, and long-term institutional growth.", points: ["Review synergy and strategic fit", "Explore growth alignment", "Open a partnership discussion"], cta: "Partnership Inquiry", href: "#contact-form" },
+                { n: "01", title: "Private Investors", desc: "Built for individuals seeking structured exposure, disciplined execution, and premium communication.", points: ["Explore current live fund opportunities", "Review fit based on your goals", "Begin a direct conversation with KCG"], cta: "Investor Inquiry", href: CALENDLY_URL },
+                { n: "02", title: "Fund Allocation", desc: "Designed for larger capital conversations, managed allocation discussions, and formal fund placement interest.", points: ["Discuss allocation objectives", "Review strategy alignment", "Position for advanced capital conversation"], cta: "Discuss Allocation", href: CALENDLY_URL },
+                { n: "03", title: "Strategic Partnerships", desc: "For broker relationships, business partnerships, platform collaborations, and long-term institutional growth.", points: ["Review synergy and strategic fit", "Explore growth alignment", "Open a partnership discussion"], cta: "Partnership Inquiry", href: CALENDLY_URL },
               ].map((item, i) => (
                 <SlideReveal key={item.n} direction="up" delay={i * 100}>
                   <div className="glass-card" style={{ padding: 32, height: "100%", display: "flex", flexDirection: "column" }}>
@@ -485,7 +399,7 @@ export default function Home() {
                       ))}
                     </ul>
                     <a href={item.href}
-                      onClick={e => { e.preventDefault(); const el = document.getElementById("contact-form"); if(el) el.scrollIntoView({ behavior:"smooth", block:"start" }); }}
+                      target="_blank" rel="noopener noreferrer"
                       style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", padding: "10px 20px", borderRadius: 100, border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.04)", color: "rgba(255,255,255,0.75)", fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, textDecoration: "none", transition: "all 0.2s ease", marginTop: "auto", cursor: "pointer" }}
                       onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.28)"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
                       onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; e.currentTarget.style.background = "rgba(255,255,255,0.04)"; }}>
@@ -495,6 +409,9 @@ export default function Home() {
                 </SlideReveal>
               ))}
             </div>
+            <p style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.4)", marginTop: 20, textAlign: "center" }}>
+              Prefer email? Write to <a href={`mailto:${SUPPORT_EMAIL}`} style={{ color: "rgba(159,180,193,0.8)" }}>{SUPPORT_EMAIL}</a>
+            </p>
           </div>
         </Scene>
 
@@ -549,7 +466,7 @@ export default function Home() {
 
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(min(240px,100%),1fr))", gap: 16 }}>
               {[
-                { name: "TMGM", abbr: "TM", desc: "Global multi-asset broker with deep liquidity and fast execution. Used for Fund 1 and Fund 1a.", href: "https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" },
+                { name: "TMGM", abbr: "TM", desc: "Global multi-asset broker with deep liquidity and fast execution. Used for KCG's TMGM-based funds.", href: "https://www.tmgm.com?r_code=IB1750127193A&expiry_date=Nw==" },
                 { name: "MultiBank Group", abbr: "MB", desc: "One of the world's largest financial derivatives providers. Used across multiple KCG funds.", href: "https://tradfi.multibankgroup.com/en/account/live-account?ibNum=8836606" },
                 { name: "Genesis FX", abbr: "GF", desc: "Emerging brokerage with competitive spreads and institutional infrastructure.", href: "https://dashboard.genesisfxmarkets.com/auth/register?ref=GFXBEBEF21B" },
               ].map((b, i) => (
@@ -583,7 +500,7 @@ export default function Home() {
                   {[
                     { icon: "🏛️", title: "Institutional Structure", desc: "Every fund has defined strategy, verified brokerage, and transparent reporting." },
                     { icon: "⚡", title: "Disciplined Execution", desc: "Algorithmic and manual strategies with strict risk management protocols." },
-                    { icon: "🌐", title: "Global Brokerage Access", desc: "TMGM, MultiBank, TradeSmart — regulated partners with deep liquidity." },
+                    { icon: "🌐", title: "Global Brokerage Access", desc: "TMGM, MultiBank, Genesis FX — the approved brokerages KCG funds run on." },
                     { icon: "📊", title: "Verified Performance", desc: "Third-party tracking through Myfxbook, FX Blue, and brokerage ratings." },
                   ].map((item) => (
                     <div key={item.title} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
@@ -597,9 +514,22 @@ export default function Home() {
                 </div>
               </SlideReveal>
               <SlideReveal direction="right">
-                <p className="scene-label">Live Trading Activity</p>
-                <h2 className="scene-h2" style={{ marginBottom: "2rem" }}>Recent executions.</h2>
-                <LiveTradesFeed />
+                <p className="scene-label">Live Funds</p>
+                <h2 className="scene-h2" style={{ marginBottom: "2rem" }}>Check every record yourself.</h2>
+                <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                  {LIVE_FUNDS.map(f => (
+                    <div key={f.id} className="glass-card" style={{ padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
+                      <div>
+                        <div style={{ fontFamily: "sans-serif", fontSize: "0.9rem", fontWeight: 700, color: "#fff" }}>{f.name}</div>
+                        <div style={{ fontFamily: "sans-serif", fontSize: "0.75rem", color: "rgba(255,255,255,0.38)" }}>{f.focus} · {f.broker}</div>
+                      </div>
+                      {f.track
+                        ? <a href={f.track} target="_blank" rel="noopener noreferrer" style={{ fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "rgba(0,232,122,0.8)", textDecoration: "none", whiteSpace: "nowrap" }}>Verified record ↗</a>
+                        : <span style={{ fontFamily: "sans-serif", fontSize: 12, color: "rgba(255,255,255,0.35)", whiteSpace: "nowrap" }}>Record link pending</span>}
+                    </div>
+                  ))}
+                </div>
+                <p style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.4)", marginTop: 12, lineHeight: 1.6 }}>{RISK_LINE}</p>
                 <a href="/performance" style={{ display: "inline-flex", alignItems: "center", gap: 6, marginTop: 16, fontFamily: "sans-serif", fontSize: 12, fontWeight: 700, color: "rgba(159,180,193,0.6)", textDecoration: "none" }}>View full performance dashboard →</a>
               </SlideReveal>
             </div>

@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Kaizen Capital Group",
-  description: "Institutional capital strategy platform built around structure, credibility, and long-term growth across 14 active funds.",
+  description: "Institutional capital strategy platform built around structure, credibility, and long-term growth across Gold, Forex, Crypto and multi-asset funds.",
   verification: {
     google: "3Jj43ox4bzCy0UeQGbuMQFWiEZEZ6-cOtILjTAo4MjQ",
   },

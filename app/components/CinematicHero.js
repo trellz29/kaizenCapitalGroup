@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { motion, AnimatePresence } from "framer-motion";
+import { LIVE_COUNT, FUND_COUNT, APPROVED_BROKERS } from "../data/funds";
 
 const ROLES = ["Allocation", "Growth", "Preservation", "Innovation", "Expansion"];
 
@@ -274,10 +275,9 @@ export default function CinematicHero() {
 
         <div className="hero-stats" ref={statsRef} style={{ opacity: 0 }}>
           {[
-            { num: "13", lbl: "Active Funds" },
-            { num: "9.2%", lbl: "Avg Monthly Return" },
-            { num: "$847M+", lbl: "Total Volume" },
-            { num: "1,000+", lbl: "Active Users" },
+            { num: String(LIVE_COUNT), lbl: "Live Funds" },
+            { num: String(FUND_COUNT), lbl: "Strategies" },
+            { num: String(APPROVED_BROKERS.length), lbl: "Approved Brokerages" },
           ].map(s => (
             <div key={s.lbl}>
               <div className="hero-stat-num">{s.num}</div>

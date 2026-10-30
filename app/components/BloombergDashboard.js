@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { LIVE_FUNDS, LIVE_COUNT, FUND_COUNT, APPROVED_BROKERS } from "../data/funds";
 
 /* ??? Animated line chart ??????????????????????????????????????????? */
 function MiniChart({ data, color = "#00E87A", height = 60, animated = false }) {
@@ -105,19 +106,23 @@ function TerminalCursor() {
 }
 
 /* ??? Main component ???????????????????????????????????????????????? */
-const FUND_DATA = [
-  { name: "KaizenCapitalGroup.Xau-TMGM", ticker: "XAUT1", ret: "+9.4%", aum: "$124K", status: "LIVE", data: [1,1.2,1.1,1.4,1.3,1.6,1.5,1.8,1.7,2.1,2.0,2.3,2.2,2.6,2.5,2.9,2.8,3.1,3.0,3.4] },
-  { name: "KaizenCapitalGroup.Xau-MB", ticker: "XAUMB", ret: "+11.2%", aum: "$87K", status: "LIVE", data: [1,1.1,1.3,1.2,1.5,1.4,1.7,1.6,2.0,1.9,2.2,2.1,2.5,2.4,2.8,2.7,3.0,3.2,3.1,3.5] },
-  { name: "The Alpha Fund", ticker: "ALPH8", ret: "+7.8%", aum: "$203K", status: "LIVE", data: [1,1.05,1.1,1.08,1.2,1.15,1.3,1.28,1.4,1.38,1.5,1.48,1.6,1.62,1.7,1.75,1.8,1.85,1.9,2.0] },
-  { name: "MAMALYN Fund", ticker: "MMLYN", ret: "+8.9%", aum: "$156K", status: "LIVE", data: [1,1.08,1.06,1.15,1.12,1.22,1.2,1.3,1.28,1.38,1.36,1.48,1.46,1.58,1.56,1.7,1.68,1.82,1.8,1.95] },
-  { name: "VaultKano Fund", ticker: "VLTK3", ret: "—", aum: "—", status: "RELAUNCH", data: [1,0.98,1.02,0.99,1.04,1.01,1.06,1.03,1.08,1.05,1.1,1.07,1.12,1.09,1.14,1.11,1.16,1.13,1.18,1.15] },
-];
+// D1/D2: no return, AUM or chart figures until each links its own verified record.
+const FLAT = Array.from({ length: 20 }, () => 1);
+const FUND_DATA = LIVE_FUNDS.map(f => ({
+  name: f.name,
+  ticker: `FUND${f.id.toUpperCase()}`,
+  ret: f.track ? "See record" : "Pending",
+  aum: "—",
+  status: "LIVE",
+  broker: f.broker,
+  data: FLAT,
+}));
 
 const METRICS = [
-  { label: "TOTAL AUM", value: "847", prefix: "$", suffix: "M+", decimals: 0 },
-  { label: "ACTIVE FUNDS", value: "13+", prefix: "", suffix: "", decimals: 0 },
-  { label: "AVG MONTHLY RETURN", value: "9.2", prefix: "", suffix: "%", decimals: 1 },
-  { label: "LIVE STRATEGIES", value: "4", prefix: "", suffix: "", decimals: 0 },
+  { label: "LIVE FUNDS", value: String(LIVE_COUNT), prefix: "", suffix: "", decimals: 0 },
+  { label: "STRATEGIES LISTED", value: String(FUND_COUNT), prefix: "", suffix: "", decimals: 0 },
+  { label: "WITH VERIFIED RECORD", value: String(LIVE_FUNDS.filter(f => f.track).length), prefix: "", suffix: "", decimals: 0 },
+  { label: "APPROVED BROKERAGES", value: String(APPROVED_BROKERS.length), prefix: "", suffix: "", decimals: 0 },
 ];
 
 export default function BloombergDashboard() {
@@ -205,7 +210,7 @@ export default function BloombergDashboard() {
           <div style={{ borderRight: "1px solid rgba(255,255,255,0.05)" }}>
             {/* Table header */}
             <div style={{ display: "grid", gridTemplateColumns: "70px 1fr 72px 72px 80px", padding: "10px 16px", borderBottom: "1px solid rgba(255,255,255,0.05)", gap: 8 }}>
-              {["TICKER", "FUND NAME", "MTH RTN", "AUM", "STATUS"].map(h => (
+              {["TICKER", "FUND NAME", "RECORD", "BROKER", "STATUS"].map(h => (
                 <div key={h} style={{ ...styles.label }}>{h}</div>
               ))}
             </div>
@@ -220,8 +225,8 @@ export default function BloombergDashboard() {
               >
                 <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: "rgba(0,232,120,0.8)" }}>{fund.ticker}</div>
                 <div style={{ fontFamily: "sans-serif", fontSize: 11, color: "rgba(255,255,255,0.65)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{fund.name}</div>
-                <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: fund.ret === "—" ? "rgba(255,255,255,0.3)" : "#00E87A" }}>{fund.ret}</div>
-                <div style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{fund.aum}</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, fontWeight: 700, color: fund.ret === "Pending" ? "rgba(255,255,255,0.3)" : "#00E87A" }}>{fund.ret}</div>
+                <div style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{fund.broker}</div>
                 <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
                   <span className={fund.status === "LIVE" ? "bb-live" : ""} style={{ width: 5, height: 5, borderRadius: "50%", background: fund.status === "LIVE" ? "#00E87A" : "#F59E0B", flexShrink: 0, display: "inline-block" }} />
                   <span style={{ fontFamily: "monospace", fontSize: 9, color: fund.status === "LIVE" ? "rgba(0,232,120,0.7)" : "rgba(245,158,11,0.7)", letterSpacing: "0.1em" }}>{fund.status}</span>
@@ -239,15 +244,13 @@ export default function BloombergDashboard() {
             </div>
 
             <div style={{ height: 100 }}>
-              <MiniChart data={FUND_DATA[activeRow].data} color={FUND_DATA[activeRow].ret === "—" ? "#9FB4C1" : "#00E87A"} height={100} animated={visible} />
+              <MiniChart data={FUND_DATA[activeRow].data} color={"#9FB4C1"} height={100} animated={visible} />
             </div>
 
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
               {[
-                { label: "MONTHLY RETURN", value: FUND_DATA[activeRow].ret },
-                { label: "AUM", value: FUND_DATA[activeRow].aum },
-                { label: "STRATEGY", value: "Scalping" },
-                { label: "RISK LEVEL", value: "Moderate" },
+                { label: "TRACK RECORD", value: FUND_DATA[activeRow].ret },
+                { label: "BROKER", value: FUND_DATA[activeRow].broker },
               ].map(s => (
                 <div key={s.label} style={{ background: "rgba(255,255,255,0.02)", borderRadius: 8, padding: "10px 12px", border: "1px solid rgba(255,255,255,0.05)" }}>
                   <div style={{ ...styles.label, marginBottom: 4, fontSize: 8 }}>{s.label}</div>
@@ -262,8 +265,8 @@ export default function BloombergDashboard() {
                 {[
                   `> loading ${FUND_DATA[activeRow].ticker}...`,
                   `✓ data stream connected`,
-                  `> MTH: ${FUND_DATA[activeRow].ret}`,
-                  `> AUM: ${FUND_DATA[activeRow].aum}`,
+                  `> RECORD: ${FUND_DATA[activeRow].ret}`,
+                  `> BROKER: ${FUND_DATA[activeRow].broker}`,
                   `> STATUS: ${FUND_DATA[activeRow].status}`,
                   `> monitoring...`,
                 ].map((line, i) => (

@@ -25,7 +25,7 @@ const INSIGHTS = [
     category: "Operations",
     tag: "INFRASTRUCTURE",
     title: "Why KCG uses multiple brokerages instead of one",
-    excerpt: "TMGM, MultiBank, TradeSmart — three regulated partners, three different liquidity pools. The infrastructure case for multi-brokerage capital deployment.",
+    excerpt: "TMGM, MultiBank, Genesis FX — three approved partners, three different liquidity pools. The infrastructure case for multi-brokerage capital deployment.",
     date: "Oct 2025",
     readTime: "5 min read",
     accent: "#00E87A",
